@@ -24,9 +24,6 @@ public class VehicleMovement : MonoBehaviour
     [SerializeField]
     Rigidbody2D rigidbody2D;
 
-    [SerializeField]
-    WorkerBase worker = null;
-
     // Start is called before the first frame update
     void Start()
     {
