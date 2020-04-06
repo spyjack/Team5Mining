@@ -18,7 +18,16 @@ public class WorkerBase : ScriptableObject
     WorkStation _equippedStation = WorkStation.None;
 
     [SerializeField]
-    int _boost1 = 0;
+    int currentHealth = 3;
+
+    [SerializeField]
+    int maxHealth = 3;
+
+    [SerializeField]
+    int motorskills = 1;
+
+    [SerializeField]
+    int engineering = 1;
 
     public string WorkerName
     {

@@ -456,6 +456,7 @@ GameObject:
   - component: {fileID: 1671639622}
   - component: {fileID: 1671639625}
   - component: {fileID: 1671639621}
+  - component: {fileID: 1671639626}
   m_Layer: 31
   m_Name: ShipTest
   m_TagString: Untagged
@@ -570,7 +571,27 @@ MonoBehaviour:
   nextWaypointDistance: 0.25
   seeker: {fileID: 1671639623}
   rigidbody2D: {fileID: 1671639622}
-  worker: {fileID: 0}
+--- !u!114 &1671639626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671639620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770bd604961d63d4390f7a91e08269cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crew:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  drill: {fileID: 0}
+  engine: {fileID: 0}
+  upgrade: {fileID: 0}
+  cabin: {fileID: 0}
+  wheels: {fileID: 0}
 --- !u!1 &2078381305
 GameObject:
   m_ObjectHideFlags: 0

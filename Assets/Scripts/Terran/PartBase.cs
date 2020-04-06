@@ -17,6 +17,9 @@ public class PartBase : ScriptableObject
     [SerializeField]
     int _baseCost = 10;
 
+    [SerializeField]
+    float _fuelEfficiency = 1;
+
     public string PartName
     {
         get { return _partName; }
@@ -33,6 +36,12 @@ public class PartBase : ScriptableObject
     {
         get { return _uiIcon; }
         set { _uiIcon = value; }
+    }
+
+    public float FuelEfficiency
+    {
+        get { return _fuelEfficiency; }
+        set { _fuelEfficiency = value; }
     }
 
     public int Cost
