@@ -9,7 +9,13 @@ public class VehicleMovement : MonoBehaviour
     private List<Vector3> targetQueue = new List<Vector3>();
 
     [SerializeField]
-    private float speed = 200f;
+    private float speed = 0f;
+
+    [SerializeField]
+    private float maxSpeed = 200f;
+
+    [SerializeField]
+    private float stoppingDistance = 3f;
 
     [SerializeField]
     private float nextWaypointDistance = 3f;
@@ -22,11 +28,25 @@ public class VehicleMovement : MonoBehaviour
     Seeker seeker;
 
     [SerializeField]
-    Rigidbody2D rigidbody2D;
+    Rigidbody2D rb = null;
+
+    [SerializeField]
+    VehicleClass vehicleMain = null;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (vehicleMain == null)
+        {
+            Debug.LogError(gameObject.name + " Missing Vehicle Main");
+        }
+
+        if (rb == null)
+        {
+            Debug.LogWarning(gameObject.name + " Missing RigidBody2D");
+            rb = GetComponent<Rigidbody2D>();
+        }
+
         InvokeRepeating("UpdatePath", 0f, 1f);
     }
 
@@ -49,18 +69,31 @@ public class VehicleMovement : MonoBehaviour
         if (currentWaypoint >= path.vectorPath.Count)
         {
             reachedEndOfPath = true;
+            if (Vector2.Distance(rb.position, targetQueue[0]) < stoppingDistance)
+            {
+                targetQueue.RemoveAt(0);
+                if (targetQueue.Count <= 0)
+                {
+                    speed = 0;
+                }
+            }
             return;
         }else
         {
             reachedEndOfPath = false;
         }
 
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rigidbody2D.position).normalized;
+        if (speed < maxSpeed)
+        {
+            speed += vehicleMain.Acceleration;
+        }
+
+        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
 
-        rigidbody2D.AddForce(force);
+        rb.velocity = force;
 
-        float distance = Vector2.Distance(rigidbody2D.position, path.vectorPath[currentWaypoint]);
+        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
         if (distance < nextWaypointDistance)
         {
@@ -71,7 +104,7 @@ public class VehicleMovement : MonoBehaviour
     void UpdatePath()
     {
         if (seeker.IsDone() && targetQueue.Count > 0)
-        seeker.StartPath(rigidbody2D.position, targetQueue[0], OnPathComplete);
+        seeker.StartPath(rb.position, targetQueue[0], OnPathComplete);
     }
 
     void OnPathComplete(Path _path)
@@ -81,6 +114,6 @@ public class VehicleMovement : MonoBehaviour
             path = _path;
             currentWaypoint = 0;
         }
-        targetQueue.RemoveAt(0);
+        
     }
 }

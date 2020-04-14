@@ -46,6 +46,12 @@ public class WorkerBase : ScriptableObject
         get { return _gender; }
         set { _gender = value; }
     }
+
+    public int Motorskills
+    {
+        get { return motorskills; }
+        set { motorskills = value; }
+    }
 }
 
 public enum Gender

@@ -20,6 +20,9 @@ public class PartBase : ScriptableObject
     [SerializeField]
     float _fuelEfficiency = 1;
 
+    [SerializeField]
+    float _weight = 10;
+
     public string PartName
     {
         get { return _partName; }
@@ -42,6 +45,12 @@ public class PartBase : ScriptableObject
     {
         get { return _fuelEfficiency; }
         set { _fuelEfficiency = value; }
+    }
+
+    public float Weight
+    {
+        get { return _weight; }
+        set { _weight = value; }
     }
 
     public int Cost

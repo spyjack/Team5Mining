@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACYn+vi8KSoTAIAAPMEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzqWDaQnQW2sI6YGECe3k4ouQ1liDLHn0ESAM/70r2cZOMj0h3r5dvbe78oUIZStgTpuVEXytOZAfAxLO5MugCz7Aie612oo3aDkvgrsikGjkPFMnNOJJSLO6BGcE+6n2MpBHCHolcm3KJd9Dqq2zCOdUWsCQ0S5kK4QuA3LCn+E8pJzxNJ6G0xue5qPBFY8MlAPTUVtiS6tZXjFJywp4kNyRk7uGndxFmkIzDWP0dTwJ5bWUwjZiiDtX0WxKK+vRChK4oGguKgheCxD7wgWh/eSnPLfgGlWGnhfCYI/qquSXrhtXUnuopb1S6eGmvS65/hQdJjGcG10+tLcmo3CDKwQ7PNMzo9b1+tqHF+9le3Wk8kB3El4KUI96ZbRXHIPO+JDqLYwX3d+bsbQAdujwWuoH0Ff/n07wcI3eT6kU5S42/nsNbKWO3Y6zB4Oj+Y2C42bYpgSiQcVfC3/ovr9CTeBeGOsw1LhUQd5OexOoZBl7Ftx4l2qjIMKN6AoUle68wTKuP8Dkc6x37YfIPQ2P5X1W+wY+pES448cx9kMbfbwNyxb6uAZbPHknhYJOdAg8Yp9SrVS9X/2etGlbb3LKeml7L/j71SKwo7PJfPaNz5PdhI2mQ8ghn+34mE2mIz7jjMTdEwp9UrmphTZDwamprrjCPWu/IYOVoVXcdW7ocSXeSt1ruVC53jIDoJ7qCjfhYPASfJZ8yQU2aAvOCRXnTS4ZkZodgGe3Qll0ujw5Q7OuSkYq8apdQDKSxo9GRq7k+g9QSwMEFAAACAgAAJif651e515tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTVUVBKL0osyCgGihiCOKWZKSB2tFJqUqKFqaWFcYqlYZJpsoG5bmpaappFUopRsqm5QYpFSrJSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAJif6+LwpKhMAgAA8wQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAJif651e515tAAAAeAAAAAkAJAAAAAAAAAAAAAAAmQIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABRAwAAAAA=
+    dataString: UEsDBBQAAAgIAACYn+voJYHWVQIAAPkEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMziWDnVCgt9YQ0gOBCe3k4ouQ1liDLHkkOXwN/70r2WCHTE+It29Xb9+ufCZC2RKY02ZuBF9oDuRHj/gz+dZrgy9woFut1uIEV8674C73JBo4b9QJjXjk06wuwBnBfqqt9OQBgpUSmTbFjG8h0dZZhDMqLWDIaOezFULnHjngT3/iU454ikf+dMLTZNC74JGBcmBa6pV4pdWsSjFJixK4l9ySH+OGHX0PNIXNNIzBQzz05bWUwjZiiDuWodl1mYMB3y0XFHsLAp4efEIOYps7r7SbvcwyC66RZehxKgyaVJclv3TtXEHtrtb2QWXlL4qHta666OJLvB+FcGZ08XK9Nxr4O1wu2O6NHhm1rmNtF5620qNg0Z7KHd1IeM9Bveq50ZXiGHSm8qmVhXja/r21luTAdi1eS70Dq/L/A/I9XEL3h0SKYhO8f6qBtdTB8DB+MDid3yg4LIdtSiDqVfy18Iduu1vUBJ6FsQ5DTZfKy9voyngqmQXPfDeVS7RREOBGdAmKSndcYRnXHWH0Nda59i7yTP17+Zx1fQZ3KQFu+WGM3dBK72/DsrneL8Dmy8pJoaAV7QOv6FOilao3rOvJNW1dmYyyTtq2EvzzahHY0PFwMn7kk2gzZINRHzLIxhses+FowMeckbB7QmGfVK5qoc1QcGqqLa5wz3zFRAI1wHsr6nIbHo+h+7k4FbrjulCZXjMDoJZ1kZt2MHgPPk4+4wI9WoNzQoWRk3NKpGY74OmtUBqanR2coWlbJSWl+NDOIylJwqcjJRdy+QdQSwMEFAAACAgAAJif651e515tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTVUVBKL0osyCgGihiCOKWZKSB2tFJqUqKFqaWFcYqlYZJpsoG5bmpaappFUopRsqm5QYpFSrJSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAJif6+glgdZVAgAA+QQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAJif651e515tAAAAeAAAAAkAJAAAAAAAAAAAAAAAogIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABaAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -247,7 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 842784056}
   - component: {fileID: 842784055}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +389,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1648725526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.415, y: 0.065, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 12.413176, y: 6.5560994, z: 5}
   m_Children: []
   m_Father: {fileID: 1671639624}
@@ -455,8 +455,9 @@ GameObject:
   - component: {fileID: 1671639623}
   - component: {fileID: 1671639622}
   - component: {fileID: 1671639625}
-  - component: {fileID: 1671639621}
   - component: {fileID: 1671639626}
+  - component: {fileID: 1671639621}
+  - component: {fileID: 1671639627}
   m_Layer: 31
   m_Name: ShipTest
   m_TagString: Untagged
@@ -464,8 +465,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &1671639621
-BoxCollider2D:
+--- !u!70 &1671639621
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -477,19 +478,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.45000005, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.9000001, y: 1}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.5, y: 1}
+  m_Direction: 1
 --- !u!50 &1671639622
 Rigidbody2D:
   serializedVersion: 4
@@ -503,14 +494,14 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1.5
+  m_LinearDrag: 5
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1671639623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,10 +558,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetQueue: []
-  speed: 600
+  speed: 0
+  maxSpeed: 200
   nextWaypointDistance: 0.25
   seeker: {fileID: 1671639623}
-  rigidbody2D: {fileID: 1671639622}
+  rb: {fileID: 1671639622}
+  vehicleMain: {fileID: 1671639626}
 --- !u!114 &1671639626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,19 +576,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770bd604961d63d4390f7a91e08269cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shipName: S.S. Unnamed
   health: 10
   healthMax: 10
+  baseWeight: 50
+  weight: 100
   fuel: 60
   fuelMax: 60
+  acceleration: 60
   crew:
+  - {fileID: 11400000, guid: caf08e104827ea64da883d2d2319ffab, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  drill: {fileID: 0}
-  engine: {fileID: 0}
-  upgrade: {fileID: 0}
-  cabin: {fileID: 0}
-  wheels: {fileID: 0}
+  drill: {fileID: 11400000, guid: 371f7c6967a2b5c4fb3ae1a60749ae8a, type: 2}
+  engine: {fileID: 11400000, guid: cdcda958b3a7d734cae13946e036497c, type: 2}
+  upgrade: {fileID: 11400000, guid: 6049b4a02407d4b4bb453dcdca4403c7, type: 2}
+  cabin: {fileID: 11400000, guid: 7c3ab340114dca04195d07214dbcba3b, type: 2}
+  wheels: {fileID: 11400000, guid: cb79af443f12db1418f4d8d6b12df402, type: 2}
+--- !u!114 &1671639627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671639620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  smoothType: 0
+  subdivisions: 2
+  iterations: 2
+  strength: 0.75
+  uniformLength: 1
+  maxSegmentLength: 0.75
+  bezierTangentLength: 0.4
+  offset: 0.2
+  factor: 0.1
 --- !u!1 &2078381305
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +627,7 @@ GameObject:
   - component: {fileID: 2078381308}
   - component: {fileID: 2078381307}
   - component: {fileID: 2078381309}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
