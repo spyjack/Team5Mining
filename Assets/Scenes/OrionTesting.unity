@@ -583,6 +583,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770bd604961d63d4390f7a91e08269cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 10
+  healthMax: 10
+  fuel: 60
+  fuelMax: 60
   crew:
   - {fileID: 0}
   - {fileID: 0}
