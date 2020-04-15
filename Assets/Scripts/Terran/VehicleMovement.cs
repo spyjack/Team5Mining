@@ -21,6 +21,7 @@ public class VehicleMovement : MonoBehaviour
     private float nextWaypointDistance = 3f;
 
     Path path;
+    Path path2;
     int currentWaypoint = 0;
     bool reachedEndOfPath = false;
 
@@ -35,6 +36,9 @@ public class VehicleMovement : MonoBehaviour
 
     [SerializeField]
     Vector2 drillPosition = new Vector2();
+
+    [SerializeField]
+    Vector2 direction = new Vector2();
 
     public Vector2 DrillPoint
     {
@@ -67,7 +71,8 @@ public class VehicleMovement : MonoBehaviour
             targetQueue.Add(mousePos);
         }
 
-        
+        drillPosition = rb.position + direction * 5;
+        Debug.DrawLine(rb.position, drillPosition, Color.blue);
     }
 
     // Update is called once per frame
@@ -79,33 +84,36 @@ public class VehicleMovement : MonoBehaviour
         if (currentWaypoint >= path.vectorPath.Count)
         {
             reachedEndOfPath = true;
-            if (Vector2.Distance(rb.position, targetQueue[0]) < stoppingDistance)
+            
+            if (Vector2.Distance(rb.position, targetQueue[0]) <= stoppingDistance)
             {
                 if (targetQueue.Count <= 0)
                 {
                     speed = 0;
-                }else
+                }
+                else
                 {
-                    
+
                     targetQueue.RemoveAt(0);
                 }
             }
+            
             return;
         }else
         {
             reachedEndOfPath = false;
         }
 
-        if (speed < maxSpeed)
+        if (speed < maxSpeed && !reachedEndOfPath)
         {
             speed += vehicleMain.Acceleration;
         }
 
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
 
 
-        //Debug.DrawLine(rb.position, transform.right*direction*3);
+        
         
 
         rb.velocity = force;
@@ -116,15 +124,18 @@ public class VehicleMovement : MonoBehaviour
         if (distance < nextWaypointDistance)
         {
             currentWaypoint++;
-            Debug.DrawLine(rb.position, GetPointInDirection(rb.position, path.vectorPath[currentWaypoint], 20), Color.magenta, 1f);
-            print(path.vectorPath[currentWaypoint]);
+            //Debug.DrawLine(rb.position, GetPointInDirection(rb.position, path.vectorPath[currentWaypoint], 20), Color.magenta, 1f);
+            //print(path.vectorPath[currentWaypoint]);
         }
     }
 
     void UpdatePath()
     {
         if (seeker.IsDone() && targetQueue.Count > 0)
-        seeker.StartPath(rb.position, targetQueue[0], OnPathComplete);
+        {
+            seeker.StartPath(rb.position, targetQueue[0], OnPathComplete);
+
+        }
     }
 
     void OnPathComplete(Path _path)
