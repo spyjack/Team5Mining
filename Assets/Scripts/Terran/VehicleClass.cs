@@ -112,6 +112,8 @@ public class VehicleClass : MonoBehaviour
         return totalWeight;
     }
 
+    
+
     public void RecalculateStats()
     {
         weight = CalculateWeight();

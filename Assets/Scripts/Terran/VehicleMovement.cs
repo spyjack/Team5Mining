@@ -33,6 +33,14 @@ public class VehicleMovement : MonoBehaviour
     [SerializeField]
     VehicleClass vehicleMain = null;
 
+    [SerializeField]
+    Vector2 drillPosition = new Vector2();
+
+    public Vector2 DrillPoint
+    {
+        get { return drillPosition; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +66,8 @@ public class VehicleMovement : MonoBehaviour
             mousePos.z = 0;
             targetQueue.Add(mousePos);
         }
+
+        
     }
 
     // Update is called once per frame
@@ -71,10 +81,13 @@ public class VehicleMovement : MonoBehaviour
             reachedEndOfPath = true;
             if (Vector2.Distance(rb.position, targetQueue[0]) < stoppingDistance)
             {
-                targetQueue.RemoveAt(0);
                 if (targetQueue.Count <= 0)
                 {
                     speed = 0;
+                }else
+                {
+                    
+                    targetQueue.RemoveAt(0);
                 }
             }
             return;
@@ -91,13 +104,20 @@ public class VehicleMovement : MonoBehaviour
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
 
+
+        //Debug.DrawLine(rb.position, transform.right*direction*3);
+        
+
         rb.velocity = force;
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        
 
         if (distance < nextWaypointDistance)
         {
             currentWaypoint++;
+            Debug.DrawLine(rb.position, GetPointInDirection(rb.position, path.vectorPath[currentWaypoint], 20), Color.magenta, 1f);
+            print(path.vectorPath[currentWaypoint]);
         }
     }
 
@@ -115,5 +135,16 @@ public class VehicleMovement : MonoBehaviour
             currentWaypoint = 0;
         }
         
+    }
+
+    public Vector2 GetPointInDirection(Vector2 startPos, Vector2 secondPos, float length)
+    {
+        //The angle needed is the Arc Tangent of the slope of the direction minus the slope of the start position
+        float theta = Mathf.Atan((secondPos.y - startPos.y) / (secondPos.x - startPos.x));
+
+        float posX = length * Mathf.Cos(theta);
+        float posY = length * Mathf.Sin(theta);
+
+        return new Vector2(posX, posY);
     }
 }
