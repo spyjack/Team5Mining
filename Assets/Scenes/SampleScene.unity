@@ -902,6 +902,8 @@ MonoBehaviour:
   seeker: {fileID: 1720924224}
   rb: {fileID: 1720924223}
   vehicleMain: {fileID: 1720924221}
+  drillPosition: {x: 0, y: 0}
+  direction: {x: 0, y: 0}
 --- !u!50 &1720924223
 Rigidbody2D:
   serializedVersion: 4

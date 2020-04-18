@@ -27,6 +27,9 @@ public class VehicleClass : MonoBehaviour
     [SerializeField]
     private float acceleration = 60;
 
+    [SerializeField]
+    private bool isSelected = false;
+
     [Header("Crew Stats")]
     [SerializeField]
     WorkerBase[] crew = new WorkerBase[3]; //0 - Captain, 1 - Operator, 2 - Engineer
@@ -52,6 +55,17 @@ public class VehicleClass : MonoBehaviour
     {
         get { return acceleration; }
     }
+
+    public bool Selected
+    {
+        get { return isSelected; }
+        set { isSelected = value; }
+    }
+
+    public float Fuel
+    {
+        get { return fuel; }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -62,7 +76,7 @@ public class VehicleClass : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        checkForSelection();
     }
 
     float CalculateAcceleration()//Calculate acceleration, based on engine power + pilot skills over weight
@@ -112,7 +126,33 @@ public class VehicleClass : MonoBehaviour
         return totalWeight;
     }
 
+    void checkForSelection()
+    {
+        if (Input.GetMouseButtonDown(1))
+        { 
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            if (hit.collider != null && hit.collider.gameObject.GetComponent<VehicleClass>() != null)
+            {
+                VehicleClass ship = hit.collider.gameObject.GetComponent<VehicleClass>();
+                if (ship.Selected)
+                {
+                    ship.Selected = false;
+                }else
+                {
+                    ship.Selected = true;
+                }
+            }
+        }else if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Selected = false;
+        }
+    }
     
+    public void UseFuel(int fuelModifier)
+    {
+        fuel = Mathf.Min(Mathf.Max(0, fuel + fuelModifier), fuelMax);
+    }
 
     public void RecalculateStats()
     {

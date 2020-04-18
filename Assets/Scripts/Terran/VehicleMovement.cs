@@ -20,6 +20,9 @@ public class VehicleMovement : MonoBehaviour
     [SerializeField]
     private float nextWaypointDistance = 3f;
 
+    [SerializeField]
+    private float drillRange = 3f;
+
     Path path;
     Path path2;
     int currentWaypoint = 0;
@@ -64,14 +67,16 @@ public class VehicleMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && vehicleMain.Selected)
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
-            targetQueue.Add(mousePos);
+            AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        }else if (Input.GetMouseButtonDown(2) && vehicleMain.Selected)
+        {
+            targetQueue.Clear();
+            path.vectorPath.Clear();
         }
 
-        drillPosition = rb.position + direction * 5;
+        drillPosition = rb.position + direction * drillRange;
         Debug.DrawLine(rb.position, drillPosition, Color.blue);
     }
 
@@ -84,19 +89,23 @@ public class VehicleMovement : MonoBehaviour
         if (currentWaypoint >= path.vectorPath.Count)
         {
             reachedEndOfPath = true;
-            
-            if (Vector2.Distance(rb.position, targetQueue[0]) <= stoppingDistance)
+            StopCoroutine(ConsumeGas());
+            if (0 < targetQueue.Count)
             {
-                if (targetQueue.Count <= 0)
+                if (Vector2.Distance(rb.position, targetQueue[0]) <= stoppingDistance)
                 {
-                    speed = 0;
-                }
-                else
-                {
+                    if (targetQueue.Count <= 0)
+                    {
+                        speed = 0;
+                    }
+                    else
+                    {
 
-                    targetQueue.RemoveAt(0);
+                        targetQueue.RemoveAt(0);
+                    }
                 }
             }
+           
             
             return;
         }else
@@ -107,6 +116,7 @@ public class VehicleMovement : MonoBehaviour
         if (speed < maxSpeed && !reachedEndOfPath)
         {
             speed += vehicleMain.Acceleration;
+            
         }
 
         direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
@@ -144,18 +154,49 @@ public class VehicleMovement : MonoBehaviour
         {
             path = _path;
             currentWaypoint = 0;
+            StartCoroutine(ConsumeGas());
         }
         
     }
 
-    public Vector2 GetPointInDirection(Vector2 startPos, Vector2 secondPos, float length)
+    IEnumerator ConsumeGas()
     {
-        //The angle needed is the Arc Tangent of the slope of the direction minus the slope of the start position
-        float theta = Mathf.Atan((secondPos.y - startPos.y) / (secondPos.x - startPos.x));
+        if (speed > 0)
+        {
+            
+            vehicleMain.UseFuel(-2);
+            print(vehicleMain.Fuel);
+        }
 
-        float posX = length * Mathf.Cos(theta);
-        float posY = length * Mathf.Sin(theta);
+        yield return new WaitForSeconds(0.5f);
+    }
 
-        return new Vector2(posX, posY);
+    void AddTargetPoint(Vector2 newTarget)
+    {
+        targetQueue.Add(newTarget);
+    }
+
+    void RemoveTargetPoint(Vector2 target) //removes a target at a coordinate with a 0.1 inclusion zone, may remove multiple
+    {
+        for (int i = 0; i < targetQueue.Count; i++)
+        {
+            if(Vector2.Distance(target, targetQueue[i]) <= 0.1f)
+            {
+                Debug.Log("Removing Coordinate " + targetQueue[i] + " at index " + i);
+                targetQueue.RemoveAt(i);
+            }
+        }
+    }
+
+    void RemoveTargetPoint(int index) //removes a target at an index
+    {
+        Debug.Log("Removing Coordinate " + targetQueue[index] + " at index " + i);
+        targetQueue.RemoveAt(index);
+    }
+
+    void ClearTargets()
+    {
+        targetQueue.Clear();
+        path.vectorPath.Clear();
     }
 }
