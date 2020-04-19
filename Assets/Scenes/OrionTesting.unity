@@ -435,9 +435,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770bd604961d63d4390f7a91e08269cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceInventory:
+    resources: []
+    maxCapacity: 0
+    usedCapacity: 0
   shipName: S.S. Unnamed
   health: 10
   healthMax: 10
+  inventoryCapacity: 5000
   baseWeight: 50
   weight: 100
   fuel: 60
@@ -1058,9 +1063,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770bd604961d63d4390f7a91e08269cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceInventory:
+    resources: []
+    maxCapacity: 0
+    usedCapacity: 0
   shipName: S.S. Unnamed
   health: 10
   healthMax: 10
+  inventoryCapacity: 5000
   baseWeight: 50
   weight: 100
   fuel: 60
@@ -1170,13 +1180,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770bd604961d63d4390f7a91e08269cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceInventory:
+    resources: []
+    maxCapacity: 0
+    usedCapacity: 0
   shipName: S.S. Unnamed
   health: 10
   healthMax: 10
+  inventoryCapacity: 5000
   baseWeight: 50
   weight: 100
   fuel: 60
-  fuelMax: 60
+  fuelMax: 180
   acceleration: 60
   isSelected: 0
   crew:

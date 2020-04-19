@@ -190,7 +190,7 @@ public class VehicleMovement : MonoBehaviour
 
     void RemoveTargetPoint(int index) //removes a target at an index
     {
-        Debug.Log("Removing Coordinate " + targetQueue[index] + " at index " + i);
+        Debug.Log("Removing Coordinate " + targetQueue[index] + " at index " + index);
         targetQueue.RemoveAt(index);
     }
 
