@@ -30,23 +30,38 @@ public class ShipDrilling : MonoBehaviour
         }
     }
 
-        /*
-    public void OnTriggerEnter2D(Collision2D coll)
+    /*
+public void OnTriggerEnter2D(Collision2D coll)
+{
+    Vector3 hitPosition = Vector3.zero;
+    RaycastHit hit;
+    Ray drillingRay = new Ray(transform.position, Vector3.down);
+    if (Physics.Raycast(drillingRay, out hit, 100))
     {
-        Vector3 hitPosition = Vector3.zero;
-        RaycastHit hit;
-        Ray drillingRay = new Ray(transform.position, Vector3.down);
-        if (Physics.Raycast(drillingRay, out hit, 100))
+        if (hit.collider.tag == "Ground")
         {
-            if (hit.collider.tag == "Ground")
+            Debug.Log(hit.point);
+            hitPosition.x = hit.point.x - 0.1f;
+            hitPosition.y = hit.point.y - 0.1f;
+            tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+        }
+    }
+
+}
+*/
+
+    public void FixedUpdate()
+    {
+        Vector2 hitPos = Vector2.zero;
+        RaycastHit hit;
+        Ray drillingRay = new Ray(transform.position, Vector2.right);
+        Debug.DrawLine(transform.position, Vector2.right);
+        if(Physics.Raycast(drillingRay,out hit,1 ))
+        {
+            if(hit.collider.tag == "Ground")
             {
-                Debug.Log(hit.point);
-                hitPosition.x = hit.point.x - 0.1f;
-                hitPosition.y = hit.point.y - 0.1f;
-                tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+                tilemap.SetTile(tilemap.WorldToCell(hitPos), null);
             }
         }
-
     }
-    */
 }

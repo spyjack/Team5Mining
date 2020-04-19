@@ -804,6 +804,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1185927202}
   - component: {fileID: 1185927203}
+  - component: {fileID: 1185927204}
   m_Layer: 31
   m_Name: DrillBit
   m_TagString: Untagged
@@ -841,6 +842,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.75
+--- !u!114 &1185927204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185927201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d143a33607a5144824d01942518682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 0}
 --- !u!1 &1648725526
 GameObject:
   m_ObjectHideFlags: 0
