@@ -41,6 +41,9 @@ public class VehicleMovement : MonoBehaviour
     Vector2 drillPosition = new Vector2();
 
     [SerializeField]
+    Transform drillBit = null;
+
+    [SerializeField]
     Vector2 direction = new Vector2();
 
     public Vector2 DrillPoint
@@ -77,7 +80,8 @@ public class VehicleMovement : MonoBehaviour
         }
 
         drillPosition = rb.position + direction * drillRange;
-        Debug.DrawLine(rb.position, drillPosition, Color.blue);
+        drillBit.position = drillPosition;
+        Debug.DrawLine(rb.position, drillBit.position, Color.blue);
     }
 
     // Update is called once per frame
@@ -190,7 +194,10 @@ public class VehicleMovement : MonoBehaviour
 
     void RemoveTargetPoint(int index) //removes a target at an index
     {
+
         Debug.Log("Removing Coordinate " + targetQueue[index] + " at index " + index);
+
+
 
         Debug.Log("Removing Coordinate " + targetQueue[index] + " at index " + index);
 
