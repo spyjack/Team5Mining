@@ -24,8 +24,8 @@ public class ShipDrilling : MonoBehaviour
         foreach (ContactPoint2D hit in collision.contacts)
         {
             Debug.Log(hit.point);
-            hitPosition.x = hit.point.x - 0.1f;
-            hitPosition.y = hit.point.y - 0.1f;
+            hitPosition.x = hit.point.x - 0f;
+            hitPosition.y = hit.point.y - 0f;
             tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
         }
     }
