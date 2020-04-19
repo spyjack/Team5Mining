@@ -28,8 +28,13 @@ public class ShipDrilling : MonoBehaviour
         foreach (ContactPoint2D hit in collision.contacts)
         {
             Debug.Log(hit.point);
+
             hitPosition.x = hit.point.x;
             hitPosition.y = hit.point.y;
+
+            hitPosition.x = hit.point.x;
+            hitPosition.y = hit.point.y;
+
             tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
             //Code for Particle system spawning.
             Instantiate(drillingParticles, transform.position, Quaternion.identity);
