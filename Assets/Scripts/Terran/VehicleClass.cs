@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VehicleClass : MonoBehaviour
 {
+    [SerializeField]
+    private ResourceInventoryClass resourceInventory = null;
 
     [Header("Vehicle Stats")]
     [SerializeField]
@@ -13,6 +15,9 @@ public class VehicleClass : MonoBehaviour
     private int health = 10;
     [SerializeField]
     private int healthMax = 10;
+
+    [SerializeField]
+    private float inventoryCapacity = 5000;
 
     [SerializeField]
     private float baseWeight = 50;
@@ -69,14 +74,50 @@ public class VehicleClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        resourceInventory = new ResourceInventoryClass(inventoryCapacity);
         weight = CalculateWeight();
         acceleration = CalculateAcceleration();
+        Refuel(fuelMax);
     }
 
     // Update is called once per frame
     void Update()
     {
         checkForSelection();
+
+        if (Input.GetKeyDown(KeyCode.Insert))
+        {
+            int num = Random.Range(0, 6);
+            int randAmount = Random.Range(10, 60);
+            switch (num)
+            {
+                case 0:
+                    resourceInventory.AddResource(ResourceId.Fuel, randAmount);
+                    print("Added " + randAmount + " " + ResourceId.Fuel + " to " + name);
+                    break;
+                case 1:
+                    resourceInventory.AddResource(ResourceId.Dirt, randAmount);
+                    print("Added " + randAmount + " " + ResourceId.Dirt + " to " + name);
+                    break;
+                case 2:
+                    resourceInventory.AddResource(ResourceId.Stone, randAmount);
+                    print("Added " + randAmount + " " + ResourceId.Stone + " to " + name);
+                    break;
+                case 3:
+                    resourceInventory.AddResource(ResourceId.Iron, randAmount);
+                    print("Added " + randAmount + " " + ResourceId.Iron + " to " + name);
+                    break;
+                case 4:
+                    resourceInventory.AddResource(ResourceId.Copper, randAmount);
+                    print("Added " + randAmount + " " + ResourceId.Copper + " to " + name);
+                    break;
+                case 5:
+                    resourceInventory.AddResource(ResourceId.Gold, randAmount);
+                    print("Added " + randAmount + " " + ResourceId.Gold + " to " + name);
+                    break;
+            }
+
+        }
     }
 
     float CalculateAcceleration()//Calculate acceleration, based on engine power + pilot skills over weight
@@ -152,6 +193,11 @@ public class VehicleClass : MonoBehaviour
     public void UseFuel(int fuelModifier)
     {
         fuel = Mathf.Min(Mathf.Max(0, fuel + fuelModifier), fuelMax);
+    }
+
+    public void Refuel(float fuelAmount)
+    {
+        resourceInventory.AddResource(ResourceId.Fuel, fuelAmount);
     }
 
     public void RecalculateStats()

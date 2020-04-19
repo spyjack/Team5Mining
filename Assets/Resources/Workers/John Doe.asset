@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: John Doe
   m_EditorClassIdentifier: 
   _workerName: John Doe
-  _portrait: {fileID: 0}
+  _portrait: {fileID: -8581557238236739388, guid: a0c822b1c1cc0ee4786ce2ef45216df0,
+    type: 3}
   _gender: 0
   _equippedStation: 0
   currentHealth: 3
   maxHealth: 3
-  motorskills: 1
+  motorskills: 3
   engineering: 1
