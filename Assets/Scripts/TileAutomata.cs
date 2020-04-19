@@ -28,6 +28,11 @@ public class TileAutomata : MonoBehaviour {
     int width;
     int height;
 
+    public void Start()
+    {
+        doSim(numR);
+    }
+
     public void doSim(int nu)
     {
         clearMap(false);

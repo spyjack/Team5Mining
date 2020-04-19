@@ -8,6 +8,7 @@ public class MiningScript : MonoBehaviour
     public float castDistance = 1.0f; //How far we will cast
     public Transform raycastPoint; //The origin point of our cast
     public LayerMask layer; //The layer we want to cast onto
+    public Tilemap map;
 
     float blockDestroyTime = 1.0f; //How long to delay between tile destructions
 

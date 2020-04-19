@@ -6,6 +6,10 @@ using UnityEngine;
 public class ShipDrilling : MonoBehaviour
 {
     public Tilemap tilemap;
+    public GameObject drillingParticles;
+    public Vector3 drillBitPos;
+    public GameObject drill;
+    
     /*public void OnTriggerEnter2D(Collision2D collision)
     {
         Vector3 hitPosition = Vector3.zero;
@@ -24,9 +28,17 @@ public class ShipDrilling : MonoBehaviour
         foreach (ContactPoint2D hit in collision.contacts)
         {
             Debug.Log(hit.point);
-            hitPosition.x = hit.point.x - 0f;
-            hitPosition.y = hit.point.y - 0f;
+
+            hitPosition.x = hit.point.x;
+            hitPosition.y = hit.point.y;
+
+            hitPosition.x = hit.point.x;
+            hitPosition.y = hit.point.y;
+
             tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+            //Code for Particle system spawning.
+            Instantiate(drillingParticles, transform.position, Quaternion.identity);
+            drill.transform.parent = drill.transform;
         }
     }
 
@@ -50,7 +62,7 @@ public void OnTriggerEnter2D(Collision2D coll)
 }
 */
 
-    public void FixedUpdate()
+    /*public void FixedUpdate()
     {
         Vector2 hitPos = Vector2.zero;
         RaycastHit hit;
@@ -64,4 +76,5 @@ public void OnTriggerEnter2D(Collision2D coll)
             }
         }
     }
+    */
 }

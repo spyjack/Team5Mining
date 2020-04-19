@@ -20,8 +20,10 @@ public class Terriangenerationmodified : MonoBehaviour
     private int[,] terrainMap;
     public Vector3Int tmpSize;
     public Tilemap topMap;
+    //public Tilemap coalMap;
     public Tilemap botMap;
     public TerrainTile topTile;
+    //public Sprite coalTile;
     public AnimatedTile botTile;
 
     int width;
@@ -59,6 +61,7 @@ public class Terriangenerationmodified : MonoBehaviour
                 if (terrainMap[x, y] == 1)
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile);
                 botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
+                //coalMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
             }
         }
 
