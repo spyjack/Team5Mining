@@ -66,7 +66,53 @@ public class ResourceInventoryClass
         
     }
 
-    
+    public void RemoveResource(ResourceId _id)
+    {
+        foreach (ResourceClass _valuable in resources)
+        {
+            if (_valuable.Id == _id)
+            {
+                usedCapacity -= _valuable.EvaluateAmount(_valuable.Quantity);
+                _valuable.AddAmount(_valuable.Quantity);
+            }
+        }
+    }
+
+    public void RemoveResource(ResourceId _id, float _amount)
+    {
+        foreach (ResourceClass _valuable in resources)
+        {
+            if (_valuable.Id == _id)
+            {
+                usedCapacity -= Mathf.Max(0, -_valuable.EvaluateAmount(_amount));
+                _valuable.AddAmount(_amount);
+            }
+        }
+    }
+
+    public float GetResourceCapacity(ResourceId resourceId)
+    {
+        foreach (ResourceClass _valuable in resources)
+        {
+            if (_valuable.Id == resourceId)
+            {
+                return  _valuable.Weight;
+            }
+        }
+        return 0f;
+    }
+
+    public float GetResourceAmount(ResourceId resourceId)
+    {
+        foreach (ResourceClass _valuable in resources)
+        {
+            if (_valuable.Id == resourceId)
+            {
+                return _valuable.Quantity;
+            }
+        }
+        return 0f;
+    }
 }
 
 

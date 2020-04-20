@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,11 +19,17 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private List<Transform> playerShips = new List<Transform>();
+
+    [SerializeField]
+    AstarPath astar = null;
+
+    public bool dirtyNav = true;
     // Start is called before the first frame update
     void Start()
     {
         GetAllShips();
         StartCoroutine(CheckDepths());
+        StartCoroutine(UpdateNavmesh());
     }
 
     // Update is called once per frame
@@ -47,6 +54,19 @@ public class PlayerController : MonoBehaviour
             //print("Checking Depths " + lowest);
             deepestDepth = lowest;
             yield return new WaitForSeconds(0.25f * playerShips.Count);
+        }
+    }
+
+    IEnumerator UpdateNavmesh()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.25f * playerShips.Count);
+            if (dirtyNav)
+            {
+                astar.Scan(astar.graphs[0]);
+                dirtyNav = false;
+            }
         }
     }
 
