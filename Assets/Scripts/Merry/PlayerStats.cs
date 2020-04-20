@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats arc;
+    //public Sprite[] portritFile;
 
     public int lv;
 
@@ -19,10 +21,11 @@ public class PlayerStats : MonoBehaviour
 
     public int[] whichImage = new int[4]; //wheels, base, drill, Ob.
 
+
     public string ShipName = "Rusty";
     public string[] Name = new string[3] { "Sam", "Dean", "Cass"};
     public int[] Work = new int[3] { 4, 4, 4};
-
+    public int[] workersImage = new int[3] {1, 6, 7 };
     public Animator Wheel;
     public Animator anDrill;
     public int num;
