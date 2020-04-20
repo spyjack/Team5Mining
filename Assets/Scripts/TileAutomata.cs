@@ -136,24 +136,24 @@ public class TileAutomata : MonoBehaviour {
 
 	void Update () {
 
-        if (Input.GetMouseButtonDown(0))
-            {
-            doSim(numR);
-            }
+        //if (Input.GetMouseButtonDown(0))
+            //{
+            //doSim(numR);
+            //}
 
 
-        if (Input.GetMouseButtonDown(1))
-            {
-            clearMap(true);
-            }
+        //if (Input.GetMouseButtonDown(1))
+            //{
+            //clearMap(true);
+            //}
 
 
 
-        if (Input.GetMouseButton(2))
-        {
-            SaveAssetMap();
-            count++;
-        }
+        //if (Input.GetMouseButton(2))
+        //{
+            //SaveAssetMap();
+           // count++;
+        //}
 
 
 
