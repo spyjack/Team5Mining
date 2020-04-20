@@ -73,7 +73,7 @@ public class VehicleMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && vehicleMain.Selected)
         {
             AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        }else if (Input.GetMouseButtonDown(2) && vehicleMain.Selected)
+        }else if ((Input.GetMouseButtonDown(2) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
         {
             targetQueue.Clear();
             path.vectorPath.Clear();
@@ -104,7 +104,6 @@ public class VehicleMovement : MonoBehaviour
                     }
                     else
                     {
-
                         targetQueue.RemoveAt(0);
                     }
                 }

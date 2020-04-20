@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
                     lowest = vehicle.position.y * 4;
                 }
             }
-            print("Checking Depths " + lowest);
+            //print("Checking Depths " + lowest);
             deepestDepth = lowest;
             yield return new WaitForSeconds(0.25f * playerShips.Count);
         }

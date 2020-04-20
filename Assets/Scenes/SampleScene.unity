@@ -168,7 +168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &143468882
 Transform:
   m_ObjectHideFlags: 0
@@ -1044,6 +1044,8 @@ MonoBehaviour:
     type: 3}
   drillBitPos: {x: 0, y: 0, z: 0}
   drill: {fileID: 1178357889}
+  vehicleMain: {fileID: 515770309}
+  drillParticlesPooled: []
 --- !u!58 &1178357892
 CircleCollider2D:
   m_ObjectHideFlags: 0
