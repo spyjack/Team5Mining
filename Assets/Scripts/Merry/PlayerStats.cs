@@ -17,24 +17,27 @@ public class PlayerStats : MonoBehaviour
     public GameObject[] Base = new GameObject[3];
     public GameObject[] Observitory = new GameObject[3];
 
-   public string[] Name = new string[3] { "Sam", "Dean", "Cass"};
+    public int[] whichImage = new int[4]; //wheels, base, drill, Ob.
 
+    public string ShipName = "Rusty";
+    public string[] Name = new string[3] { "Sam", "Dean", "Cass"};
     public int[] Work = new int[3] { 4, 4, 4};
 
     public Animator Wheel;
+    public Animator anDrill;
     public int num;
     [SerializeField] private KeyCode moveKey;
 
     private void Awake()
     {
-        Wheel.SetInteger("Wheel", 0);
+        // Wheel.SetInteger("Wheel", 0);
+        anDrill.SetInteger("whichDrill", 0);
+        anDrill.SetBool("isDigging", true);
         arc = this;
         lv = 1;
     }
     public void Start()
     {
-        ChangeBase(0);
-        ChangeObservitory(0);
     }
     private void Update()
     {
