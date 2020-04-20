@@ -25,7 +25,7 @@ public class VehicleClass : MonoBehaviour
     private float weight = 100;
 
     [SerializeField]
-    private int fuel = 60;
+    private float fuel = 60;
     [SerializeField]
     private int fuelMax = 60;
 
@@ -84,6 +84,7 @@ public class VehicleClass : MonoBehaviour
     void Update()
     {
         checkForSelection();
+        fuel = resourceInventory.GetResourceAmount(ResourceId.Fuel);
 
         if (Input.GetKeyDown(KeyCode.Insert))
         {
@@ -190,9 +191,9 @@ public class VehicleClass : MonoBehaviour
         }
     }
     
-    public void UseFuel(int fuelModifier)
+    public void UseFuel(float fuelModifier)
     {
-        fuel = Mathf.Min(Mathf.Max(0, fuel + fuelModifier), fuelMax);
+        resourceInventory.RemoveResource(ResourceId.Fuel, fuelModifier);
     }
 
     public void Refuel(float fuelAmount)
