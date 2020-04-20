@@ -46,6 +46,9 @@ public class VehicleMovement : MonoBehaviour
     [SerializeField]
     Vector2 direction = new Vector2();
 
+    [SerializeField]
+    bool minerMode = false;
+
     public Vector2 DrillPoint
     {
         get { return drillPosition; }
@@ -70,6 +73,21 @@ public class VehicleMovement : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (minerMode)
+            {
+                seeker.graphMask = GraphMask.FromGraphName("Cleared Paths");
+                minerMode = false;
+                GetComponentInChildren<ShipDrilling>().drillCollider.enabled = false;
+            }else
+            {
+                seeker.graphMask = GraphMask.FromGraphName("Mining Paths");
+                GetComponentInChildren<ShipDrilling>().drillCollider.enabled = true;
+                minerMode = true;
+            }
+        }
+
         if (Input.GetMouseButtonDown(0) && vehicleMain.Selected)
         {
             AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));

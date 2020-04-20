@@ -11,24 +11,19 @@ public class ShipDrilling : MonoBehaviour
     public GameObject drill;
 
     [SerializeField]
+    public CircleCollider2D drillCollider = null;
+
+    [SerializeField]
     VehicleClass vehicleMain = null;
+
+    [SerializeField]
+    VehicleMovement vehicleMover = null;
 
     //Added object pooling as it currently instantiates waaay too many particles - Terran
     [SerializeField]
     List<GameObject> drillParticlesPooled = new List<GameObject>();
 
-    /*public void OnTriggerEnter2D(Collision2D collision)
-    {
-        Vector3 hitPosition = Vector3.zero;
-        foreach (ContactPoint2D hit in collision.contacts)
-        {
-            Debug.Log(hit.point);
-            hitPosition.x = hit.point.x - 0.1f;
-            hitPosition.y = hit.point.y - 0.1f;
-            tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
-        }
-    }
-    */
+    
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Vector3 hitPosition = Vector3.zero;
@@ -49,43 +44,10 @@ public class ShipDrilling : MonoBehaviour
             //Consume a fuel with every block mined
             vehicleMain.UseFuel(-1);
         }
+        GameObject.FindObjectOfType<PlayerController>().dirtyNav = true;
     }
 
-    /*
-public void OnTriggerEnter2D(Collision2D coll)
-{
-    Vector3 hitPosition = Vector3.zero;
-    RaycastHit hit;
-    Ray drillingRay = new Ray(transform.position, Vector3.down);
-    if (Physics.Raycast(drillingRay, out hit, 100))
-    {
-        if (hit.collider.tag == "Ground")
-        {
-            Debug.Log(hit.point);
-            hitPosition.x = hit.point.x - 0.1f;
-            hitPosition.y = hit.point.y - 0.1f;
-            tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
-        }
-    }
-
-}
-*/
-
-    /*public void FixedUpdate()
-    {
-        Vector2 hitPos = Vector2.zero;
-        RaycastHit hit;
-        Ray drillingRay = new Ray(transform.position, Vector2.right);
-        Debug.DrawLine(transform.position, Vector2.right);
-        if(Physics.Raycast(drillingRay,out hit,1 ))
-        {
-            if(hit.collider.tag == "Ground")
-            {
-                tilemap.SetTile(tilemap.WorldToCell(hitPos), null);
-            }
-        }
-    }
-    */
+    
 
     void CreateParticle(Vector2 position)
     {
@@ -127,4 +89,53 @@ public void OnTriggerEnter2D(Collision2D coll)
             yield return new WaitForSeconds(0.5f);
         }
     }
+
+    /*public void OnTriggerEnter2D(Collision2D collision)
+    {
+        Vector3 hitPosition = Vector3.zero;
+        foreach (ContactPoint2D hit in collision.contacts)
+        {
+            Debug.Log(hit.point);
+            hitPosition.x = hit.point.x - 0.1f;
+            hitPosition.y = hit.point.y - 0.1f;
+            tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+        }
+    }
+    */
+
+    /*
+public void OnTriggerEnter2D(Collision2D coll)
+{
+    Vector3 hitPosition = Vector3.zero;
+    RaycastHit hit;
+    Ray drillingRay = new Ray(transform.position, Vector3.down);
+    if (Physics.Raycast(drillingRay, out hit, 100))
+    {
+        if (hit.collider.tag == "Ground")
+        {
+            Debug.Log(hit.point);
+            hitPosition.x = hit.point.x - 0.1f;
+            hitPosition.y = hit.point.y - 0.1f;
+            tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+        }
+    }
+
+}
+*/
+
+    /*public void FixedUpdate()
+    {
+        Vector2 hitPos = Vector2.zero;
+        RaycastHit hit;
+        Ray drillingRay = new Ray(transform.position, Vector2.right);
+        Debug.DrawLine(transform.position, Vector2.right);
+        if(Physics.Raycast(drillingRay,out hit,1 ))
+        {
+            if(hit.collider.tag == "Ground")
+            {
+                tilemap.SetTile(tilemap.WorldToCell(hitPos), null);
+            }
+        }
+    }
+    */
 }
