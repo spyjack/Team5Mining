@@ -236,6 +236,10 @@ public GameObject obPanel;*/
         yourText.text = "Your ship " + what + " is at Lv - " + PlayerStats.arc.lv;
         ShopImage();
         AudioManager.am.Play("Button");
+        PlayerStats.arc.anWheel.SetBool("isGoing", false);
+        PlayerStats.arc.movenum = 0;
+        PlayerStats.arc.anDrill.SetBool("isDigging", false);
+        Debug.Log("Nothings Moving");
     }
 
     public void leaveShopButton()
@@ -373,25 +377,28 @@ public GameObject obPanel;*/
             if (what == 1 && lv == 1)
             {
                 PlayerStats.arc.ChangeWeels(1);
-                PlayerStats.arc.whichImage[1] = 0;
+                PlayerStats.arc.whichImage[0] = 1;
             }
             if (what == 1 && lv == 2)
             {
                 PlayerStats.arc.ChangeWeels(2);
-                PlayerStats.arc.whichImage[2] = 0;
+                PlayerStats.arc.whichImage[0] = 2;
             }
             //Drill
             if (what == 2 && lv == 0)
             {
                 PlayerStats.arc.whichImage[2] = 0;
+                PlayerStats.arc.anDrill.SetInteger("whichDrill", 0);
             }
             if (what == 2 && lv == 1)
             {
                 PlayerStats.arc.whichImage[2] = 1;
+                PlayerStats.arc.anDrill.SetInteger("whichDrill", 1);
             }
             if (what == 2 && lv == 2)
             {
                 PlayerStats.arc.whichImage[2] = 2;
+                PlayerStats.arc.anDrill.SetInteger("whichDrill", 2);
             }
             //Observitory
             if (what == 3 && lv == 0)

@@ -14,33 +14,35 @@ public class PlayerStats : MonoBehaviour
 
     public float drilWork;
 
-    public bool[] Wheels = new bool[3] {true, false, false };
-    public bool[] Drill = new bool[3] { true, false, false };
+    //public bool[] Wheels = new bool[3] {true, false, false };
+    ////public bool[] Drill = new bool[3] { true, false, false };
     public GameObject[] Base = new GameObject[3];
     public GameObject[] Observitory = new GameObject[3];
 
     public int[] whichImage = new int[4]; //wheels, base, drill, Ob.
 
-
     public string ShipName = "Rusty";
     public string[] Name = new string[3] { "Sam", "Dean", "Cass"};
     public int[] Work = new int[3] { 4, 4, 4};
     public int[] workersImage = new int[3] {1, 6, 7 };
-    public Animator Wheel;
+    public Animator anWheel;
     public Animator anDrill;
-    public int num;
+    public int movenum;
     [SerializeField] private KeyCode moveKey;
 
     private void Awake()
     {
         // Wheel.SetInteger("Wheel", 0);
-        anDrill.SetInteger("whichDrill", 0);
-        anDrill.SetBool("isDigging", true);
         arc = this;
         lv = 1;
     }
     public void Start()
     {
+        anDrill.SetInteger("whichDrill", 0);
+        anDrill.SetBool("isDigging", true);
+        anWheel.SetInteger("whichWheele", 0);
+        anWheel.SetBool("isMoving", true);
+        UpdatePlayerSprite();
     }
     private void Update()
     {
@@ -49,6 +51,18 @@ public class PlayerStats : MonoBehaviour
             Move();
         }
     }
+
+    public void UpdatePlayerSprite()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            Base[i].SetActive(false);
+            Observitory[i].SetActive(false);
+        }
+        Base[whichImage[1]].SetActive(true);
+        Observitory[whichImage[3]].SetActive(true);
+    }
+
     public void WorkTotal()
     {
         if(lv == 1)
@@ -81,9 +95,11 @@ public class PlayerStats : MonoBehaviour
 
     public void ChangeWeels(int num)
     {
-         if(num == 0)
+        anWheel.SetInteger("whichWheele", num);
+       /* if (num == 0)
         {
-            Wheel.SetInteger("Wheel", 0);
+            anWheel.SetInteger("whichWheele", 0);
+            
             Wheels[0] = true;
             Wheels[1] = false;
             Wheels[2] = false;
@@ -91,7 +107,8 @@ public class PlayerStats : MonoBehaviour
 
         if (num == 1)
         {
-            Wheel.SetInteger("Wheel", 1);
+            anWheel.SetInteger("whichWheele", 1);
+          
             Wheels[0] = false;
             Wheels[1] = true;
             Wheels[2] = false;
@@ -99,17 +116,19 @@ public class PlayerStats : MonoBehaviour
 
         if (num == 2)
         {
-            Wheel.SetInteger("Wheel", 3);
+            anWheel.SetInteger("whichWheele", 2);
+            
             Wheels[0] = false;
             Wheels[1] = false;
             Wheels[2] = true;
-        }
+        }*/
     }
 
     public void ChangeBase(int num)
     {
         if(num == 0)
         {
+
             Base[0].SetActive(true);
             Base[1].SetActive(false);
             Base[2].SetActive(false);
@@ -129,16 +148,16 @@ public class PlayerStats : MonoBehaviour
     }
 
     private void Move()
-    {        
-        num++;
-        if (num == 1)
+    {
+        movenum++;
+        if (movenum == 1)
         {
-            Wheel.SetBool("Moveing", false);
+            anWheel.SetBool("isGoinh", true);
         }
-        if (num == 2)
+        if (movenum == 2)
         {
-            Wheel.SetBool("Moveing", true);
-            num = 0;
+            anWheel.SetBool("isGoing", false);
+            movenum = 0;
         }
     }
 
@@ -146,21 +165,27 @@ public class PlayerStats : MonoBehaviour
     {
         if (num == 0)
         {
+            anDrill.SetInteger("whichDrill", 0);
+            /*
             Drill[0] = true;
             Drill[1] = false;
-            Drill[2] = false;
+            Drill[2] = false;*/
         }
         if (num == 1)
         {
+            anDrill.SetInteger("whichDrill", 0);
+            /*
             Drill[0] = false;
             Drill[1] = true;
-            Drill[2] = false;
+            Drill[2] = false;*/
         }
         if (num == 2)
         {
+            anDrill.SetInteger("whichDrill", 0);
+            /*
             Drill[0] = false;
             Drill[1] = false;
-            Drill[2] = true;
+            Drill[2] = true;*/
         }
     }
 
