@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     public GameObject leavePanel;
     public GameObject shopPanel;
     public GameObject menuPanel;
+    public GameObject helpPanel;
 
     public AudioClip inGameMus;
 
@@ -67,6 +68,7 @@ public GameObject obPanel;*/
         leavePanel.SetActive(false);
         shopPanel.SetActive(false);
         menuPanel.SetActive(false);
+        helpPanel.SetActive(false);
         Debug.Log("Check1");
         lvText.text = "Lv: " + PlayerStats.arc.lv;
         Debug.Log("Check2");
@@ -124,37 +126,6 @@ public GameObject obPanel;*/
     }
     
 
-    //worker stats panel
-    /*
-
-    public void statsShowButton()
-    {
-        Debug.Log("Clicked");
-        statscount++;
-        if(statscount == 2)
-        {
-            Debug.Log("2");
-
-            level = PlayerStats.arc.lv;
-            for (int i = 0; i < level; i++)
-            {
-                workerStatsPanel[i].SetActive(true);
-            }
-        }
-        if (statscount == 3)
-        {
-            Debug.Log("3");
-
-            
-            for (int i = 0; i < 3; i++)
-            {
-                workerStatsPanel[i].SetActive(false);
-            }
-            statscount = 1;
-        }
-    }  
-*/
-
     //leave Panel -- DONE
 
     public void OnLeaveButton()
@@ -171,6 +142,16 @@ public GameObject obPanel;*/
     {
         leavePanel.SetActive(false);
         AudioManager.am.Play("Button");
+    }
+
+    //Help Butoom --
+    public void toHelpbutton()
+    {
+        helpPanel.SetActive(true);
+    }
+    public void leaveHelpButton()
+    {
+        helpPanel.SetActive(false);
     }
 
 
