@@ -14,6 +14,16 @@ public class ResourceInventoryClass
     [SerializeField]
     float usedCapacity;
 
+    public float UsedCapacity
+    {
+        get { return usedCapacity; }
+    }
+
+    public float Capacity
+    {
+        get { return maxCapacity; }
+    }
+
     public ResourceInventoryClass(float _capacity)
     {
         maxCapacity = _capacity;
@@ -73,9 +83,21 @@ public class ResourceInventoryClass
             if (_valuable.Id == _id)
             {
                 usedCapacity -= _valuable.EvaluateAmount(_valuable.Quantity);
-                _valuable.AddAmount(_valuable.Quantity);
+                _valuable.AddAmount(-_valuable.Quantity);
             }
         }
+    }
+
+    public bool CheckForResource(ResourceId _id)
+    {
+        foreach (ResourceClass _valuable in resources)
+        {
+            if (_valuable.Id == _id)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void RemoveResource(ResourceId _id, float _amount)
@@ -113,6 +135,33 @@ public class ResourceInventoryClass
         }
         return 0f;
     }
+
+    public void AddRandomResource(float amount)
+    {
+        int num = Random.Range(0, 6);
+        switch (num)
+        {
+            case 0:
+                AddResource(ResourceId.Fuel, amount);
+                break;
+            case 1:
+                AddResource(ResourceId.Dirt, amount);
+                break;
+            case 2:
+                AddResource(ResourceId.Stone, amount);
+                break;
+            case 3:
+                AddResource(ResourceId.Iron, amount);
+                break;
+            case 4:
+                AddResource(ResourceId.Copper, amount);
+                break;
+            case 5:
+                AddResource(ResourceId.Gold, amount);
+                break;
+        }
+    }
+
 }
 
 

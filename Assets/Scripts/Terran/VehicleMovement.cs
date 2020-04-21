@@ -68,6 +68,8 @@ public class VehicleMovement : MonoBehaviour
             rb = GetComponent<Rigidbody2D>();
         }
 
+        ToggleMinerMode(true);
+
         InvokeRepeating("UpdatePath", 0f, 1f);
     }
 
@@ -75,18 +77,11 @@ public class VehicleMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            if (minerMode)
-            {
-                seeker.graphMask = GraphMask.FromGraphName("Cleared Paths");
-                minerMode = false;
-                GetComponentInChildren<ShipDrilling>().drillCollider.enabled = false;
-            }else
-            {
-                seeker.graphMask = GraphMask.FromGraphName("Mining Paths");
-                GetComponentInChildren<ShipDrilling>().drillCollider.enabled = true;
-                minerMode = true;
-            }
+            ToggleMinerMode(minerMode);
         }
+
+        if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity)
+            ToggleMinerMode(true);
 
         if (Input.GetMouseButtonDown(0) && vehicleMain.Selected)
         {
@@ -225,5 +220,23 @@ public class VehicleMovement : MonoBehaviour
     {
         targetQueue.Clear();
         path.vectorPath.Clear();
+    }
+
+    void ToggleMinerMode(bool isActive)
+    {
+        if (isActive)
+        {
+            seeker.graphMask = GraphMask.FromGraphName("Cleared Paths");
+            minerMode = false;
+            GetComponentInChildren<ShipDrilling>().drillCollider.enabled = false;
+
+        }
+        else
+        {
+            seeker.graphMask = GraphMask.FromGraphName("Mining Paths");
+            GetComponentInChildren<ShipDrilling>().drillCollider.enabled = true;
+            minerMode = true;
+
+        }
     }
 }

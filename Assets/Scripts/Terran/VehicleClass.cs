@@ -71,6 +71,11 @@ public class VehicleClass : MonoBehaviour
     {
         get { return fuel; }
     }
+
+    public ResourceInventoryClass Inventory
+    {
+        get { return resourceInventory; }
+    }
     // Start is called before the first frame update
     void Start()
     {

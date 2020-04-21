@@ -23,8 +23,8 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         Vector3 newCamPos = new Vector3(0, 0, -10);
-        newCamPos.x = Mathf.Min(Mathf.Max(cameraPlane.bounds.min.x, cam.position.x + Input.GetAxis("Horizontal")), cameraPlane.bounds.max.x);
-        newCamPos.y = Mathf.Min(Mathf.Max(cameraPlane.bounds.min.y, cam.position.y + Input.GetAxis("Vertical")), cameraPlane.bounds.max.y);
+        newCamPos.x = Mathf.Min(Mathf.Max(cameraPlane.bounds.min.x, cam.position.x + Input.GetAxis("Horizontal") * (Time.deltaTime * 50)), cameraPlane.bounds.max.x);
+        newCamPos.y = Mathf.Min(Mathf.Max(cameraPlane.bounds.min.y, cam.position.y + Input.GetAxis("Vertical") * (Time.deltaTime * 50)), cameraPlane.bounds.max.y);
         cam.position = newCamPos;
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f && zoomModifier > 2) // forward

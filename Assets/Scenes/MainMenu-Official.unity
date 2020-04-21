@@ -2402,7 +2402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   helpPanel: {fileID: 2080033717}
   creditsPanel: {fileID: 15906876}
-  nextSceneName: 
+  nextSceneName: GameScene-Official
 --- !u!4 &1829381413
 Transform:
   m_ObjectHideFlags: 0

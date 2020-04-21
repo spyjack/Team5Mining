@@ -171,7 +171,7 @@ public class Terriangenerationmodified : MonoBehaviour
     }
 
 
-    public void SaveAssetMap()
+    /*public void SaveAssetMap()
     {
         string saveName = "tmapXY_" + count;
         var mf = GameObject.Find("Grid");
@@ -192,7 +192,7 @@ public class Terriangenerationmodified : MonoBehaviour
         }
 
 
-    }
+    }*/
 
     public void clearMap(bool complete)
     {

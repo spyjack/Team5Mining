@@ -43,6 +43,8 @@ public class ShipDrilling : MonoBehaviour
             drill.transform.parent = drill.transform;
             //Consume a fuel with every block mined
             vehicleMain.UseFuel(-1);
+            //Add a resource
+            vehicleMain.Inventory.AddRandomResource(1);
         }
         GameObject.FindObjectOfType<PlayerController>().dirtyNav = true;
     }

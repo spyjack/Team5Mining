@@ -8,6 +8,7 @@ TagManager:
   - Drill
   - Ground
   - Lava
+  - Vehicle
   layers:
   - Default
   - TransparentFX

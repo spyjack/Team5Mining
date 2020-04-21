@@ -42,7 +42,22 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     BoxCollider2D camBounds = null;
-   
+
+    [SerializeField]
+    Text moneyText = null;
+
+    [SerializeField]
+    Text depthGoalsText = null;
+
+    [SerializeField]
+    Text shipLogsText = null;
+
+    public int Money
+    {
+        get { return money; }
+        set { money = value; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +69,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        moneyText.text = money + "$";
+        shipLogsText.text = "Ship Logs: \n";
+        foreach (Transform ship in playerShips)
+        {
+            VehicleClass vehicle = ship.GetComponent<VehicleClass>();
+            shipLogsText.text += ship.gameObject.name + ": Inventory: " + vehicle.Inventory.UsedCapacity + "/" + vehicle.Inventory.Capacity;
+            shipLogsText.text += " Gas: " + vehicle.Inventory.GetResourceAmount(ResourceId.Fuel); 
+            shipLogsText.text += "\n";
+        }
     }
 
     IEnumerator CheckDepths()
@@ -72,8 +95,10 @@ public class PlayerController : MonoBehaviour
             }
             //print("Checking Depths " + lowest);
             deepestDepth = lowest;
+            depthGoalsText.text = deepestDepth.ToString() + " m \n Goal: " + depthMarkers[nextDepth].depthLevel;
             if (deepestDepth <= depthMarkers[nextDepth].depthLevel)
             {
+                
                 depthTextsList[1].text = depthMarkers[nextDepth].depthName;
                 depthTextsList[2].text = depthMarkers[nextDepth].depthLevel*-1 + " m";
                 //offset is half of the increased amount
