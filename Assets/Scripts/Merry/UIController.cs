@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     public GameObject leavePanel;
     public GameObject shopPanel;
     public GameObject menuPanel;
+    public GameObject helpPanel;
 
     public AudioClip inGameMus;
 
@@ -67,6 +68,7 @@ public GameObject obPanel;*/
         leavePanel.SetActive(false);
         shopPanel.SetActive(false);
         menuPanel.SetActive(false);
+        helpPanel.SetActive(false);
         Debug.Log("Check1");
         lvText.text = "Lv: " + PlayerStats.arc.lv;
         Debug.Log("Check2");
@@ -124,37 +126,6 @@ public GameObject obPanel;*/
     }
     
 
-    //worker stats panel
-    /*
-
-    public void statsShowButton()
-    {
-        Debug.Log("Clicked");
-        statscount++;
-        if(statscount == 2)
-        {
-            Debug.Log("2");
-
-            level = PlayerStats.arc.lv;
-            for (int i = 0; i < level; i++)
-            {
-                workerStatsPanel[i].SetActive(true);
-            }
-        }
-        if (statscount == 3)
-        {
-            Debug.Log("3");
-
-            
-            for (int i = 0; i < 3; i++)
-            {
-                workerStatsPanel[i].SetActive(false);
-            }
-            statscount = 1;
-        }
-    }  
-*/
-
     //leave Panel -- DONE
 
     public void OnLeaveButton()
@@ -171,6 +142,16 @@ public GameObject obPanel;*/
     {
         leavePanel.SetActive(false);
         AudioManager.am.Play("Button");
+    }
+
+    //Help Butoom --
+    public void toHelpbutton()
+    {
+        helpPanel.SetActive(true);
+    }
+    public void leaveHelpButton()
+    {
+        helpPanel.SetActive(false);
     }
 
 
@@ -236,6 +217,10 @@ public GameObject obPanel;*/
         yourText.text = "Your ship " + what + " is at Lv - " + PlayerStats.arc.lv;
         ShopImage();
         AudioManager.am.Play("Button");
+        PlayerStats.arc.anWheel.SetBool("isGoing", false);
+        PlayerStats.arc.movenum = 0;
+        PlayerStats.arc.anDrill.SetBool("isDigging", false);
+        Debug.Log("Nothings Moving");
     }
 
     public void leaveShopButton()
@@ -373,25 +358,28 @@ public GameObject obPanel;*/
             if (what == 1 && lv == 1)
             {
                 PlayerStats.arc.ChangeWeels(1);
-                PlayerStats.arc.whichImage[1] = 0;
+                PlayerStats.arc.whichImage[0] = 1;
             }
             if (what == 1 && lv == 2)
             {
                 PlayerStats.arc.ChangeWeels(2);
-                PlayerStats.arc.whichImage[2] = 0;
+                PlayerStats.arc.whichImage[0] = 2;
             }
             //Drill
             if (what == 2 && lv == 0)
             {
                 PlayerStats.arc.whichImage[2] = 0;
+                PlayerStats.arc.anDrill.SetInteger("whichDrill", 0);
             }
             if (what == 2 && lv == 1)
             {
                 PlayerStats.arc.whichImage[2] = 1;
+                PlayerStats.arc.anDrill.SetInteger("whichDrill", 1);
             }
             if (what == 2 && lv == 2)
             {
                 PlayerStats.arc.whichImage[2] = 2;
+                PlayerStats.arc.anDrill.SetInteger("whichDrill", 2);
             }
             //Observitory
             if (what == 3 && lv == 0)
