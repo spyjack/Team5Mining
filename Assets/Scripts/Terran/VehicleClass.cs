@@ -38,7 +38,7 @@ public class VehicleClass : MonoBehaviour
     [Header("Crew Stats")]
     [SerializeField]
     WorkerBase[] crew = new WorkerBase[3]; //0 - Captain, 1 - Operator, 2 - Engineer
-    bool hasRations = false;
+    //bool hasRations = false;
 
     [Header("Vehicle Parts")]
     [SerializeField]

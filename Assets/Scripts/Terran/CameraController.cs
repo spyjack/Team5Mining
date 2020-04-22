@@ -5,10 +5,10 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    Transform cam;
+    Transform cam = null;
 
     [SerializeField]
-    BoxCollider2D cameraPlane;
+    BoxCollider2D cameraPlane = null;
 
     [SerializeField]
     float zoomModifier = 2;

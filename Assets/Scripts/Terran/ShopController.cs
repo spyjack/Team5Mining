@@ -49,6 +49,10 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     private GameObject resourceListGroup = null;
 
+    [Header("Store General UI")]
+    [SerializeField]
+    private GameObject shopObject = null;
+
     public VehicleClass SelectedShip
     {
         get { return selectedVehicle; }
@@ -56,13 +60,13 @@ public class ShopController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -114,9 +118,21 @@ public class ShopController : MonoBehaviour
             player.Money -= (int)CalculateValue(_resource, _amount, false);
             selectedVehicle.Inventory.AddResource(_resource, _amount);
             UpdateCapacity();
-            print("Added " + _resource + " x" + _amount);
+            //print("Added " + _resource + " x" + _amount);
         }
     }
+
+    public void ToggleStore()
+    {
+        if (shopObject.activeInHierarchy)
+        {
+            shopObject.SetActive(false);
+        }else
+        {
+            shopObject.SetActive(true);
+        }
+    }
+
 
     void AddShipSelector(VehicleClass _vehicle)
     {

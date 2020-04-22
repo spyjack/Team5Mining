@@ -29,7 +29,7 @@ public class VehicleMovement : MonoBehaviour
     bool reachedEndOfPath = false;
 
     [SerializeField]
-    Seeker seeker;
+    Seeker seeker = null;
 
     [SerializeField]
     Rigidbody2D rb = null;
