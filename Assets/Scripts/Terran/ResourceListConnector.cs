@@ -44,12 +44,12 @@ public class ResourceListConnector : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            shopMain.SellResource(resourceId, 10);
+            shopMain.BuyResource(resourceId, 10);
             shopMain.RefreshResource(resourceId, this);
         }
         else
         {
-            shopMain.SellResource(resourceId, 1);
+            shopMain.BuyResource(resourceId, 1);
             shopMain.RefreshResource(resourceId, this);
         }
     }

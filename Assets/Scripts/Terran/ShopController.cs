@@ -107,6 +107,17 @@ public class ShopController : MonoBehaviour
         }
     }
 
+    public void BuyResource(ResourceId _resource, float _amount)
+    {
+        if (selectedVehicle.Inventory.UsedCapacity < selectedVehicle.Inventory.Capacity)
+        {
+            player.Money -= (int)CalculateValue(_resource, _amount, false);
+            selectedVehicle.Inventory.AddResource(_resource, _amount);
+            UpdateCapacity();
+            print("Added " + _resource + " x" + _amount);
+        }
+    }
+
     void AddShipSelector(VehicleClass _vehicle)
     {
         GameObject newSelector = Instantiate(shipSelectorPrefab, dockedShipsGroup.transform);
@@ -119,6 +130,10 @@ public class ShopController : MonoBehaviour
     void DockShip(VehicleClass _vehicle)
     {
         dockedShips.Add(_vehicle);
+
+        if (dockedShips.Count == 1)
+            SelectShipTab(_vehicle);
+
         foreach (ShipSelector sellector in shipSelectors)
         {
             if (sellector.Vehicle == _vehicle)
@@ -128,6 +143,8 @@ public class ShopController : MonoBehaviour
             }
         }
         AddShipSelector(_vehicle);
+
+        
     }
 
     void UndockShip(VehicleClass _vehicle)
@@ -143,6 +160,14 @@ public class ShopController : MonoBehaviour
                 selector.gameObject.SetActive(false);
                 DisableResourceList();
             }
+        }
+        if (dockedShips.Count <= 0)
+        {
+            currentCapacityText.text = "0";
+            maxCapacityText.text = "0";
+        }else
+        {
+            SelectShipTab(dockedShips[0]);
         }
     }
 
@@ -180,8 +205,8 @@ public class ShopController : MonoBehaviour
             _connector.gameObject.SetActive(true);            
 
             _connector.resourceName.text = selectedVehicle.Inventory.GetResourceName(_resource);
-            _connector.resourceQuantity.text = selectedVehicle.Inventory.GetResourceAmount(_resource).ToString();
-            _connector.resourceCapacity.text = selectedVehicle.Inventory.GetResourceCapacity(_resource).ToString();
+            _connector.resourceQuantity.text = selectedVehicle.Inventory.GetResourceAmount(_resource).ToString("F2");
+            _connector.resourceCapacity.text = selectedVehicle.Inventory.GetResourceCapacity(_resource).ToString("F2");
             _connector.resourceValue.text = "$" + CalculateValue(_resource);
             _connector.shopMain = this;
 
@@ -206,9 +231,9 @@ public class ShopController : MonoBehaviour
 
             connector.resourceId = _resource;
             connector.resourceName.text = selectedVehicle.Inventory.GetResourceName(_resource);
-            connector.resourceQuantity.text = selectedVehicle.Inventory.GetResourceAmount(_resource).ToString();
-            connector.resourceCapacity.text = selectedVehicle.Inventory.GetResourceCapacity(_resource).ToString();
-            connector.resourceValue.text = "$" + CalculateValue(_resource);
+            connector.resourceQuantity.text = selectedVehicle.Inventory.GetResourceAmount(_resource).ToString("F2");
+            connector.resourceCapacity.text = selectedVehicle.Inventory.GetResourceCapacity(_resource).ToString("F2");
+            connector.resourceValue.text = "$" + CalculateValue(_resource).ToString("F2");
             connector.shopMain = this;
 
             if (_resource == ResourceId.Fuel || _resource == ResourceId.Rations)
@@ -220,8 +245,8 @@ public class ShopController : MonoBehaviour
 
     void UpdateCapacity()
     {
-        currentCapacityText.text = selectedVehicle.Inventory.UsedCapacity.ToString();
-        maxCapacityText.text = selectedVehicle.Inventory.Capacity.ToString();
+        currentCapacityText.text = selectedVehicle.Inventory.UsedCapacity.ToString("F2");
+        maxCapacityText.text = selectedVehicle.Inventory.Capacity.ToString("F2");
     }
 
     float CalculateValue(ResourceId _resource)
@@ -243,6 +268,18 @@ public class ShopController : MonoBehaviour
             if (resourceSaleItems[i].resource == _resource)
             {
                 return (resourceSaleItems[i].salePricerPerUnit * _amount) * resourceSaleItems[i].saleModifier;
+            }
+        }
+        return 0f;
+    }
+
+    float CalculateValue(ResourceId _resource, float _amount, bool isSelling = false)
+    {
+        for (int i = 0; i < resourceSaleItems.Count; i++)
+        {
+            if (resourceSaleItems[i].resource == _resource)
+            {
+                return (resourceSaleItems[i].buyPricerPerUnit * _amount) * resourceSaleItems[i].saleModifier;
             }
         }
         return 0f;
