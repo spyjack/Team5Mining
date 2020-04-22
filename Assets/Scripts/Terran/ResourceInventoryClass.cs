@@ -102,12 +102,13 @@ public class ResourceInventoryClass
 
     public void RemoveResource(ResourceId _id, float _amount)
     {
+        _amount = Mathf.Abs(_amount);
         foreach (ResourceClass _valuable in resources)
         {
             if (_valuable.Id == _id)
             {
-                usedCapacity -= Mathf.Max(0, -_valuable.EvaluateAmount(_amount));
-                _valuable.AddAmount(_amount);
+                usedCapacity -= Mathf.Min(usedCapacity, _valuable.EvaluateAmount(_amount));
+                _valuable.AddAmount(-_amount);
             }
         }
     }
@@ -162,6 +163,38 @@ public class ResourceInventoryClass
         }
     }
 
+    public string GetResourceName(ResourceId resource)
+    {
+        switch (resource)
+        {
+            case ResourceId.Fuel:
+                return "Fuel";
+
+            case ResourceId.Rations:
+                return "Rations";
+
+            case ResourceId.Dirt:
+                return "Dirt";
+
+            case ResourceId.Stone:
+                return "Stone";
+
+            case ResourceId.Iron:
+                return "Iron Ore";
+
+            case ResourceId.Copper:
+                return "Copper Ore";
+
+            case ResourceId.Gold:
+                return "Gold Ore";
+
+            case ResourceId.Lead:
+                return "Lead Ore";
+
+            default:
+                return "Unkown Material";
+                
+
+        }
+    }
 }
-
-
