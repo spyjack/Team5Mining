@@ -15,16 +15,22 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     VehicleClass selectedVehicle = null;
 
+    [SerializeField]
+    GameObject shipSelectorPrefab = null;
+
     [Header("Resources Store UI")]
 
     [SerializeField]
-    private List<GameObject> shipSellectors = new List<GameObject>();
+    private List<GameObject> shipSelectors = new List<GameObject>();
 
     [SerializeField]
     private Text currentCapacityText = null;
 
     [SerializeField]
     private Text maxCapacityText = null;
+
+    [SerializeField]
+    private GameObject dockedShipsGroup = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,30 +64,34 @@ public class ShopController : MonoBehaviour
 
     }
 
-    void AddShipSelector(VehicleClass vehicle)
+    void AddShipSelector(VehicleClass _vehicle)
     {
-
+        GameObject newSelector = Instantiate(shipSelectorPrefab, dockedShipsGroup.transform);
+        newSelector.GetComponent<ShipSelector>().Vehicle = _vehicle;
+        shipSelectors.Add(newSelector);
     }
 
     void DockShip(VehicleClass _vehicle)
     {
         dockedShips.Add(_vehicle);
-        foreach (GameObject sellector in shipSellectors)
+        foreach (GameObject sellector in shipSelectors)
         {
-            ShipSellector shipSellect = sellector.GetComponent<ShipSellector>();
+            ShipSelector shipSellect = sellector.GetComponent<ShipSelector>();
             if (shipSellect.Vehicle == _vehicle)
             {
                 sellector.SetActive(true);
+                return;
             }
         }
+        AddShipSelector(_vehicle);
     }
 
     void UndockShip(VehicleClass _vehicle)
     {
         dockedShips.Remove(_vehicle);
-        foreach (GameObject sellector in shipSellectors)
+        foreach (GameObject sellector in shipSelectors)
         {
-            ShipSellector shipSellect = sellector.GetComponent<ShipSellector>();
+            ShipSelector shipSellect = sellector.GetComponent<ShipSelector>();
             if (shipSellect.Vehicle == _vehicle)
             {
                 sellector.SetActive(false);

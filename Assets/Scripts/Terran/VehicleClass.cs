@@ -56,6 +56,12 @@ public class VehicleClass : MonoBehaviour
     [SerializeField]
     private PartWheel wheels = null;
 
+    public string ShipName
+    {
+        get { return shipName; }
+        set { shipName = value; }
+    }
+
     public float Acceleration
     {
         get { return acceleration; }
