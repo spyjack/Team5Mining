@@ -64,6 +64,15 @@ public class ShopController : MonoBehaviour
 
     [Header("Store General UI")]
     [SerializeField]
+    private GameObject marketTab = null;
+
+    [SerializeField]
+    private GameObject barracksTab = null;
+
+    [SerializeField]
+    private GameObject resourcesTab = null;
+
+    [SerializeField]
     private GameObject shopObject = null;
 
     public VehicleClass SelectedShip
@@ -98,6 +107,38 @@ public class ShopController : MonoBehaviour
         }
     }
 
+    public void OnMarketTab()
+    {
+        if (!marketTab.activeInHierarchy)
+        {
+            marketTab.SetActive(true);
+            resourcesTab.SetActive(false);
+            barracksTab.SetActive(false);
+        }
+    }
+
+    public void OnBarracksTab()
+    {
+        if (!barracksTab.activeInHierarchy)
+        {
+            barracksTab.SetActive(true);
+            resourcesTab.SetActive(false);
+            marketTab.SetActive(false);
+            PopulateWorkerList();
+        }
+    }
+
+    public void OnResourcesTab()
+    {
+        if (!resourcesTab.activeInHierarchy)
+        {
+            resourcesTab.SetActive(true);
+            barracksTab.SetActive(false);
+            marketTab.SetActive(false);
+        }
+        
+    }
+
     public void SelectShipTab(VehicleClass _vehicle)
     {
         for (int i = 0; i < shipSelectors.Count; i++)
@@ -126,7 +167,7 @@ public class ShopController : MonoBehaviour
 
     public void BuyResource(ResourceId _resource, float _amount)
     {
-        if (selectedVehicle.Inventory.UsedCapacity < selectedVehicle.Inventory.Capacity)
+        if (selectedVehicle.Inventory.UsedCapacity < selectedVehicle.Inventory.Capacity && player.Money - (int)CalculateValue(_resource, _amount, false) >= 0)
         {
             player.Money -= (int)CalculateValue(_resource, _amount, false);
             selectedVehicle.Inventory.AddResource(_resource, _amount);
@@ -176,6 +217,9 @@ public class ShopController : MonoBehaviour
         workerConnector.recruitButton.colors = buttonColors;
         workerConnector.recruitButton.interactable = false;
         workerConnector.isRecruited = true;
+
+        player.Money -= (int)workerConnector.worker.Cost;
+        player.AddWorker(workerConnector.worker);
     }
 
     void NewWorkerCard(WorkerBase _worker)
@@ -189,7 +233,7 @@ public class ShopController : MonoBehaviour
         newWorkerCard.workerImage.sprite = _worker.Portrait;
         newWorkerCard.shopMain = this;
 
-        newWorkerCard.costText.text = "Cost: $" + GetWorkerCost(_worker);
+        newWorkerCard.costText.text = "Cost: $" + _worker.Cost;
 
         workerConnectors.Add(newWorkerCard);
     }
@@ -220,7 +264,8 @@ public class ShopController : MonoBehaviour
                 break;
         }
 
-        
+        newWorker.name = newWorker.WorkerName + " Asset";
+        newWorker.Cost = GetWorkerCost(newWorker);
 
         return newWorker;
     }

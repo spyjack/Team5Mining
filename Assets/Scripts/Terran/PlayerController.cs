@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private List<Transform> playerShips = new List<Transform>();
 
+
     [SerializeField]
     AstarPath astar = null;
 
@@ -78,6 +79,11 @@ public class PlayerController : MonoBehaviour
             shipLogsText.text += " Gas: " + vehicle.Inventory.GetResourceAmount(ResourceId.Fuel); 
             shipLogsText.text += "\n";
         }
+    }
+
+    public void AddWorker(WorkerBase _worker)
+    {
+        workerInventory.Add(_worker);
     }
 
     IEnumerator CheckDepths()

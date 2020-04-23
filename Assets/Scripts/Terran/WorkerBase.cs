@@ -32,6 +32,9 @@ public class WorkerBase : ScriptableObject
     [SerializeField]
     int operating = 1;
 
+    [SerializeField]
+    float cost = 1;
+
     public string WorkerName
     {
         get { return _workerName; }
@@ -66,6 +69,12 @@ public class WorkerBase : ScriptableObject
     {
         get { return operating; }
         set { operating = value; }
+    }
+
+    public float Cost
+    {
+        get { return cost; }
+        set { cost = value; }
     }
 }
 

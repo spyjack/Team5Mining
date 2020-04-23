@@ -31,9 +31,25 @@ public class WorkerCardConnector : MonoBehaviour
 
     public ShopController shopMain = null;
 
+    public PlayerController playerMain = null;
+
     private void Start()
     {
         SetUpButton();
+        playerMain = FindObjectOfType<PlayerController>();
+    }
+
+    private void Update()
+    {
+        if (playerMain.Money - worker.Cost < 0)
+        {
+            recruitButton.transform.GetComponentInChildren<Text>().text = "Too Expensive";
+            recruitButton.interactable = false;
+        }else if (playerMain.Money - worker.Cost >= 0 && !isRecruited)
+        {
+            recruitButton.transform.GetComponentInChildren<Text>().text = "Recruit";
+            recruitButton.interactable = true;
+        }
     }
 
     void SetUpButton()
