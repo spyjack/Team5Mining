@@ -1621,6 +1621,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5090b1aa5042444baed233140dce12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  workerNameText: {fileID: 7189430759375934818}
+  workerImage: {fileID: 7189430759370442577}
+  workerImageBackground: {fileID: 7189430760433558755}
+  healthSkillText: {fileID: 7189430758803758377}
+  motorSkillText: {fileID: 7189430759051863932}
+  engineerSkillText: {fileID: 7189430758557185389}
+  operationSkillText: {fileID: 7189430760289352074}
+  costText: {fileID: 7189430758762102135}
+  recruitButton: {fileID: 7189430759793268524}
+  recruitedOverlay: {fileID: 7189430758581375641}
 --- !u!1 &7189430760289352087
 GameObject:
   m_ObjectHideFlags: 0

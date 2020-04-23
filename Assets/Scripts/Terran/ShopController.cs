@@ -12,6 +12,16 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     List<VehicleClass> dockedShips = new List<VehicleClass>();
 
+    [Header("Worker Store")]
+    [SerializeField]
+    List<WorkerCardConnector> workerConnectors = new List<WorkerCardConnector>();
+
+    [SerializeField]
+    GameObject workerCardPrefab = null;
+
+    [SerializeField]
+    Transform workerCardGroup = null;
+
     [Header("Store Values")]
     [SerializeField]
     List<ResourceSaleItem> resourceSaleItems = new List<ResourceSaleItem>();
@@ -127,12 +137,50 @@ public class ShopController : MonoBehaviour
         if (shopObject.activeInHierarchy)
         {
             shopObject.SetActive(false);
-        }else
+        } else
         {
             shopObject.SetActive(true);
         }
     }
 
+    public void PopulateWorkerList()
+    {
+        int count = 3;
+        foreach (WorkerCardConnector workerCard in workerConnectors)
+        {
+            count--;
+            if (workerCard.isRecruited)
+            {
+                Destroy(workerCard.gameObject);
+                count++;
+            }
+        }
+        for (int c = count; c > 0; c--)
+        {
+            NewWorkerCard(NewWorker());
+        }
+    }
+
+    void NewWorkerCard(WorkerBase _worker)
+    {
+        WorkerCardConnector newWorkerCard = Instantiate(workerCardPrefab, workerCardGroup).GetComponent<WorkerCardConnector>();
+        newWorkerCard.worker = _worker;
+        newWorkerCard.motorSkillText.text = _worker.Motorskills.ToString();
+        newWorkerCard.engineerSkillText.text = _worker.Engineering.ToString();
+        newWorkerCard.operationSkillText.text = _worker.Operating.ToString();
+
+        workerConnectors.Add(newWorkerCard);
+    }
+
+    WorkerBase NewWorker()
+    {
+        WorkerBase newWorker = ScriptableObject.CreateInstance<WorkerBase>();
+        newWorker.Motorskills = UnityEngine.Random.Range(1, 11);
+        newWorker.Engineering = UnityEngine.Random.Range(1, 11);
+        newWorker.Operating = UnityEngine.Random.Range(1, 11);
+
+        return newWorker;
+    }
 
     void AddShipSelector(VehicleClass _vehicle)
     {

@@ -29,6 +29,9 @@ public class WorkerBase : ScriptableObject
     [SerializeField]
     int engineering = 1;
 
+    [SerializeField]
+    int operating = 1;
+
     public string WorkerName
     {
         get { return _workerName; }
@@ -51,6 +54,18 @@ public class WorkerBase : ScriptableObject
     {
         get { return motorskills; }
         set { motorskills = value; }
+    }
+
+    public int Engineering
+    {
+        get { return engineering; }
+        set { engineering = value; }
+    }
+
+    public int Operating
+    {
+        get { return operating; }
+        set { operating = value; }
     }
 }
 
