@@ -12,6 +12,19 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     List<VehicleClass> dockedShips = new List<VehicleClass>();
 
+    [Header("Part Market")]
+    [SerializeField]
+    Transform vehicleCardHolder = null;
+
+    [SerializeField]
+    VehicleCardConnector vehicleCard = null;
+
+    [SerializeField]
+    Text partCostText = null;
+
+    [SerializeField]
+    Button partBuyButton = null;
+
     [Header("Worker Store")]
     [SerializeField]
     List<WorkerCardConnector> workerConnectors = new List<WorkerCardConnector>();
