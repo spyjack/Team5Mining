@@ -22,6 +22,9 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     Transform workerCardGroup = null;
 
+    [SerializeField]
+    WorkerDataHolder workerInfoHolder = null;
+
     [Header("Store Values")]
     [SerializeField]
     List<ResourceSaleItem> resourceSaleItems = new List<ResourceSaleItem>();
@@ -165,9 +168,13 @@ public class ShopController : MonoBehaviour
     {
         WorkerCardConnector newWorkerCard = Instantiate(workerCardPrefab, workerCardGroup).GetComponent<WorkerCardConnector>();
         newWorkerCard.worker = _worker;
+        newWorkerCard.workerNameText.text = _worker.WorkerName;
         newWorkerCard.motorSkillText.text = _worker.Motorskills.ToString();
         newWorkerCard.engineerSkillText.text = _worker.Engineering.ToString();
         newWorkerCard.operationSkillText.text = _worker.Operating.ToString();
+        newWorkerCard.workerImage.sprite = _worker.Portrait;
+
+        newWorkerCard.costText.text = "Cost: $" + GetWorkerCost(_worker);
 
         workerConnectors.Add(newWorkerCard);
     }
@@ -178,8 +185,34 @@ public class ShopController : MonoBehaviour
         newWorker.Motorskills = UnityEngine.Random.Range(1, 11);
         newWorker.Engineering = UnityEngine.Random.Range(1, 11);
         newWorker.Operating = UnityEngine.Random.Range(1, 11);
+        int rand = UnityEngine.Random.Range(0, 3);
+        switch (rand)
+        {
+            case 0:
+                newWorker.WorkerName = workerInfoHolder.GetName(Gender.Male);
+                newWorker.Gender = Gender.Male;
+                newWorker.Portrait = workerInfoHolder.GetPortrait(Gender.Male);
+                break;
+            case 1:
+                newWorker.WorkerName = workerInfoHolder.GetName(Gender.Female);
+                newWorker.Gender = Gender.Female;
+                newWorker.Portrait = workerInfoHolder.GetPortrait(Gender.Female);
+                break;
+            case 2:
+                newWorker.WorkerName = workerInfoHolder.GetName(Gender.Other);
+                newWorker.Gender = Gender.Other;
+                newWorker.Portrait = workerInfoHolder.GetPortrait(Gender.Other);
+                break;
+        }
+
+        
 
         return newWorker;
+    }
+
+    float GetWorkerCost(WorkerBase _worker)
+    {
+        return (_worker.Motorskills * _worker.Engineering * _worker.Operating) * 2;
     }
 
     void AddShipSelector(VehicleClass _vehicle)

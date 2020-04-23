@@ -72,7 +72,8 @@ public class WorkerBase : ScriptableObject
 public enum Gender
 {
     Male,
-    Female
+    Female,
+    Other
 }
 
 public enum WorkStation

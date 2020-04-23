@@ -2476,6 +2476,7 @@ MonoBehaviour:
   workerCardPrefab: {fileID: 7189430760043100950, guid: fd7574bd9f49f1144adda70fe8b7f4cd,
     type: 3}
   workerCardGroup: {fileID: 1840535846}
+  workerInfoHolder: {fileID: 791824485}
   resourceSaleItems:
   - resource: 0
     salePricerPerUnit: 50
@@ -2536,7 +2537,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstNames: []
   lastNames: []
-  portraits: []
+  malePortraits:
+  - {fileID: -8581557238236739388, guid: a0c822b1c1cc0ee4786ce2ef45216df0, type: 3}
+  - {fileID: -8346915415066625267, guid: a0c822b1c1cc0ee4786ce2ef45216df0, type: 3}
+  - {fileID: 6643403633473222309, guid: a0c822b1c1cc0ee4786ce2ef45216df0, type: 3}
+  - {fileID: -5326533708760344547, guid: a0c822b1c1cc0ee4786ce2ef45216df0, type: 3}
+  - {fileID: 2990826800479873996, guid: a0c822b1c1cc0ee4786ce2ef45216df0, type: 3}
+  femalePortraits:
+  - {fileID: -1367835423526575636, guid: a0c822b1c1cc0ee4786ce2ef45216df0, type: 3}
+  - {fileID: 2990826800479873996, guid: a0c822b1c1cc0ee4786ce2ef45216df0, type: 3}
+  otherPortraits:
+  - {fileID: 4475996129950518311, guid: a0c822b1c1cc0ee4786ce2ef45216df0, type: 3}
+  - {fileID: 5447289005621912397, guid: a0c822b1c1cc0ee4786ce2ef45216df0, type: 3}
 --- !u!1 &847057182
 GameObject:
   m_ObjectHideFlags: 0
