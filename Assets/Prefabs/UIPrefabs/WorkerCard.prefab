@@ -929,7 +929,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: -8581557238236739388, guid: a0c822b1c1cc0ee4786ce2ef45216df0,
     type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1631,6 +1631,9 @@ MonoBehaviour:
   costText: {fileID: 7189430758762102135}
   recruitButton: {fileID: 7189430759793268524}
   recruitedOverlay: {fileID: 7189430758581375641}
+  worker: {fileID: 0}
+  isRecruited: 0
+  shopMain: {fileID: 0}
 --- !u!1 &7189430760289352087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1864,7 +1867,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: bc5a1b9b40a357b4da4826af230bc50b, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4

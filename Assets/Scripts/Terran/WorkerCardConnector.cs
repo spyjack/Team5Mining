@@ -28,4 +28,21 @@ public class WorkerCardConnector : MonoBehaviour
     public WorkerBase worker = null;
 
     public bool isRecruited = false;
+
+    public ShopController shopMain = null;
+
+    private void Start()
+    {
+        SetUpButton();
+    }
+
+    void SetUpButton()
+    {
+        recruitButton.onClick.AddListener(OnClickRecruit);
+    }
+
+    void OnClickRecruit()
+    {
+        shopMain.RecruitWorker(this);
+    }
 }

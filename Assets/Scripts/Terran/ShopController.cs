@@ -148,20 +148,34 @@ public class ShopController : MonoBehaviour
 
     public void PopulateWorkerList()
     {
-        int count = 3;
-        foreach (WorkerCardConnector workerCard in workerConnectors)
+        for(int i = workerConnectors.Count; i > 0; i--)
         {
-            count--;
-            if (workerCard.isRecruited)
+            if (workerConnectors[i-1].isRecruited)
             {
-                Destroy(workerCard.gameObject);
-                count++;
+                WorkerCardConnector _workerCard = workerConnectors[i-1];
+                workerConnectors.Remove(_workerCard);
+                _workerCard.gameObject.SetActive(false);
+                Destroy(_workerCard.gameObject);
             }
         }
-        for (int c = count; c > 0; c--)
+        for (int c = 3 - workerConnectors.Count; c > 0; c--)
         {
             NewWorkerCard(NewWorker());
         }
+    }
+
+    public void RecruitWorker(WorkerCardConnector workerConnector)
+    {
+        workerConnector.workerImageBackground.color = Color.gray;
+        workerConnector.workerImage.color = Color.black;
+        workerConnector.recruitedOverlay.SetActive(true);
+        ColorBlock buttonColors = new ColorBlock();
+        buttonColors.normalColor = Color.red;
+        buttonColors.disabledColor = Color.red;
+        buttonColors.colorMultiplier = 1;
+        workerConnector.recruitButton.colors = buttonColors;
+        workerConnector.recruitButton.interactable = false;
+        workerConnector.isRecruited = true;
     }
 
     void NewWorkerCard(WorkerBase _worker)
@@ -173,6 +187,7 @@ public class ShopController : MonoBehaviour
         newWorkerCard.engineerSkillText.text = _worker.Engineering.ToString();
         newWorkerCard.operationSkillText.text = _worker.Operating.ToString();
         newWorkerCard.workerImage.sprite = _worker.Portrait;
+        newWorkerCard.shopMain = this;
 
         newWorkerCard.costText.text = "Cost: $" + GetWorkerCost(_worker);
 
@@ -212,7 +227,7 @@ public class ShopController : MonoBehaviour
 
     float GetWorkerCost(WorkerBase _worker)
     {
-        return (_worker.Motorskills * _worker.Engineering * _worker.Operating) * 2;
+        return (_worker.Motorskills * _worker.Engineering * _worker.Operating) * UnityEngine.Random.Range(2,6);
     }
 
     void AddShipSelector(VehicleClass _vehicle)
