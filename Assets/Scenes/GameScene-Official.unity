@@ -5399,6 +5399,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2047784326}
   dockedShips: []
+  vehicleCardHolder: {fileID: 0}
+  vehicleCard: {fileID: 0}
   partCostText: {fileID: 1765505882}
   partBuyButton: {fileID: 832856548}
   workerConnectors: []
