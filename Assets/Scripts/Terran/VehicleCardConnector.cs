@@ -9,6 +9,8 @@ public class VehicleCardConnector : MonoBehaviour
 
     public List<Image> vehicleVisualParts = new List<Image>();
 
+    public GameObject soldOutOverlay = null;
+
     public GameObject shipStatList = null;
 
     public Button purchaseVehicleButton = null;
@@ -16,6 +18,12 @@ public class VehicleCardConnector : MonoBehaviour
     public Text vehicleCostText = null;
 
     public ShopController shopMain = null;
+
+    public VehicleClass vehicle = null;
+
+    public float costMultiplier = 1;
+
+    public bool isPurchased = false;
 
     private void Start()
     {
@@ -29,6 +37,6 @@ public class VehicleCardConnector : MonoBehaviour
 
     void OnClickPurchaseVehicle()
     {
-        print("Use Shop Purchase Vehicle");
+        shopMain.PurchaseVehicle(this);
     }
 }

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b872c95a8a3a74aa8ecad7333dae2d, type: 3}
   m_Name: Base Engine
   m_EditorClassIdentifier: 
-  _partName: 
+  _partName: Tier 1 Engine
   _image: {fileID: 0}
-  _uiIcon: {fileID: 0}
+  _uiIcon: {fileID: 21300000, guid: 16f61c35b36ea2c4e91db3a34feb54d9, type: 3}
   _baseCost: 10
   _fuelEfficiency: 1
   _weight: 10
