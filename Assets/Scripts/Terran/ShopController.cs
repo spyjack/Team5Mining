@@ -17,13 +17,42 @@ public class ShopController : MonoBehaviour
     Transform vehicleCardHolder = null;
 
     [SerializeField]
-    VehicleCardConnector vehicleCard = null;
+    GameObject vehicleCardPrefab = null;
+
+    [SerializeField]
+    List<Transform> partInfoItems = new List<Transform>();
+
+    [SerializeField]
+    GameObject partItemPrefab = null;
+
+    [SerializeField]
+    GameObject partInfoPrefab = null;
+
+    [SerializeField]
+    GameObject partInfoHolder = null;
+
+    [SerializeField]
+    GameObject partOverviewObj = null;
+
+    [SerializeField]
+    List<PartItemConnector> partItemsList = new List<PartItemConnector>();
+
+    int selectedPart = -1;
+
+    [SerializeField]
+    GameObject partItemHolder1 = null;
+
+    [SerializeField]
+    GameObject partItemHolder2 = null;
 
     [SerializeField]
     Text partCostText = null;
 
     [SerializeField]
     Button partBuyButton = null;
+
+    [SerializeField]
+    VehiclePartsDataHolder partDataHolder = null;
 
     [Header("Worker Store")]
     [SerializeField]
@@ -127,6 +156,9 @@ public class ShopController : MonoBehaviour
             marketTab.SetActive(true);
             resourcesTab.SetActive(false);
             barracksTab.SetActive(false);
+            PopulatePartsList();
+            selectedPart = -1;
+            partOverviewObj.SetActive(false);
         }
     }
 
@@ -149,7 +181,7 @@ public class ShopController : MonoBehaviour
             barracksTab.SetActive(false);
             marketTab.SetActive(false);
         }
-        
+
     }
 
     public void SelectShipTab(VehicleClass _vehicle)
@@ -197,6 +229,111 @@ public class ShopController : MonoBehaviour
         } else
         {
             shopObject.SetActive(true);
+        }
+    }
+
+    public void GenerateVehicle()
+    {
+
+    }
+
+    public void AddPartAttribute(string _attributeName, string _attributeValue)
+    {
+        PartAttributeConnector _newAttribute = Instantiate(partInfoPrefab.transform, partInfoHolder.transform).GetComponent<PartAttributeConnector>();
+        _newAttribute.attributeName.text = _attributeName;
+        _newAttribute.attributeData.text = _attributeValue;
+        partInfoItems.Add(_newAttribute.transform);
+    }
+
+    public void ClearPartAttributes()
+    {
+        for (int i = partInfoItems.Count; i > 0; i--)
+        {
+            Destroy(partInfoItems[i-1].gameObject);
+            partInfoItems.RemoveAt(i-1);
+        }
+    }
+
+    //If you select an object, turn on the overview and set the correct part. If it is selected already, hide the overview
+    public void SelectPart(PartItemConnector _part)
+    {
+        if (partItemsList.Count > 0 && selectedPart >= 0)
+        {
+            if (partItemsList[selectedPart] == _part)
+            {
+                selectedPart = -1;
+                partOverviewObj.SetActive(false);
+                return;
+            }
+        }
+
+        for (int i = 0; i < partItemsList.Count; i++)
+        {
+            if (partItemsList[i] == _part)
+            {
+                selectedPart = i;
+                partOverviewObj.SetActive(true);
+                partCostText.text = "Cost:\n" + "$" + _part.partItem.Cost;
+
+                if (_part.isPurchased)
+                {
+                    partBuyButton.interactable = false;
+                    ColorBlock colors = new ColorBlock();
+                    colors.normalColor = Color.red;
+                    colors.disabledColor = Color.red;
+                    colors.colorMultiplier = 1;
+                    partBuyButton.colors = colors;
+                    partBuyButton.transform.GetComponentInChildren<Text>().text = "Purchased";
+                    return;
+
+                } else if (_part.partItem.Cost > player.Money)
+                {
+                    ColorBlock colors = new ColorBlock();
+                    colors.normalColor = Color.green;
+                    colors.disabledColor = Color.gray;
+                    colors.colorMultiplier = 1;
+                    partBuyButton.colors = colors;
+                    partBuyButton.interactable = false;
+                    partBuyButton.transform.GetComponentInChildren<Text>().text = "Too Expensive";
+                }
+                else if (!partBuyButton.interactable)
+                {
+                    partBuyButton.interactable = true;
+                    ColorBlock colors = new ColorBlock();
+                    colors.normalColor = Color.green;
+                    colors.disabledColor = Color.gray;
+                    colors.colorMultiplier = 1;
+                    partBuyButton.colors = colors;
+                    partBuyButton.transform.GetComponentInChildren<Text>().text = "Purchase";
+                }
+
+                partBuyButton.onClick.RemoveAllListeners();
+                partBuyButton.onClick.AddListener(delegate { PurchasePart(_part); });
+                return;
+            }
+        }
+        selectedPart = -1;
+        partOverviewObj.SetActive(false);
+    }
+
+    public void PurchasePart(PartItemConnector _part)
+    {
+        if (player.Money - _part.partItem.Cost >= 0 && !_part.isPurchased)
+        {
+            player.Money -= _part.partItem.Cost;
+            _part.isPurchased = true;
+            player.AddPart(_part.partItem);
+
+            _part.purchasedOverlay.SetActive(true);
+            _part.partIcon.color = Color.black;
+
+            partBuyButton.interactable = false;
+            ColorBlock colors = new ColorBlock();
+            colors.normalColor = Color.red;
+            colors.disabledColor = Color.red;
+            colors.colorMultiplier = 1;
+            partBuyButton.colors = colors;
+            partBuyButton.transform.GetComponentInChildren<Text>().text = "Purchased";
         }
     }
 
@@ -286,6 +423,49 @@ public class ShopController : MonoBehaviour
     float GetWorkerCost(WorkerBase _worker)
     {
         return (_worker.Motorskills * _worker.Engineering * _worker.Operating) * UnityEngine.Random.Range(2,6);
+    }
+
+    void PopulatePartsList()
+    {
+        int neededItems = 6;
+        for(int i = partItemsList.Count; i > 0; i--)
+        {
+            neededItems--;
+            if (partItemsList[i-1].isPurchased)
+            {
+                neededItems++;
+                PartItemConnector _part = partItemsList[i - 1];
+                partItemsList.Remove(_part);
+                _part.gameObject.SetActive(false);
+                Destroy(_part.gameObject);
+            }
+        }
+        for (int n = 0; n < neededItems; n++)
+        {
+            partItemsList.Add(NewPartCard());
+        }
+    }
+
+    //Spawns a new Spare Part item card
+    PartItemConnector NewPartCard()
+    {
+        Transform spawnPos = partItemHolder1.transform;
+        if (partItemHolder1.gameObject.GetComponentsInChildren<PartItemConnector>().Length < 3)
+        {
+            spawnPos = partItemHolder1.transform;
+            //print(partItemHolder1.gameObject.GetComponentsInChildren<PartItemConnector>().Length);
+        }else
+        {
+            spawnPos = partItemHolder2.transform;
+        }
+
+        PartItemConnector newPartCard = Instantiate(partItemPrefab, spawnPos).GetComponent<PartItemConnector>();
+        newPartCard.shopMain = this;
+        newPartCard.purchaseItemButton = partBuyButton;
+
+        newPartCard.partItem = partDataHolder.GetRandomPart();
+
+        return newPartCard;
     }
 
     void AddShipSelector(VehicleClass _vehicle)

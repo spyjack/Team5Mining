@@ -42,6 +42,9 @@ public class VehicleClass : MonoBehaviour
 
     [Header("Vehicle Parts")]
     [SerializeField]
+    private PartBody vehicleBase = null;
+
+    [SerializeField]
     private PartDrill drill = null;
 
     [SerializeField]
@@ -85,6 +88,11 @@ public class VehicleClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (vehicleBase != null)
+        {
+            inventoryCapacity = vehicleBase.Capacity;
+            healthMax = vehicleBase.Health;
+        }
         resourceInventory = new ResourceInventoryClass(inventoryCapacity);
         weight = CalculateWeight();
         acceleration = CalculateAcceleration();

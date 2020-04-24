@@ -86,6 +86,11 @@ public class PlayerController : MonoBehaviour
         workerInventory.Add(_worker);
     }
 
+    public void AddPart(PartBase _part)
+    {
+        partsInventory.Add(_part);
+    }
+
     IEnumerator CheckDepths()
     {
         while(true)
