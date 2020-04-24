@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09d2d320472ca240b366c24582249d8, type: 3}
   m_Name: Upgrade
   m_EditorClassIdentifier: 
-  _partName: Tier 1 Upgrade
+  _partName: 
   _image: {fileID: 0}
-  _uiIcon: {fileID: 21300000, guid: 8ca28265ee79e1e4ea2a8d33f167df56, type: 3}
+  _uiIcon: {fileID: 0}
   _baseCost: 10
   _fuelEfficiency: 1
-  _weight: 10

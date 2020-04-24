@@ -18,9 +18,6 @@ public class PartBase : ScriptableObject
     int _baseCost = 10;
 
     [SerializeField]
-    int _tier = 1;
-
-    [SerializeField]
     float _fuelEfficiency = 1;
 
     [SerializeField]
@@ -60,11 +57,5 @@ public class PartBase : ScriptableObject
     {
         get { return _baseCost; }
         set { _baseCost = value; }
-    }
-
-    public int Tier
-    {
-        get { return _tier; }
-        set { _tier = value; }
     }
 }

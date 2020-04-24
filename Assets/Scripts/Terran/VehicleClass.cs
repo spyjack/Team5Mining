@@ -35,18 +35,12 @@ public class VehicleClass : MonoBehaviour
     [SerializeField]
     private bool isSelected = false;
 
-    [SerializeField]
-    private int cost = 10;
-
     [Header("Crew Stats")]
     [SerializeField]
     WorkerBase[] crew = new WorkerBase[3]; //0 - Captain, 1 - Operator, 2 - Engineer
     //bool hasRations = false;
 
     [Header("Vehicle Parts")]
-    [SerializeField]
-    private PartBody vehicleBase = null;
-
     [SerializeField]
     private PartDrill drill = null;
 
@@ -84,12 +78,6 @@ public class VehicleClass : MonoBehaviour
         get { return fuel; }
     }
 
-    public int Cost
-    {
-        get { return cost; }
-        set { cost = value; }
-    }
-
     public ResourceInventoryClass Inventory
     {
         get { return resourceInventory; }
@@ -97,13 +85,16 @@ public class VehicleClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RecalculateStats();
+        resourceInventory = new ResourceInventoryClass(inventoryCapacity);
+        weight = CalculateWeight();
+        acceleration = CalculateAcceleration();
         Refuel(fuelMax);
     }
 
     // Update is called once per frame
     void Update()
     {
+        checkForSelection();
         fuel = resourceInventory.GetResourceAmount(ResourceId.Fuel);
 
         if (Input.GetKeyDown(KeyCode.Insert))
@@ -188,37 +179,27 @@ public class VehicleClass : MonoBehaviour
         return totalWeight;
     }
 
-    
-
-
-    public void CreateSelf(VehicleClass _vehicle)
+    void checkForSelection()
     {
-        shipName = _vehicle.ShipName;
-        _vehicle.GetPart(out vehicleBase);
-        _vehicle.GetPart(out cabin);
-        _vehicle.GetPart(out drill);
-        _vehicle.GetPart(out engine);
-        _vehicle.GetPart(out wheels);
-        _vehicle.GetPart(out upgrade);
-        cost = _vehicle.cost;
-    }
+        if (Input.GetMouseButtonDown(1))
+        { 
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-    public int GetCost(float _multiplier)
-    {
-        int partCost = 0;
-        if (vehicleBase != null)
-            partCost += vehicleBase.Cost;
-        if (cabin != null)
-            partCost += cabin.Cost;
-        if (drill != null)
-            partCost += drill.Cost;
-        if (engine != null)
-            partCost += engine.Cost;
-        if (upgrade != null)
-            partCost += upgrade.Cost;
-        if (wheels != null)
-            partCost += wheels.Cost;
-        return Mathf.RoundToInt(partCost * _multiplier);
+            if (hit.collider != null && hit.collider.gameObject.GetComponent<VehicleClass>() != null)
+            {
+                VehicleClass ship = hit.collider.gameObject.GetComponent<VehicleClass>();
+                if (ship.Selected)
+                {
+                    ship.Selected = false;
+                }else
+                {
+                    ship.Selected = true;
+                }
+            }
+        }else if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Selected = false;
+        }
     }
     
     public void UseFuel(float fuelModifier)
@@ -233,82 +214,7 @@ public class VehicleClass : MonoBehaviour
 
     public void RecalculateStats()
     {
-        if (vehicleBase != null)
-        {
-            inventoryCapacity = vehicleBase.Capacity;
-            healthMax = vehicleBase.Health;
-            baseWeight = vehicleBase.Weight;
-        }
-        resourceInventory = new ResourceInventoryClass(inventoryCapacity);
         weight = CalculateWeight();
         acceleration = CalculateAcceleration();
-    }
-
-    public void InstallPart(PartBody _part)
-    {
-        vehicleBase = _part;
-        inventoryCapacity = vehicleBase.Capacity;
-        healthMax = vehicleBase.Health;
-        baseWeight = vehicleBase.Weight;
-    }
-
-    public void InstallPart(PartDrill _part)
-    {
-        drill = _part;
-        RecalculateStats();
-    }
-
-    public void InstallPart(PartCabin _part)
-    {
-        cabin = _part;
-        RecalculateStats();
-    }
-
-    public void InstallPart(PartEngine _part)
-    {
-        engine = _part;
-        RecalculateStats();
-    }
-
-    public void InstallPart(PartWheel _part)
-    {
-        wheels = _part;
-        RecalculateStats();
-    }
-
-    public void InstallPart(PartUpgrade _part)
-    {
-        upgrade = _part;
-        RecalculateStats();
-    }
-
-    public void GetPart(out PartBody _part)
-    {
-        _part = vehicleBase;
-    }
-
-    public void GetPart(out PartCabin _part)
-    {
-        _part = cabin;
-    }
-
-    public void GetPart(out PartDrill _part)
-    {
-        _part = drill;
-    }
-
-    public void GetPart(out PartEngine _part)
-    {
-        _part = engine;
-    }
-
-    public void GetPart(out PartWheel _part)
-    {
-        _part = wheels;
-    }
-
-    public void GetPart(out PartUpgrade _part)
-    {
-        _part = upgrade;
     }
 }

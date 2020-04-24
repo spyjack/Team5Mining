@@ -660,12 +660,10 @@ MonoBehaviour:
   fuelMax: 1000
   acceleration: 60
   isSelected: 0
-  cost: 10
   crew:
   - {fileID: 11400000, guid: caf08e104827ea64da883d2d2319ffab, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  vehicleBase: {fileID: 11400000, guid: 6f0b429e5db0df74788264d6a068ff51, type: 2}
   drill: {fileID: 11400000, guid: 371f7c6967a2b5c4fb3ae1a60749ae8a, type: 2}
   engine: {fileID: 11400000, guid: cdcda958b3a7d734cae13946e036497c, type: 2}
   upgrade: {fileID: 11400000, guid: 6049b4a02407d4b4bb453dcdca4403c7, type: 2}

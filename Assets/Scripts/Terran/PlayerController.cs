@@ -79,51 +79,11 @@ public class PlayerController : MonoBehaviour
             shipLogsText.text += " Gas: " + vehicle.Inventory.GetResourceAmount(ResourceId.Fuel); 
             shipLogsText.text += "\n";
         }
-
-        checkForSelection();
     }
 
     public void AddWorker(WorkerBase _worker)
     {
         workerInventory.Add(_worker);
-    }
-
-    public void AddPart(PartBase _part)
-    {
-        partsInventory.Add(_part);
-    }
-
-    public void AddShip(Transform _ship)
-    {
-        playerShips.Add(_ship);
-    }
-
-    void checkForSelection()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            print("casting");
-            if (hit.collider != null && hit.collider.gameObject.GetComponent<VehicleClass>() != null)
-            {
-                VehicleClass ship = hit.collider.gameObject.GetComponent<VehicleClass>();
-                if (ship.Selected)
-                {
-                    ship.Selected = false;
-                }
-                else
-                {
-                    ship.Selected = true;
-                }
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            foreach (Transform _vehicle in playerShips)
-            {
-                _vehicle.GetComponent<VehicleClass>().Selected = false;
-            }
-        }
     }
 
     IEnumerator CheckDepths()
