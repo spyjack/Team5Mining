@@ -21,6 +21,10 @@ public class VehicleCardConnector : MonoBehaviour
 
     public VehicleClass vehicle = null;
 
+    public float costMultiplier = 1;
+
+    public bool isPurchased = false;
+
     private void Start()
     {
         SetUpButton();
@@ -33,6 +37,6 @@ public class VehicleCardConnector : MonoBehaviour
 
     void OnClickPurchaseVehicle()
     {
-        print("Use Shop Purchase Vehicle");
+        shopMain.PurchaseVehicle(this);
     }
 }

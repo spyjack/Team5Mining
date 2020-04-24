@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Base Cab
   m_EditorClassIdentifier: 
   _partName: Tier 1 Cabin
-  _image: {fileID: 0}
+  _image: {fileID: 936464341002292260, guid: 8d18009fd96184c4d9a7474b5d2dfbcf, type: 3}
   _uiIcon: {fileID: 21300000, guid: 753baae7059a00941a0e70b89d615308, type: 3}
   _baseCost: 10
+  _tier: 1
   _fuelEfficiency: 1
   _weight: 10
   _fuelCapacity: 1

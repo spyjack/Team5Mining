@@ -29,6 +29,9 @@ public class ShopController : MonoBehaviour
     GameObject partInfoPrefab = null;
 
     [SerializeField]
+    GameObject vehicleStatPrefab = null;
+
+    [SerializeField]
     GameObject partInfoHolder = null;
 
     [SerializeField]
@@ -53,6 +56,12 @@ public class ShopController : MonoBehaviour
 
     [SerializeField]
     VehiclePartsDataHolder partDataHolder = null;
+
+    [SerializeField]
+    Transform shipSpawnPosition = null;
+
+    [SerializeField]
+    GameObject vehiclePrefab = null;
 
     [Header("Worker Store")]
     [SerializeField]
@@ -117,6 +126,9 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     private GameObject shopObject = null;
 
+    [SerializeField]
+    private TierProbability tierProbability = new TierProbability();
+
     public VehicleClass SelectedShip
     {
         get { return selectedVehicle; }
@@ -159,6 +171,7 @@ public class ShopController : MonoBehaviour
             PopulatePartsList();
             selectedPart = -1;
             partOverviewObj.SetActive(false);
+            PopulateVehicleCard();
         }
     }
 
@@ -232,9 +245,40 @@ public class ShopController : MonoBehaviour
         }
     }
 
-    public void GenerateVehicle()
+    public void PurchaseVehicle(VehicleCardConnector _vehicleCard)
     {
+        if (player.Money >= _vehicleCard.vehicle.GetCost(_vehicleCard.costMultiplier) && !_vehicleCard.isPurchased)
+        {
+            player.Money -= _vehicleCard.vehicle.GetCost(_vehicleCard.costMultiplier);
+            _vehicleCard.isPurchased = true;
+            _vehicleCard.purchaseVehicleButton.interactable = false;
+            ColorBlock buttonColors = new ColorBlock();
+            buttonColors.normalColor = Color.red;
+            buttonColors.disabledColor = Color.red;
+            buttonColors.colorMultiplier = 1;
+            _vehicleCard.purchaseVehicleButton.colors = buttonColors;
+            _vehicleCard.soldOutOverlay.SetActive(true);
 
+            GameObject _newVehicle = Instantiate(vehiclePrefab, shipSpawnPosition.position, Quaternion.identity);
+            _newVehicle.GetComponent<VehicleClass>().CreateSelf(_vehicleCard.vehicle);
+            player.AddShip(_newVehicle.transform);
+        }
+    }
+
+    public void PopulateVehicleCard()
+    {
+        VehicleCardConnector[] vehicleCards = vehicleCardHolder.GetComponentsInChildren<VehicleCardConnector>();
+        if (vehicleCards.Length < 1)
+        {
+            NewVehicleCard(tierProbability);
+        }else if (vehicleCards.Length == 1)
+        {
+            if (vehicleCards[0].isPurchased)
+            {
+                Destroy(vehicleCards[0].gameObject);
+                NewVehicleCard(tierProbability);
+            }
+        }
     }
 
     public void AddPartAttribute(string _attributeName, string _attributeValue)
@@ -424,6 +468,85 @@ public class ShopController : MonoBehaviour
     {
         return (_worker.Motorskills * _worker.Engineering * _worker.Operating) * UnityEngine.Random.Range(2,6);
     }
+
+    void NewVehicleCard(TierProbability _tierChances)
+    {
+        VehicleCardConnector _newVehicleCard = Instantiate(vehicleCardPrefab, vehicleCardHolder).GetComponent<VehicleCardConnector>();
+        _newVehicleCard.shopMain = this;
+        _newVehicleCard.vehicle = _newVehicleCard.gameObject.AddComponent<VehicleClass>();
+        _newVehicleCard.vehicle.ShipName = partDataHolder.ShipNames[UnityEngine.Random.Range(0, partDataHolder.ShipNames.Count)];
+
+        partDataHolder.GetRandomPart(_tierChances, out PartBody _body);
+        _newVehicleCard.vehicle.InstallPart(_body);
+
+        partDataHolder.GetRandomPart(_tierChances, out PartEngine _engine);
+        _newVehicleCard.vehicle.InstallPart(_engine);
+
+        partDataHolder.GetRandomPart(_tierChances, out PartWheel _wheels);
+        _newVehicleCard.vehicle.InstallPart(_wheels);
+
+        PartCabin _cabin = null;
+        PartDrill _drill = null;
+
+        //Cabin is nonessential so it is a random chance
+        _newVehicleCard.vehicleVisualParts[2].sprite = null;
+        _newVehicleCard.vehicleVisualParts[2].color = new Color(0, 0, 0, 0);
+        if (UnityEngine.Random.Range(0, 10) > 4)
+        {
+            partDataHolder.GetRandomPart(_tierChances, out _cabin);
+            _newVehicleCard.vehicle.InstallPart(_cabin);
+            _newVehicleCard.vehicleVisualParts[2].sprite = _cabin.Image;
+            _newVehicleCard.vehicleVisualParts[2].color = Color.white;
+        }
+
+        //Drill is nonessential so it is a random chance
+        _newVehicleCard.vehicleVisualParts[5].sprite = null;
+        _newVehicleCard.vehicleVisualParts[5].color = new Color(0, 0, 0, 0);
+        if (UnityEngine.Random.Range(0, 10) > 5)
+        {
+            partDataHolder.GetRandomPart(_tierChances, out _drill);
+            _newVehicleCard.vehicle.InstallPart(_drill);
+            _newVehicleCard.vehicleVisualParts[5].sprite = _drill.Image;
+            _newVehicleCard.vehicleVisualParts[5].color = Color.white;
+        }
+
+        _newVehicleCard.shipNameText.text = _newVehicleCard.vehicle.ShipName;
+        _newVehicleCard.costMultiplier = UnityEngine.Random.Range(1, 3);
+        _newVehicleCard.vehicleCostText.text = "Cost: $" + _newVehicleCard.vehicle.GetCost(_newVehicleCard.costMultiplier);
+        _newVehicleCard.vehicle.Cost = _newVehicleCard.vehicle.GetCost(_newVehicleCard.costMultiplier);
+
+        _newVehicleCard.vehicleVisualParts[0].sprite = _body.Image;
+        _newVehicleCard.vehicleVisualParts[1].sprite = _body.WindowSprite;
+        //_newVehicleCard.vehicleVisualParts[2].sprite = _cabin.Image;
+        //_newVehicleCard.vehicleVisualParts[3].sprite = _engine.Image;
+        _newVehicleCard.vehicleVisualParts[4].sprite = _wheels.Image;
+
+        //Stat text
+        Text statText = Instantiate(vehicleStatPrefab, _newVehicleCard.shipStatList.transform).GetComponentInChildren<Text>();
+        statText.text = "Hull: " + _body.PartName;
+        statText = Instantiate(vehicleStatPrefab, _newVehicleCard.shipStatList.transform).GetComponentInChildren<Text>();
+        if (_cabin != null)
+        {
+            statText.text = "Observatory: " + _cabin.PartName;
+        }
+        else
+        {
+            statText.text = "Observatory: None";
+        }
+            statText = Instantiate(vehicleStatPrefab, _newVehicleCard.shipStatList.transform).GetComponentInChildren<Text>();
+            statText.text = "Engine: " + _engine.PartName;
+            statText = Instantiate(vehicleStatPrefab, _newVehicleCard.shipStatList.transform).GetComponentInChildren<Text>();
+        if (_drill != null)
+        {
+            statText.text = "Drilling Module: " + _drill.PartName;
+        }
+        else
+        {
+            statText.text = "Drilling Module: None";
+        }
+            statText = Instantiate(vehicleStatPrefab, _newVehicleCard.shipStatList.transform).GetComponentInChildren<Text>();
+            statText.text = "Movement Module: " + _wheels.PartName;
+        }
 
     void PopulatePartsList()
     {
@@ -634,6 +757,8 @@ public class ShopController : MonoBehaviour
         }
         return 0f;
     }
+
+    
 }
 
 [System.Serializable]
@@ -643,4 +768,58 @@ public struct ResourceSaleItem
     public float salePricerPerUnit;
     public float buyPricerPerUnit;
     public float saleModifier;
+}
+
+[System.Serializable]
+public struct TierProbability
+{
+    public float tier1Chance;
+    public float tier2Chance;
+    public float tier3Chance;
+
+    public TierProbability(float _tier1Chance, float _tier2Chance, float _tier3Chance)
+    {
+        tier1Chance = _tier1Chance;
+        tier2Chance = _tier2Chance;
+        tier3Chance = _tier3Chance;
+    }
+
+    public int GetRandomTier()
+    {
+        int randChance = UnityEngine.Random.Range(0, 101);
+        Debug.Log("Random Chance was " + randChance);
+        if (randChance <= GetChance(1))
+        {
+            return 1;
+        }
+        else if (randChance > GetChance(1) && randChance <= (GetChance(1) + GetChance(2)))
+        {
+            return 2;
+        }
+        else
+        {
+            return 3;
+        }
+    }
+
+    public float GetChance(int tierIndex)
+    {
+        if (tierIndex == 0)
+        {
+            return ((tier1Chance + tier2Chance + tier3Chance) / (tier1Chance + tier2Chance + tier3Chance)) * 100;
+        }else if (tierIndex == 1)
+        {
+            return (tier1Chance/ (tier1Chance + tier2Chance + tier3Chance)) * 100;
+        }else if (tierIndex == 2)
+        {
+            return (tier2Chance / (tier1Chance + tier2Chance + tier3Chance)) * 100;
+        }else if (tierIndex == 3)
+        {
+            return (tier3Chance / (tier1Chance + tier2Chance + tier3Chance)) * 100;
+        }else
+        {
+            Debug.LogWarning("Wrong Tier Index");
+            return 0f;
+        }
+    }
 }

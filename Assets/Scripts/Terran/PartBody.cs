@@ -11,6 +11,9 @@ public class PartBody : PartBase
     [SerializeField]
     float _capacity = 5000; //Amount of storage space
 
+    [SerializeField]
+    Sprite _windowSprite = null;
+
     public float Capacity
     {
         get { return _capacity; }
@@ -21,5 +24,11 @@ public class PartBody : PartBase
     {
         get { return _healthMax; }
         set { _healthMax = value; }
+    }
+
+    public Sprite WindowSprite
+    {
+        get { return _windowSprite; }
+        set { _windowSprite = value; }
     }
 }
