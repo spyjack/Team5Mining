@@ -109,7 +109,7 @@ public class WorkerDataHolder : MonoBehaviour
         return image;
     }
 
-    void ReadString(string filename, List<string> output)
+    public static void ReadString(string filename, List<string> output)
     {
         string path = "Assets/Resources/Eng/" + filename;
 
