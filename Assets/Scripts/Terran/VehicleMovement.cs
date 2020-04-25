@@ -29,7 +29,7 @@ public class VehicleMovement : MonoBehaviour
     bool reachedEndOfPath = false;
 
     [SerializeField]
-    Seeker seeker;
+    Seeker seeker = null;
 
     [SerializeField]
     Rigidbody2D rb = null;
@@ -45,6 +45,9 @@ public class VehicleMovement : MonoBehaviour
 
     [SerializeField]
     Vector2 direction = new Vector2();
+
+    [SerializeField]
+    bool minerMode = false;
 
     public Vector2 DrillPoint
     {
@@ -65,15 +68,25 @@ public class VehicleMovement : MonoBehaviour
             rb = GetComponent<Rigidbody2D>();
         }
 
+        ToggleMinerMode(true);
+
         InvokeRepeating("UpdatePath", 0f, 1f);
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ToggleMinerMode(minerMode);
+        }
+
+        if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity)
+            ToggleMinerMode(true);
+
         if (Input.GetMouseButtonDown(0) && vehicleMain.Selected)
         {
             AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        }else if (Input.GetMouseButtonDown(2) && vehicleMain.Selected)
+        }else if ((Input.GetMouseButtonDown(2) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
         {
             targetQueue.Clear();
             path.vectorPath.Clear();
@@ -104,7 +117,6 @@ public class VehicleMovement : MonoBehaviour
                     }
                     else
                     {
-
                         targetQueue.RemoveAt(0);
                     }
                 }
@@ -208,5 +220,23 @@ public class VehicleMovement : MonoBehaviour
     {
         targetQueue.Clear();
         path.vectorPath.Clear();
+    }
+
+    void ToggleMinerMode(bool isActive)
+    {
+        if (isActive)
+        {
+            seeker.graphMask = GraphMask.FromGraphName("Cleared Paths");
+            minerMode = false;
+            GetComponentInChildren<ShipDrilling>().drillCollider.enabled = false;
+
+        }
+        else
+        {
+            seeker.graphMask = GraphMask.FromGraphName("Mining Paths");
+            GetComponentInChildren<ShipDrilling>().drillCollider.enabled = true;
+            minerMode = true;
+
+        }
     }
 }

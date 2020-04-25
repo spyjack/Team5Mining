@@ -7,40 +7,54 @@ using UnityEngine.EventSystems;
 
 public class UIController : MonoBehaviour
 {
-    [Header ("InGame")]//////////////////
+    [Header("InGame")]//////////////////
     public Text lvText;
 
     public GameObject leavePanel;
     public GameObject shopPanel;
     public GameObject menuPanel;
+    public GameObject helpPanel;
 
-   
-//    public Text[] statsText;
+    public AudioClip inGameMus;
+
+
+    //    public Text[] statsText;
     //public GameObject statsButton;
 
     [Header("Shop")]//////////////////////
     public Text ShopCashText;
     public Text ShopText;
+    public Text yourText;
 
-    public GameObject wheelsPanel;
-    public GameObject basePanel;
-    public GameObject drillPanel;
-    public GameObject obPanel;
+    public AudioClip inShopMus;
+
+    public GameObject[] Tab;
+    public GameObject[] whichDrillSh;
+    public GameObject[] whichBaseSh;
+    public GameObject[] whichWheelsSh;
+    public GameObject[] whichObSh;
+    /*wheelsPanel;
+public GameObject basePanel;
+public GameObject drillPanel;
+public GameObject obPanel;*/
 
     [Header("Stats")]
     public GameObject[] workerStatsPanel = new GameObject[3];
     public Text[] statsText;
-
-    [Header("Text")]
-
-
     public Text DrilSatsText;
 
+    public GameObject[] whichDrillSt;
+    public GameObject[] whichBaseSt;
+    public GameObject[] whichWheelsSt;
+    public GameObject[] whichObSt;
+    public Image[] Portrits;
+    public Sprite[] portritFile;
 
     [Header("Misk")]
     public int level;
     private int statscount;
-    
+    public AudioClip buttonClick;
+
 
     private void Awake()
     {
@@ -54,6 +68,7 @@ public class UIController : MonoBehaviour
         leavePanel.SetActive(false);
         shopPanel.SetActive(false);
         menuPanel.SetActive(false);
+        helpPanel.SetActive(false);
         Debug.Log("Check1");
         lvText.text = "Lv: " + PlayerStats.arc.lv;
         Debug.Log("Check2");
@@ -111,50 +126,32 @@ public class UIController : MonoBehaviour
     }
     
 
-    //worker stats panel
-    /*
-
-    public void statsShowButton()
-    {
-        Debug.Log("Clicked");
-        statscount++;
-        if(statscount == 2)
-        {
-            Debug.Log("2");
-
-            level = PlayerStats.arc.lv;
-            for (int i = 0; i < level; i++)
-            {
-                workerStatsPanel[i].SetActive(true);
-            }
-        }
-        if (statscount == 3)
-        {
-            Debug.Log("3");
-
-            
-            for (int i = 0; i < 3; i++)
-            {
-                workerStatsPanel[i].SetActive(false);
-            }
-            statscount = 1;
-        }
-    }  
-*/
-
     //leave Panel -- DONE
 
     public void OnLeaveButton()
     {
         leavePanel.SetActive(true);
+        AudioManager.am.Play("Button");
     }
     public void QuitButton()
     {
         Application.Quit();
+        AudioManager.am.Play("Button");
     }
     public void DontQuitButton()
     {
         leavePanel.SetActive(false);
+        AudioManager.am.Play("Button");
+    }
+
+    //Help Butoom --
+    public void toHelpbutton()
+    {
+        helpPanel.SetActive(true);
+    }
+    public void leaveHelpButton()
+    {
+        helpPanel.SetActive(false);
     }
 
 
@@ -164,36 +161,72 @@ public class UIController : MonoBehaviour
         menuPanel.SetActive(true);
 
         PlayerStats.arc.WorkTotal();
-        DrilSatsText.text = "Work: " + PlayerStats.arc.drilWork + " \n" + "Money: " + PlayerStats.arc.Cash;
+        DrilSatsText.text = "" + PlayerStats.arc.ShipName + "'s Work: " + PlayerStats.arc.drilWork + " \n" + "Money: " + PlayerStats.arc.Cash;
 
         Debug.Log("Now Name");
+        for(int u = 0; u < 3; u++)
+        {
+            Portrits[u].enabled = false;
+            statsText[u].text = "";
+        }
 
         //string statText = "";
         for (int i = 0; i < PlayerStats.arc.lv; i++)
         {
-            Debug.Log("" + i );
+            // Debug.Log("" + i );
+            Portrits[i].enabled = true;
+            Portrits[i].sprite = portritFile[PlayerStats.arc.workersImage[i]];
             statsText[i].text = "Name: " + PlayerStats.arc.Name[i] + "\n" + "Work Contribut: " + PlayerStats.arc.Work[i];
         }
-
+        SetStatIm();
+        Debug.Log("x");
+        AudioManager.am.Play("Button");
     }
     public void leaveToMenu()
     {
+        AudioManager.am.Play("Button");
         menuPanel.SetActive(false);
     }
 
+    private void SetStatIm()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            whichBaseSt[i].SetActive(false);
+            whichWheelsSt[i].SetActive(false);
+            whichDrillSt[i].SetActive(false);
+            whichObSt[i].SetActive(false);
+        }
+        /**/
+        whichBaseSt[PlayerStats.arc.whichImage[1]].SetActive(true);
+        whichWheelsSt[PlayerStats.arc.whichImage[0]].SetActive(true);
+        whichDrillSt[PlayerStats.arc.whichImage[2]].SetActive(true);
+        whichObSt[PlayerStats.arc.whichImage[3]].SetActive(true);
 
-    //shop panel
+        Debug.Log("S");
+    }
+
+
+    //shop panel - figure buttns,
     public void goToShopButton()
     {
+        string what = "" + PlayerStats.arc.ShipName;
         shopPanel.SetActive(true);
         ShopCashText.text = "Your Cash $" + PlayerStats.arc.Cash;
         ShopText.text = "Everything cost $25.";
-
+        yourText.text = "Your ship " + what + " is at Lv - " + PlayerStats.arc.lv;
+        ShopImage();
+        AudioManager.am.Play("Button");
+        PlayerStats.arc.anWheel.SetBool("isGoing", false);
+        PlayerStats.arc.movenum = 0;
+        PlayerStats.arc.anDrill.SetBool("isDigging", false);
+        Debug.Log("Nothings Moving");
     }
 
     public void leaveShopButton()
     {
         shopPanel.SetActive(false);
+        AudioManager.am.Play("Button");
     }
     public void MoreCash()
     {
@@ -202,8 +235,32 @@ public class UIController : MonoBehaviour
         ShopCashText.text = "Your Cash $" + PlayerStats.arc.Cash;
     }
 
-    //Wheels Buttons
+    private void ShopImage()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            whichBaseSh[i].SetActive(false);
+            whichWheelsSh[i].SetActive(false);
+            whichDrillSh[i].SetActive(false);
+            whichObSh[i].SetActive(false);
+        }
+        /**/
+        whichBaseSh[PlayerStats.arc.whichImage[1]].SetActive(true);
+        whichWheelsSh[PlayerStats.arc.whichImage[0]].SetActive(true);
+        whichDrillSh[PlayerStats.arc.whichImage[2]].SetActive(true);
+        whichObSh[PlayerStats.arc.whichImage[3]].SetActive(true);
+    }
 
+    //Wheels Buttons
+    public void TabToWheels()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Tab[i].SetActive(false);
+        }
+        Tab[0].SetActive(true);
+        AudioManager.am.Play("Button");
+    }
     public void W0Button()
     {
         CanBuy(1, 0);
@@ -218,6 +275,15 @@ public class UIController : MonoBehaviour
     }
 
     //Base Buttons
+    public void TabToBase()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Tab[i].SetActive(false);
+        }
+        Tab[1].SetActive(true);
+        AudioManager.am.Play("Button");
+    }
     public void Base0Button()
     {
         CanBuy(4, 0);
@@ -232,7 +298,37 @@ public class UIController : MonoBehaviour
     }
 
     //Drill Buttons
+    public void TabToDrill()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Tab[i].SetActive(false);
+        }
+        Tab[2].SetActive(true);
+    }
+    public void Drill0Button()
+    {
+        CanBuy(2, 0);
+    }
+    public void Drill1Button()
+    {
+        CanBuy(2, 1);
+    }
+    public void Drill2Button()
+    {
+        CanBuy(2, 2);
+    }
+
     //Observitory Buttons
+    public void TabToOb()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Tab[i].SetActive(false);
+        }
+        Tab[3].SetActive(true);
+        AudioManager.am.Play("Button");
+    }
     public void Ob0Button()
     {
         CanBuy(3, 0);
@@ -257,58 +353,72 @@ public class UIController : MonoBehaviour
             if (what == 1 && lv == 0)
             {
                 PlayerStats.arc.ChangeWeels(0);
+                PlayerStats.arc.whichImage[0] = 0;
             }
             if (what == 1 && lv == 1)
             {
                 PlayerStats.arc.ChangeWeels(1);
+                PlayerStats.arc.whichImage[0] = 1;
             }
             if (what == 1 && lv == 2)
             {
                 PlayerStats.arc.ChangeWeels(2);
+                PlayerStats.arc.whichImage[0] = 2;
             }
             //Drill
             if (what == 2 && lv == 0)
             {
-
+                PlayerStats.arc.whichImage[2] = 0;
+                PlayerStats.arc.anDrill.SetInteger("whichDrill", 0);
             }
             if (what == 2 && lv == 1)
             {
-
+                PlayerStats.arc.whichImage[2] = 1;
+                PlayerStats.arc.anDrill.SetInteger("whichDrill", 1);
             }
             if (what == 2 && lv == 2)
             {
-
+                PlayerStats.arc.whichImage[2] = 2;
+                PlayerStats.arc.anDrill.SetInteger("whichDrill", 2);
             }
             //Observitory
             if (what == 3 && lv == 0)
             {
                 PlayerStats.arc.ChangeObservitory(0);
+                PlayerStats.arc.whichImage[3] = 0;
             }
             if (what == 3 && lv == 1)
             {
                 PlayerStats.arc.ChangeObservitory(1);
+                PlayerStats.arc.whichImage[3] = 1;
             }
             if (what == 3 && lv == 2)
             {
                 PlayerStats.arc.ChangeObservitory(2);
+                PlayerStats.arc.whichImage[3] = 2;
             }
             //Base
             if (what == 4 && lv == 0)
             {
                 PlayerStats.arc.ChangeBase(0);
+                PlayerStats.arc.whichImage[1] = 0;
             }
             if (what == 4 && lv == 1)
             {
                 PlayerStats.arc.ChangeBase(1);
+                PlayerStats.arc.whichImage[1] = 1;
             }
             if (what == 4 && lv == 2)
             {
                 PlayerStats.arc.ChangeBase(2);
+                PlayerStats.arc.whichImage[1] = 2;
             }
 
             PlayerStats.arc.Cash -= 25;
             ShopCashText.text = "Your Cash $" + PlayerStats.arc.Cash;
             ShopText.text = "Everything cost $25.";
+            ShopImage();
+            AudioManager.am.Play("Button");
         }
         else
         {

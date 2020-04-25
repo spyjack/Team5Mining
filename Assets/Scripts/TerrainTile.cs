@@ -28,13 +28,13 @@ public abstract class TerrainTile : Tile{
         return true;
 
     }
-    public void UpdateDB(Object myAT , string name)
+    /*public void UpdateDB(Object myAT , string name)
     {
         AssetDatabase.CreateAsset(myAT, "Assets/Tiles/" + name + "");
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-    }
+    }*/
 
 
     //Kann sein, dass die hier oben stehen müssen, weil wir sie sonst bei Awake nicht instanzieren können
