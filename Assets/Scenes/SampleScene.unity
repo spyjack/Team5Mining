@@ -753,10 +753,12 @@ MonoBehaviour:
   fuelMax: 1000
   acceleration: 60
   isSelected: 0
+  cost: 10
   crew:
   - {fileID: 11400000, guid: caf08e104827ea64da883d2d2319ffab, type: 2}
   - {fileID: 0}
   - {fileID: 0}
+  vehicleBase: {fileID: 0}
   drill: {fileID: 11400000, guid: 371f7c6967a2b5c4fb3ae1a60749ae8a, type: 2}
   engine: {fileID: 11400000, guid: cdcda958b3a7d734cae13946e036497c, type: 2}
   upgrade: {fileID: 11400000, guid: 6049b4a02407d4b4bb453dcdca4403c7, type: 2}
@@ -786,6 +788,7 @@ MonoBehaviour:
   drillPosition: {x: 0, y: 0}
   drillBit: {fileID: 1178357890}
   direction: {x: 0, y: 0}
+  minerMode: 0
 --- !u!50 &515770311
 Rigidbody2D:
   serializedVersion: 4
@@ -1204,7 +1207,9 @@ MonoBehaviour:
     type: 3}
   drillBitPos: {x: 0, y: 0, z: 0}
   drill: {fileID: 1178357889}
+  drillCollider: {fileID: 0}
   vehicleMain: {fileID: 515770309}
+  vehicleMover: {fileID: 0}
   drillParticlesPooled: []
 --- !u!58 &1178357892
 CircleCollider2D:
@@ -1815,8 +1820,18 @@ MonoBehaviour:
   money: 100
   workerInventory: []
   partsInventory: []
+  depthLabel: {fileID: 0}
+  depthTextBreak: {fileID: 0}
+  depthTextsList: []
+  depthMarkers: []
   deepestDepth: 0
   playerShips: []
+  astar: {fileID: 0}
+  dirtyNav: 1
+  camBounds: {fileID: 0}
+  moneyText: {fileID: 0}
+  depthGoalsText: {fileID: 0}
+  shipLogsText: {fileID: 0}
 --- !u!1 &2142551903
 GameObject:
   m_ObjectHideFlags: 0
