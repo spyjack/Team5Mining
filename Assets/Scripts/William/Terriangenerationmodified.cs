@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
-using UnityEditor;
 using UnityEngine;
 
 public class Terriangenerationmodified : MonoBehaviour
