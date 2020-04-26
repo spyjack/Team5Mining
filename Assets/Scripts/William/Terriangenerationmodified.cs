@@ -58,9 +58,11 @@ public class Terriangenerationmodified : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 if (terrainMap[x, y] == 1)
+                {//You were missing these curly braces, so the if statement only set the top tile as it was the first below the if statement.
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile);
-                botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
-                coalMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
+                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
+                    coalMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), coalTile);
+                }
             }
         }
 
