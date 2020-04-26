@@ -247,7 +247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &143468882
 Transform:
   m_ObjectHideFlags: 0
@@ -753,10 +753,12 @@ MonoBehaviour:
   fuelMax: 1000
   acceleration: 60
   isSelected: 0
+  cost: 10
   crew:
   - {fileID: 11400000, guid: caf08e104827ea64da883d2d2319ffab, type: 2}
   - {fileID: 0}
   - {fileID: 0}
+  vehicleBase: {fileID: 0}
   drill: {fileID: 11400000, guid: 371f7c6967a2b5c4fb3ae1a60749ae8a, type: 2}
   engine: {fileID: 11400000, guid: cdcda958b3a7d734cae13946e036497c, type: 2}
   upgrade: {fileID: 11400000, guid: 6049b4a02407d4b4bb453dcdca4403c7, type: 2}
@@ -786,6 +788,7 @@ MonoBehaviour:
   drillPosition: {x: 0, y: 0}
   drillBit: {fileID: 1178357890}
   direction: {x: 0, y: 0}
+  minerMode: 0
 --- !u!50 &515770311
 Rigidbody2D:
   serializedVersion: 4
@@ -961,12 +964,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iniChance: 40
   birthLimit: 3
-  deathLimit: 1
+  deathLimit: 2
   numR: 5
   tmpSize: {x: 40, y: 40, z: 0}
   topMap: {fileID: 1509603832}
+  coalMap: {fileID: 2020361061}
   botMap: {fileID: 143468885}
   topTile: {fileID: 11400000, guid: 58f5a58eae5b65d4780ee7e760d1ae5a, type: 2}
+  coalTile: {fileID: 11400000, guid: 325a9759eac07304cafc6bd536aef229, type: 2}
   botTile: {fileID: 11400000, guid: e27058c793972bb4fb199c8dc39bd045, type: 2}
 --- !u!4 &847057184
 Transform:
@@ -1204,7 +1209,9 @@ MonoBehaviour:
     type: 3}
   drillBitPos: {x: 0, y: 0, z: 0}
   drill: {fileID: 1178357889}
+  drillCollider: {fileID: 0}
   vehicleMain: {fileID: 515770309}
+  vehicleMover: {fileID: 0}
   drillParticlesPooled: []
 --- !u!58 &1178357892
 CircleCollider2D:
@@ -1271,7 +1278,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2008558559}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!19719996 &1509603830
 TilemapCollider2D:
@@ -1605,8 +1612,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1509603829}
   - {fileID: 2020361058}
+  - {fileID: 1509603829}
   - {fileID: 143468882}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1642,7 +1649,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2008558559}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!19719996 &2020361059
 TilemapCollider2D:
@@ -1815,8 +1822,18 @@ MonoBehaviour:
   money: 100
   workerInventory: []
   partsInventory: []
+  depthLabel: {fileID: 0}
+  depthTextBreak: {fileID: 0}
+  depthTextsList: []
+  depthMarkers: []
   deepestDepth: 0
   playerShips: []
+  astar: {fileID: 0}
+  dirtyNav: 1
+  camBounds: {fileID: 0}
+  moneyText: {fileID: 0}
+  depthGoalsText: {fileID: 0}
+  shipLogsText: {fileID: 0}
 --- !u!1 &2142551903
 GameObject:
   m_ObjectHideFlags: 0
