@@ -3015,10 +3015,14 @@ MonoBehaviour:
   - {fileID: 1137861437}
   - {fileID: 362731237}
   - {fileID: 1974533931}
+  soldOutOverlay: {fileID: 0}
   shipStatList: {fileID: 1988790860}
   purchaseVehicleButton: {fileID: 186652563}
   vehicleCostText: {fileID: 557336169}
   shopMain: {fileID: 0}
+  vehicle: {fileID: 0}
+  costMultiplier: 1
+  isPurchased: 0
 --- !u!1 &385739526
 GameObject:
   m_ObjectHideFlags: 0
@@ -5400,9 +5404,21 @@ MonoBehaviour:
   player: {fileID: 2047784326}
   dockedShips: []
   vehicleCardHolder: {fileID: 0}
-  vehicleCard: {fileID: 0}
+  vehicleCardPrefab: {fileID: 0}
+  partInfoItems: []
+  partItemPrefab: {fileID: 0}
+  partInfoPrefab: {fileID: 0}
+  vehicleStatPrefab: {fileID: 0}
+  partInfoHolder: {fileID: 0}
+  partOverviewObj: {fileID: 0}
+  partItemsList: []
+  partItemHolder1: {fileID: 0}
+  partItemHolder2: {fileID: 0}
   partCostText: {fileID: 1765505882}
   partBuyButton: {fileID: 832856548}
+  partDataHolder: {fileID: 0}
+  shipSpawnPosition: {fileID: 0}
+  vehiclePrefab: {fileID: 0}
   workerConnectors: []
   workerCardPrefab: {fileID: 7189430760043100950, guid: fd7574bd9f49f1144adda70fe8b7f4cd,
     type: 3}
@@ -5457,6 +5473,10 @@ MonoBehaviour:
   barracksTab: {fileID: 1835110399}
   resourcesTab: {fileID: 1366543918}
   shopObject: {fileID: 614006085}
+  tierProbability:
+    tier1Chance: 0
+    tier2Chance: 0
+    tier3Chance: 0
 --- !u!114 &791824485
 MonoBehaviour:
   m_ObjectHideFlags: 0
