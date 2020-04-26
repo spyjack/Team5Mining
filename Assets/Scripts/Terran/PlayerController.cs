@@ -53,6 +53,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Text shipLogsText = null;
 
+    [SerializeField]
+    InventoryBarConnector partsInventoryBar = null;
+
+    [SerializeField]
+    InventoryBarConnector workersInventoryBar = null;
+
     public int Money
     {
         get { return money; }
@@ -86,11 +92,13 @@ public class PlayerController : MonoBehaviour
     public void AddWorker(WorkerBase _worker)
     {
         workerInventory.Add(_worker);
+        workersInventoryBar.AddItem(_worker);
     }
 
     public void AddPart(PartBase _part)
     {
         partsInventory.Add(_part);
+        partsInventoryBar.AddItem(_part);
     }
 
     public void AddShip(Transform _ship)
