@@ -39,18 +39,29 @@ public class ResourceInventoryClass
         {
             if (_valuable.Id == _id)
             {
-                usedCapacity -= _valuable.Weight;
+                
                 _requiredCapacity = _valuable.EvaluateAmount(_amount);
+                Debug.Log("Required Capacity Old: " + _requiredCapacity);
                 if (usedCapacity + _requiredCapacity <= maxCapacity)
                 {
+                    usedCapacity -= _valuable.Weight;
                     _valuable.AddAmount(_amount);
-                }else
+                    usedCapacity += _valuable.Weight;
+                }
+                else if (usedCapacity + _requiredCapacity > maxCapacity)
                 {
+                    
                     float overCapacity = (usedCapacity + _requiredCapacity) - maxCapacity;
                     float newAmount = _amount - (overCapacity / _valuable.WeightPerUnit);
+                    Debug.Log("Over Capacity " + overCapacity + ". Adding " + newAmount + " Resources Instead.");
+                    usedCapacity -= _valuable.Weight;
                     _valuable.AddAmount(newAmount);
+
+                    if (_valuable.EvaluateAmount(_valuable.Quantity) > maxCapacity)
+                        Debug.LogError("ERROR: Too High Weight");
+
+                    usedCapacity += _valuable.Weight;
                 }
-                usedCapacity += _valuable.Weight;
                 return;
             }
         }//If it completes the loop, it doesn't contain the resource
@@ -65,8 +76,8 @@ public class ResourceInventoryClass
         else
         {
             float overCapacity = (usedCapacity + _requiredCapacity) - maxCapacity;
-            Debug.Log(overCapacity);
             float newAmount = _amount - (overCapacity/newResource.WeightPerUnit);
+            Debug.Log("Over Capacity " + overCapacity + ". Adding " + newAmount + " New Resources Instead.");
             newResource.AddAmount(newAmount);
         }
 

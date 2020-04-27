@@ -75,12 +75,12 @@ public class VehicleMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M) && vehicleMain.Inventory.UsedCapacity < vehicleMain.Inventory.Capacity)
         {
             ToggleMinerMode(minerMode);
         }
 
-        if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity)
+        if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity && minerMode)
             ToggleMinerMode(true);
 
         if (Input.GetMouseButtonDown(0) && vehicleMain.Selected)
@@ -187,8 +187,10 @@ public class VehicleMovement : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
-    void AddTargetPoint(Vector2 newTarget)
+    void AddTargetPoint(Vector3 newTarget)
     {
+        if (minerMode)
+            newTarget.z = 1;
         targetQueue.Add(newTarget);
     }
 
@@ -206,10 +208,6 @@ public class VehicleMovement : MonoBehaviour
 
     void RemoveTargetPoint(int index) //removes a target at an index
     {
-
-        Debug.Log("Removing Coordinate " + targetQueue[index] + " at index " + index);
-
-
 
         Debug.Log("Removing Coordinate " + targetQueue[index] + " at index " + index);
 
