@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moneyText.text = money + "$";
+        moneyText.text = "Funds: $" + money;
         shipLogsText.text = "Ship Logs: \n";
         foreach (Transform ship in playerShips)
         {
@@ -95,10 +95,30 @@ public class PlayerController : MonoBehaviour
         workersInventoryBar.AddItem(_worker);
     }
 
+    public float GetMaxWorkers()
+    {
+        return workersInventoryBar.MaxItems;
+    }
+
+    public float GetWorkersCount()
+    {
+        return workersInventoryBar.ItemCount;
+    }
+
     public void AddPart(PartBase _part)
     {
         partsInventory.Add(_part);
         partsInventoryBar.AddItem(_part);
+    }
+
+    public float GetMaxParts()
+    {
+        return partsInventoryBar.MaxItems;
+    }
+
+    public float GetPartsCount()
+    {
+        return partsInventoryBar.ItemCount;
     }
 
     public void AddShip(Transform _ship)

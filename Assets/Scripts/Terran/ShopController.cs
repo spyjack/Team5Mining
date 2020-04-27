@@ -719,6 +719,16 @@ public class ShopController : MonoBehaviour
     void UpdateCapacity()
     {
         currentCapacityText.text = selectedVehicle.Inventory.UsedCapacity.ToString("F2");
+        if (selectedVehicle.Inventory.UsedCapacity >= selectedVehicle.Inventory.Capacity * 0.9f)
+        {
+            currentCapacityText.color = Color.red;
+        }else if (selectedVehicle.Inventory.UsedCapacity >= selectedVehicle.Inventory.Capacity * 0.6f)
+        {
+            currentCapacityText.color = Color.yellow;
+        }else
+        {
+            currentCapacityText.color = Color.white;
+        }
         maxCapacityText.text = selectedVehicle.Inventory.Capacity.ToString("F2");
     }
 
