@@ -29,6 +29,9 @@ public class InventoryBarConnector : MonoBehaviour
     [SerializeField]
     GameObject workerItemPrefab = null;
 
+    [SerializeField]
+    ShipEditor shipEditor = null;
+
     public int ItemCount
     {
         get { return currentItems; }
@@ -37,6 +40,11 @@ public class InventoryBarConnector : MonoBehaviour
     public int MaxItems
     {
         get { return maxItems; }
+    }
+
+    public ShipEditor Editor
+    {
+        get { return shipEditor; }
     }
 
     // Start is called before the first frame update
@@ -92,6 +100,7 @@ public class InventoryBarConnector : MonoBehaviour
             {
                 print("Adding Content");
                 item.AddContent(_worker);
+                item.shipEditor = shipEditor;
                 currentItems++;
                 return;
             }
@@ -109,6 +118,7 @@ public class InventoryBarConnector : MonoBehaviour
             if (!item.HasContent)
             {
                 item.AddContent(_part);
+                item.shipEditor = shipEditor;
                 currentItems++;
                 return;
             }

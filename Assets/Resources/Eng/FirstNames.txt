@@ -100,3 +100,31 @@ Juliet -f
 Juan -m
 Steve -m
 Stella -f
+Tiffany -f
+Ellie -f
+Eli -m
+Charlie -f
+Charlie -m
+Mr. -m
+Mrs. -f
+Kian -m
+Bruce -m
+Lou -f
+Sue -f
+Lou -m
+Eiko -m
+Eiko -f
+Noah -m
+Hannah -f
+Ellen -f
+Richard -m
+'Big Boy' -m
+'Big Girl' -f
+Pheonix -f
+Neo -m
+Tolle -m
+Robo
+Autonomous
+V1
+V2
+V3

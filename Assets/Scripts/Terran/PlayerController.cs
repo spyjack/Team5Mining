@@ -48,7 +48,10 @@ public class PlayerController : MonoBehaviour
     Text moneyText = null;
 
     [SerializeField]
-    Text depthGoalsText = null;
+    Text depthGoalText = null;
+
+    [SerializeField]
+    Text depthCurrentText = null;
 
     [SerializeField]
     Text shipLogsText = null;
@@ -58,6 +61,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     InventoryBarConnector workersInventoryBar = null;
+
+    [SerializeField]
+    ShipEditor shipEditor = null;
 
     public int Money
     {
@@ -169,7 +175,8 @@ public class PlayerController : MonoBehaviour
             }
             //print("Checking Depths " + lowest);
             deepestDepth = lowest;
-            depthGoalsText.text = deepestDepth.ToString() + " m \n Goal: " + depthMarkers[nextDepth].depthLevel;
+            depthCurrentText.text = "Depth: " + deepestDepth.ToString("F2") + "m";
+            depthGoalText.text = "Goal: " + depthMarkers[nextDepth].depthLevel + "m";
             if (deepestDepth <= depthMarkers[nextDepth].depthLevel)
             {
                 
