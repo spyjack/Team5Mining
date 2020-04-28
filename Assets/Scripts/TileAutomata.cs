@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEditor;
+//using UnityEditor;
 
 public class TileAutomata : MonoBehaviour {
 

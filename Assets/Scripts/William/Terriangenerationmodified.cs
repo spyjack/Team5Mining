@@ -28,6 +28,8 @@ public class Terriangenerationmodified : MonoBehaviour
     int width;
     int height;
 
+    //public GameObject loadingScreen;
+
 
     public void Start()
     {
@@ -126,6 +128,7 @@ public class Terriangenerationmodified : MonoBehaviour
                     else
                     {
                         newMap[x, y] = 0;
+                        
                     }
                 }
 
@@ -134,7 +137,7 @@ public class Terriangenerationmodified : MonoBehaviour
         }
 
 
-
+        
         return newMap;
     }
 
