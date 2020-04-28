@@ -7,6 +7,9 @@ public class VehicleClass : MonoBehaviour
     [SerializeField]
     private ResourceInventoryClass resourceInventory = null;
 
+    [SerializeField]
+    private GameObject selectionSprite = null;
+
     [Header("Vehicle Stats")]
     [SerializeField]
     private string shipName = "S.S. Unnamed";
@@ -105,6 +108,18 @@ public class VehicleClass : MonoBehaviour
     void Update()
     {
         fuel = resourceInventory.GetResourceAmount(ResourceId.Fuel);
+
+        if (selectionSprite != null)
+        {
+            if (isSelected && !selectionSprite.activeSelf)
+            {
+                selectionSprite.SetActive(true);
+            }
+            else if (!isSelected && selectionSprite.activeSelf)
+            {
+                selectionSprite.SetActive(false);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Insert))
         {

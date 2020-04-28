@@ -48,10 +48,22 @@ public class PlayerController : MonoBehaviour
     Text moneyText = null;
 
     [SerializeField]
-    Text depthGoalsText = null;
+    Text depthGoalText = null;
+
+    [SerializeField]
+    Text depthCurrentText = null;
 
     [SerializeField]
     Text shipLogsText = null;
+
+    [SerializeField]
+    InventoryBarConnector partsInventoryBar = null;
+
+    [SerializeField]
+    InventoryBarConnector workersInventoryBar = null;
+
+    [SerializeField]
+    ShipEditor shipEditor = null;
 
     public int Money
     {
@@ -70,7 +82,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moneyText.text = money + "$";
+        moneyText.text = "Funds: $" + money;
         shipLogsText.text = "Ship Logs: \n";
         foreach (Transform ship in playerShips)
         {
@@ -86,11 +98,33 @@ public class PlayerController : MonoBehaviour
     public void AddWorker(WorkerBase _worker)
     {
         workerInventory.Add(_worker);
+        workersInventoryBar.AddItem(_worker);
+    }
+
+    public float GetMaxWorkers()
+    {
+        return workersInventoryBar.MaxItems;
+    }
+
+    public float GetWorkersCount()
+    {
+        return workersInventoryBar.ItemCount;
     }
 
     public void AddPart(PartBase _part)
     {
         partsInventory.Add(_part);
+        partsInventoryBar.AddItem(_part);
+    }
+
+    public float GetMaxParts()
+    {
+        return partsInventoryBar.MaxItems;
+    }
+
+    public float GetPartsCount()
+    {
+        return partsInventoryBar.ItemCount;
     }
 
     public void AddShip(Transform _ship)
@@ -141,7 +175,8 @@ public class PlayerController : MonoBehaviour
             }
             //print("Checking Depths " + lowest);
             deepestDepth = lowest;
-            depthGoalsText.text = deepestDepth.ToString() + " m \n Goal: " + depthMarkers[nextDepth].depthLevel;
+            depthCurrentText.text = "Depth: " + deepestDepth.ToString("F2") + "m";
+            depthGoalText.text = "Goal: " + depthMarkers[nextDepth].depthLevel + "m";
             if (deepestDepth <= depthMarkers[nextDepth].depthLevel)
             {
                 

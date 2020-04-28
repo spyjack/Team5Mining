@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VehicleController : MonoBehaviour
+public class VehicleEditorComponent : MonoBehaviour
 {
+    public PartType partType = PartType.Drill;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +15,16 @@ public class VehicleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 }
+
+public enum PartType
+{
+    Drill,
+    Cabin,
+    Engine,
+    Wheels,
+    Upgrade
+}
+

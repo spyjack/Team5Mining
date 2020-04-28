@@ -113,6 +113,8 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     private GameObject resourceListGroup = null;
 
+    [SerializeField]
+    private Text helpResourcesText = null;
     [Header("Store General UI")]
     [SerializeField]
     private GameObject marketTab = null;
@@ -122,6 +124,12 @@ public class ShopController : MonoBehaviour
 
     [SerializeField]
     private GameObject resourcesTab = null;
+
+    [SerializeField]
+    private GameObject openShopButton = null;
+
+    [SerializeField]
+    private GameObject closeShopButton = null;
 
     [SerializeField]
     private GameObject shopObject = null;
@@ -195,6 +203,22 @@ public class ShopController : MonoBehaviour
             marketTab.SetActive(false);
         }
 
+    }
+
+    public void OnOpenShop()
+    {
+        openShopButton.SetActive(false);
+        closeShopButton.SetActive(true);
+        OnMarketTab();
+        shopObject.SetActive(true);
+        
+    }
+
+    public void OnCloseShop()
+    {
+        openShopButton.SetActive(true);
+        closeShopButton.SetActive(false);
+        shopObject.SetActive(false);
     }
 
     public void SelectShipTab(VehicleClass _vehicle)
@@ -607,6 +631,8 @@ public class ShopController : MonoBehaviour
         if (dockedShips.Count == 1)
             SelectShipTab(_vehicle);
 
+        helpResourcesText.gameObject.SetActive(false);
+
         foreach (ShipSelector sellector in shipSelectors)
         {
             if (sellector.Vehicle == _vehicle)
@@ -616,8 +642,6 @@ public class ShopController : MonoBehaviour
             }
         }
         AddShipSelector(_vehicle);
-
-        
     }
 
     void UndockShip(VehicleClass _vehicle)
@@ -638,7 +662,9 @@ public class ShopController : MonoBehaviour
         {
             currentCapacityText.text = "0";
             maxCapacityText.text = "0";
-        }else
+            helpResourcesText.gameObject.SetActive(true);
+        }
+        else
         {
             SelectShipTab(dockedShips[0]);
         }
@@ -719,6 +745,16 @@ public class ShopController : MonoBehaviour
     void UpdateCapacity()
     {
         currentCapacityText.text = selectedVehicle.Inventory.UsedCapacity.ToString("F2");
+        if (selectedVehicle.Inventory.UsedCapacity >= selectedVehicle.Inventory.Capacity * 0.9f)
+        {
+            currentCapacityText.color = Color.red;
+        }else if (selectedVehicle.Inventory.UsedCapacity >= selectedVehicle.Inventory.Capacity * 0.6f)
+        {
+            currentCapacityText.color = Color.yellow;
+        }else
+        {
+            currentCapacityText.color = Color.white;
+        }
         maxCapacityText.text = selectedVehicle.Inventory.Capacity.ToString("F2");
     }
 

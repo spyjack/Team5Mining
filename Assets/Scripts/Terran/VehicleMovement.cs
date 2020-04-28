@@ -9,6 +9,12 @@ public class VehicleMovement : MonoBehaviour
     private List<Vector3> targetQueue = new List<Vector3>();
 
     [SerializeField]
+    private List<GameObject> targetPositions = new List<GameObject>();
+
+    [SerializeField]
+    private GameObject targetPrefab = null;
+
+    [SerializeField]
     private float speed = 0f;
 
     [SerializeField]
@@ -75,12 +81,12 @@ public class VehicleMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M) && vehicleMain.Inventory.UsedCapacity < vehicleMain.Inventory.Capacity)
         {
             ToggleMinerMode(minerMode);
         }
 
-        if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity)
+        if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity && minerMode)
             ToggleMinerMode(true);
 
         if (Input.GetMouseButtonDown(0) && vehicleMain.Selected)
@@ -88,8 +94,25 @@ public class VehicleMovement : MonoBehaviour
             AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }else if ((Input.GetMouseButtonDown(2) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
         {
-            targetQueue.Clear();
+            ClearTargets();
             path.vectorPath.Clear();
+        }
+
+        if (targetPositions.Count > 0)
+        {
+            if (!vehicleMain.Selected && targetPositions[0].activeInHierarchy)
+            {
+                foreach (GameObject item in targetPositions)
+                {
+                    item.SetActive(false);
+                }
+            }else if (vehicleMain.Selected && !targetPositions[0].activeInHierarchy)
+            {
+                foreach (GameObject item in targetPositions)
+                {
+                    item.SetActive(true);
+                }
+            }
         }
 
         drillPosition = rb.position + direction * drillRange;
@@ -117,7 +140,7 @@ public class VehicleMovement : MonoBehaviour
                     }
                     else
                     {
-                        targetQueue.RemoveAt(0);
+                        RemoveTargetPoint(0);
                     }
                 }
             }
@@ -187,9 +210,22 @@ public class VehicleMovement : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
-    void AddTargetPoint(Vector2 newTarget)
+
+
+    void AddTargetPoint(Vector3 newTarget)
     {
+        if (minerMode)
+            newTarget.z = 1;
         targetQueue.Add(newTarget);
+        newTarget.z = -2;
+        targetPositions.Add(Instantiate(targetPrefab, newTarget, Quaternion.identity));
+        for (int i = 0; i < targetPositions.Count; i++)
+        {
+            SpriteRenderer sprite = targetPositions[i].transform.GetComponent<SpriteRenderer>();
+            Color spriteColor = sprite.color;
+            spriteColor.a = Mathf.Max(0.1f, Mathf.Abs(i - (float)targetPositions.Count) / (float)targetPositions.Count);
+            sprite.color = spriteColor;
+        }
     }
 
     void RemoveTargetPoint(Vector2 target) //removes a target at a coordinate with a 0.1 inclusion zone, may remove multiple
@@ -200,6 +236,8 @@ public class VehicleMovement : MonoBehaviour
             {
                 Debug.Log("Removing Coordinate " + targetQueue[i] + " at index " + i);
                 targetQueue.RemoveAt(i);
+                Destroy(targetPositions[i]);
+                targetPositions.RemoveAt(i);
             }
         }
     }
@@ -209,17 +247,27 @@ public class VehicleMovement : MonoBehaviour
 
         Debug.Log("Removing Coordinate " + targetQueue[index] + " at index " + index);
 
-
-
-        Debug.Log("Removing Coordinate " + targetQueue[index] + " at index " + index);
-
         targetQueue.RemoveAt(index);
+        Destroy(targetPositions[index]);
+        targetPositions.RemoveAt(index);
+        for (int i = 0; i < targetPositions.Count; i++)
+        {
+            SpriteRenderer sprite = targetPositions[i].transform.GetComponent<SpriteRenderer>();
+            Color spriteColor = sprite.color;
+            spriteColor.a = Mathf.Max(0.1f, Mathf.Abs(i - (float)targetPositions.Count) / (float)targetPositions.Count);
+            sprite.color = spriteColor;
+        }
     }
 
     void ClearTargets()
     {
         targetQueue.Clear();
         path.vectorPath.Clear();
+        for (int i = targetPositions.Count-1; i >= 0; i--)
+        {
+            Destroy(targetPositions[i]);
+        }
+        targetPositions.Clear();
     }
 
     void ToggleMinerMode(bool isActive)
