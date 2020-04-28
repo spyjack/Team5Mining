@@ -18,6 +18,11 @@ public class InventoryBarContent : MonoBehaviour
     public WorkerBase workerContent = null;
     public PartBase partContent = null;
 
+    public ShipEditor shipEditor = null;
+
+    bool isSelected = false;
+    bool isHeld = false;
+
     public bool HasContent
     {
         get { return hasContent; }
@@ -46,6 +51,7 @@ public class InventoryBarContent : MonoBehaviour
         contentIcon.sprite = workerContent.Portrait;
         emptyContentIcon.SetActive(false);
         contentMain.SetActive(true);
+        contentButton.onClick.AddListener(OnPickUp);
     }
 
     public void AddContent(PartBase _part)
@@ -57,6 +63,7 @@ public class InventoryBarContent : MonoBehaviour
         contentIcon.sprite = partContent.Icon;
         emptyContentIcon.SetActive(false);
         contentMain.SetActive(true);
+        contentButton.onClick.AddListener(OnPickUp);
     }
 
     public void RemoveContent()
@@ -67,5 +74,24 @@ public class InventoryBarContent : MonoBehaviour
         contentIcon.sprite = null;
         emptyContentIcon.SetActive(true);
         contentMain.SetActive(false);
+    }
+
+    public void OnDrop()
+    {
+        isHeld = false;
+        emptyContentIcon.SetActive(false);
+        contentMain.SetActive(true);
+    }
+
+    public void OnPickUp()
+    {
+        if (hasContent)
+        {
+            shipEditor.Hold(this);
+            isHeld = true;
+            emptyContentIcon.SetActive(true);
+            contentMain.SetActive(false);
+            
+        }
     }
 }

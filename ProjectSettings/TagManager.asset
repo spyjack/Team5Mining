@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Lava
   - Vehicle
+  - Thumbnail
   layers:
   - Default
   - TransparentFX
