@@ -37,7 +37,13 @@ public class ShipDrilling : MonoBehaviour
             hitPosition.x = hit.point.x;
             hitPosition.y = hit.point.y;
 
-            tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+            ResourceTile _tile = tilemap.GetTile<ResourceTile>(tilemap.WorldToCell(hitPosition));
+            _tile.TakeDamage(1);
+            print("Tile Health " + _tile.Health);
+            
+            //tilemap.GetTile<ResourceTile>(tilemap.WorldToCell(hitPosition)).TakeDamage(5);
+            //tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+
             //Code for Particle system spawning.
             CreateParticle(this.transform.position);
             drill.transform.parent = drill.transform;

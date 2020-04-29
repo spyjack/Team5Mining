@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.0019607844, g: 0.0019607844, b: 0.0019607844, a: 1}
+  m_AmbientSkyColor: {r: 0.03137255, g: 0.03137255, b: 0.03137255, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -154,7 +154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 36.353}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -29.099976, y: 45.799988}
+  m_AnchoredPosition: {x: -29.099976, y: 45.80005}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &918695
@@ -710,7 +710,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25.312}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 52.6, y: -24.7}
+  m_AnchoredPosition: {x: 52.599976, y: -24.699951}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &92611556
@@ -4017,8 +4017,8 @@ MonoBehaviour:
   coalTile: {fileID: 11400000, guid: 325a9759eac07304cafc6bd536aef229, type: 2}
   botTile: {fileID: 11400000, guid: 1e90fd8145488584ca4dccd070cde782, type: 2}
   terrainTilesList:
-  - {fileID: 11400000, guid: 58f5a58eae5b65d4780ee7e760d1ae5a, type: 2}
-  - {fileID: 11400000, guid: ba051fdff7f3cac4194bd865edcac2ad, type: 2}
+  - {fileID: 11400000, guid: 5288b5961ae004b4e927dff49375ffb2, type: 2}
+  - {fileID: 11400000, guid: b17c51a624effc3448f2f25f7fe4a131, type: 2}
 --- !u!4 &847057184
 Transform:
   m_ObjectHideFlags: 0
@@ -6052,7 +6052,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.900024, y: 7.200012}
+  m_AnchoredPosition: {x: 10.900024, y: 7.2000732}
   m_SizeDelta: {x: -65.1, y: -65.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1691831283
@@ -7008,7 +7008,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: 7.200012}
+  m_AnchoredPosition: {x: -0.00012207031, y: 7.2000732}
   m_SizeDelta: {x: 0.00012207, y: -65.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1840535845
