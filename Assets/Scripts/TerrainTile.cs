@@ -28,14 +28,6 @@ public abstract class TerrainTile : Tile{
         return true;
 
     }
-    /*public void UpdateDB(Object myAT , string name)
-    {
-        AssetDatabase.CreateAsset(myAT, "Assets/Tiles/" + name + "");
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-
-    }*/
-
 
     //Kann sein, dass die hier oben stehen müssen, weil wir sie sonst bei Awake nicht instanzieren können
     public SpriteSlot[] spriteSlots;
@@ -69,12 +61,6 @@ public abstract class TerrainTile : Tile{
                 }
         }
 
-
-        //Anschließend wird geschaut, welche Tiles daneben kein Tile haben
-
-        //Je nach Index wird das jeweilige Tile ausgewählt, das passt
-        //Slot wird aus spriteSlots der mit Prefabs versehen ist gefüllt
-        //Nummer vier, falls Random Tiles reinkommen, glaube ich
         //ChangeYT
         //Standard if no sprites around
         SpriteSlot slot = spriteSlots[11];

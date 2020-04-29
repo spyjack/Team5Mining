@@ -25,6 +25,9 @@ public class Terriangenerationmodified : MonoBehaviour
     public TerrainTile coalTile;
     public AnimatedTile botTile;
 
+    [SerializeField]
+    private List<TerrainTile> terrainTilesList;
+
     int width;
     int height;
 
@@ -59,12 +62,15 @@ public class Terriangenerationmodified : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                if (terrainMap[x, y] == 1)
+                if (terrainMap[x, y] == 1 && y < Random.Range(10,20))
                 {//You were missing these curly braces, so the if statement only set the top tile as it was the first below the if statement.
-                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile);
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
-                    coalMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), coalTile);
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), terrainTilesList[0]);
+                    
+                }else if (terrainMap[x, y] == 1)
+                {
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), terrainTilesList[1]);
                 }
+                botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
             }
         }
 
