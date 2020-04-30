@@ -26,7 +26,10 @@ public class Terriangenerationmodified : MonoBehaviour
     public AnimatedTile botTile;
 
     [SerializeField]
-    private List<TerrainTile> terrainTilesList;
+    private List<ResourceTile> terrainTilesList;
+
+    [SerializeField]
+    Sprite testSprite = null;
 
     int width;
     int height;
@@ -62,19 +65,29 @@ public class Terriangenerationmodified : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                if (terrainMap[x, y] == 1 && y < Random.Range(10,20))
+                if (terrainMap[x, y] == 1 && y < Random.Range(15,25))
                 {//You were missing these curly braces, so the if statement only set the top tile as it was the first below the if statement.
-                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), terrainTilesList[0]);
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[0]));
                     
                 }else if (terrainMap[x, y] == 1)
                 {
-                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), terrainTilesList[1]);
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[1]));
                 }
                 botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
             }
         }
 
 
+    }
+
+    public ResourceTile CreateTile(ResourceTile _baseTile)
+    {
+        ResourceTile _newTile = ScriptableObject.CreateInstance<ResourceTile>();
+        _newTile.sprite = _baseTile.sprite;
+        _newTile.SetHealth(_baseTile.Health);
+        _newTile.Resource = _baseTile.Resource;
+
+        return _newTile;
     }
 
     public void initPos()
@@ -146,63 +159,6 @@ public class Terriangenerationmodified : MonoBehaviour
         
         return newMap;
     }
-
-
-    void Update()
-    {
-
-        /*if (Input.GetMouseButtonDown(0))
-        {
-            doSim(numR);
-        }
-
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            clearMap(true);
-        }
-
-
-
-        if (Input.GetMouseButton(2))
-        {
-            SaveAssetMap();
-            count++;
-        }
-        */
-
-
-
-
-
-
-
-
-    }
-
-
-    /*public void SaveAssetMap()
-    {
-        string saveName = "tmapXY_" + count;
-        var mf = GameObject.Find("Grid");
-
-        if (mf)
-        {
-            var savePath = "Assets/" + saveName + ".prefab";
-            if (PrefabUtility.CreatePrefab(savePath, mf))
-            {
-                EditorUtility.DisplayDialog("Tilemap saved", "Your Tilemap was saved under" + savePath, "Continue");
-            }
-            else
-            {
-                EditorUtility.DisplayDialog("Tilemap NOT saved", "An ERROR occured while trying to saveTilemap under" + savePath, "Continue");
-            }
-
-
-        }
-
-
-    }*/
 
     public void clearMap(bool complete)
     {

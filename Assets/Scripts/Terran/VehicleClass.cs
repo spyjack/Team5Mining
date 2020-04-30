@@ -36,6 +36,9 @@ public class VehicleClass : MonoBehaviour
     private float acceleration = 60;
 
     [SerializeField]
+    private float drillSpeed = 1;
+
+    [SerializeField]
     private bool isSelected = false;
 
     [SerializeField]
@@ -74,6 +77,23 @@ public class VehicleClass : MonoBehaviour
     public float Acceleration
     {
         get { return acceleration; }
+    }
+
+    public float DrillSpeed
+    {
+        get { return drillSpeed; }
+    }
+    public float DrillTier
+    {
+        get { return drill.Strength; }
+    }
+    public float DrillEfficiency
+    {
+        get { return drill.Efficiency; }
+    }
+    public float DrillFuelEfficiency
+    {
+        get { return drill.FuelEfficiency; }
     }
 
     public bool Selected
@@ -154,6 +174,11 @@ public class VehicleClass : MonoBehaviour
             }
 
         }
+    }
+
+    float CalculateDrillSpeed()
+    {
+        return (1 / drill.Strength);
     }
 
     float CalculateAcceleration()//Calculate acceleration, based on engine power + pilot skills over weight
@@ -257,6 +282,8 @@ public class VehicleClass : MonoBehaviour
         resourceInventory = new ResourceInventoryClass(inventoryCapacity);
         weight = CalculateWeight();
         acceleration = CalculateAcceleration();
+        if (drill != null)
+            drillSpeed = CalculateDrillSpeed();
     }
 
     public void InstallPart(PartBody _part)
@@ -325,5 +352,33 @@ public class VehicleClass : MonoBehaviour
     public void GetPart(out PartUpgrade _part)
     {
         _part = upgrade;
+    }
+
+    public bool PartExists(PartType _part)
+    {
+        switch (_part)
+        {
+            case PartType.Drill:
+                if (drill != null)
+                    return true;
+                break;
+            case PartType.Cabin:
+                if (cabin != null)
+                    return true;
+                break;
+            case PartType.Engine:
+                if (engine != null)
+                    return true;
+                break;
+            case PartType.Wheels:
+                if (wheels != null)
+                    return true;
+                break;
+            case PartType.Upgrade:
+                if (upgrade != null)
+                    return true;
+                break;
+        }
+        return false;
     }
 }

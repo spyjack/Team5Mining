@@ -4,13 +4,19 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "New Tile", menuName = "Terrain Tiles/Tile", order = 51)]
-public class ResourceTile : TerrainTile
+public class ResourceTile : Tile
 {
     //[SerializeField]
     //Vector3Int tileTransform = new Vector3Int();
 
     [SerializeField]
     int health = 1;
+
+    [SerializeField]
+    ResourceId resourceType = ResourceId.Dirt;
+
+    [SerializeField]
+    int hardness = 0;
 
     [SerializeField]
     bool isDestructible = true;
@@ -21,6 +27,17 @@ public class ResourceTile : TerrainTile
     public int Health
     {
         get { return health; }
+    }
+
+    public int Hardness
+    {
+        get { return hardness; }
+    }
+
+    public ResourceId Resource
+    {
+        get { return resourceType; }
+        set { resourceType = value; }
     }
 
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
@@ -44,5 +61,10 @@ public class ResourceTile : TerrainTile
                 Debug.Log("died");
             }
         }
+    }
+
+    public void SetHealth(int _health)
+    {
+        health = _health;
     }
 }

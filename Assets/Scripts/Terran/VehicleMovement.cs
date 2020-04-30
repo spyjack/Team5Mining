@@ -60,6 +60,11 @@ public class VehicleMovement : MonoBehaviour
         get { return drillPosition; }
     }
 
+    public bool IsMining
+    {
+        get { return minerMode; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,9 +86,10 @@ public class VehicleMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M) && vehicleMain.Inventory.UsedCapacity < vehicleMain.Inventory.Capacity)
+        if (Input.GetKeyDown(KeyCode.M) && vehicleMain.Inventory.UsedCapacity < vehicleMain.Inventory.Capacity && vehicleMain.Selected)
         {
-            ToggleMinerMode(minerMode);
+            if (vehicleMain.PartExists(PartType.Drill))
+                ToggleMinerMode(minerMode);
         }
 
         if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity && minerMode)
@@ -115,8 +121,11 @@ public class VehicleMovement : MonoBehaviour
             }
         }
 
-        drillPosition = rb.position + direction * drillRange;
-        drillBit.position = drillPosition;
+        if (direction != Vector2.zero)
+        {
+            drillPosition = rb.position + direction * drillRange;
+            drillBit.position = drillPosition;
+        }
         Debug.DrawLine(rb.position, drillBit.position, Color.blue);
     }
 
@@ -204,7 +213,7 @@ public class VehicleMovement : MonoBehaviour
         {
             
             vehicleMain.UseFuel(-2);
-            print(vehicleMain.Fuel);
+            //print(vehicleMain.Fuel);
         }
 
         yield return new WaitForSeconds(0.5f);
