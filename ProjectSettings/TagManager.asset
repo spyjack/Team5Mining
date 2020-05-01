@@ -10,6 +10,7 @@ TagManager:
   - Lava
   - Vehicle
   - Thumbnail
+  - CRT
   layers:
   - Default
   - TransparentFX
