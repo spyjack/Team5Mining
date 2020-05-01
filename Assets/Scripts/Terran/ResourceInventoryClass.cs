@@ -14,6 +14,8 @@ public class ResourceInventoryClass
     [SerializeField]
     float usedCapacity;
 
+    int fuelIndex = -1;
+
     public float UsedCapacity
     {
         get { return usedCapacity; }
@@ -144,6 +146,25 @@ public class ResourceInventoryClass
             {
                 return _valuable.Quantity;
             }
+        }
+        return 0f;
+    }
+
+    public float GetFuelAmount()
+    {
+        if (fuelIndex == -1)
+        {
+            for (int i = 0; i < resources.Count; i++)
+            {
+                if (resources[i].Id == ResourceId.Fuel)
+                {
+                    fuelIndex = i;
+                    return resources[i].Quantity;
+                }
+            }
+        }else
+        {
+            return resources[fuelIndex].Quantity;
         }
         return 0f;
     }

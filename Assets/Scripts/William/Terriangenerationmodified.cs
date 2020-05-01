@@ -14,9 +14,13 @@ public class Terriangenerationmodified : MonoBehaviour
     private int[,] ironMap;
     private int[,] copperMap;
     private int[,] goldMap;
+    private int[,] crystalMap;
+    private int[,] leadMap;
+    private int[,] aluminumMap;
+    private int[,] coalMap;
+    private int[,] hardstoneMap;
     public Vector3Int tmpSize;
     public Tilemap topMap;
-    public Tilemap coalMap;
     public Tilemap botMap;
     public TerrainTile topTile;
     public TerrainTile coalTile;
@@ -47,8 +51,12 @@ public class Terriangenerationmodified : MonoBehaviour
         height = tmpSize.y;
 
         int ironAmount = 0;
+        int coalAmount = 0;
         int copperAmount = 0;
         int goldAmount = 0;
+        int crystalsAmount = 0;
+        int aluminumAmount = 0;
+        int leadAmount = 0;
 
         if (terrainMap == null)
         {
@@ -70,6 +78,26 @@ public class Terriangenerationmodified : MonoBehaviour
             goldMap = new int[width, height];
             initPos(terrainInits[3], goldMap);
         }
+        if (crystalMap == null)
+        {
+            crystalMap = new int[width, height];
+            initPos(terrainInits[6], crystalMap);
+        }
+        if (leadMap == null)
+        {
+            leadMap = new int[width, height];
+            initPos(terrainInits[4], leadMap);
+        }
+        if (aluminumMap == null)
+        {
+            aluminumMap = new int[width, height];
+            initPos(terrainInits[5], aluminumMap);
+        }
+        if (coalMap == null)
+        {
+            coalMap = new int[width, height];
+            initPos(terrainInits[7], coalMap);
+        }
 
         foreach (TerrainProbabilities _terrainProbs in terrainInits)
         {
@@ -79,6 +107,10 @@ public class Terriangenerationmodified : MonoBehaviour
                 ironMap = genTilePos(ironMap, terrainInits[1]);
                 copperMap = genTilePos(copperMap, terrainInits[2]);
                 goldMap = genTilePos(goldMap, terrainInits[3]);
+                coalMap = genTilePos(coalMap, terrainInits[7]);
+                crystalMap = genTilePos(crystalMap, terrainInits[6]);
+                aluminumMap = genTilePos(aluminumMap, terrainInits[5]);
+                leadMap = genTilePos(leadMap, terrainInits[4]);
             }
         }
         
@@ -94,12 +126,17 @@ public class Terriangenerationmodified : MonoBehaviour
                 {
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[1]));
                 }
-                if(ironMap[x,y] == 1 && y > 20)
+                if (coalMap[x, y] == 0 && y > Random.Range(10, 25))
+                {
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[8]));
+                    coalAmount++;
+                }
+                if (ironMap[x,y] == 1 && coalMap[x, y] == 1 && y > 20)
                 {
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[2]));
                     ironAmount++;
                 }
-                if (copperMap[x, y] == 1 && ironMap[x, y] == 0 && y > Random.Range(15, 35))
+                if (copperMap[x, y] == 1 && ironMap[x, y] == 0 && coalMap[x, y] == 1 && y > Random.Range(15, 35))
                 {
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[3]));
                     copperAmount++;
@@ -109,15 +146,34 @@ public class Terriangenerationmodified : MonoBehaviour
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[4]));
                     goldAmount++;
                 }
-                
+                if (leadMap[x, y] == 1 && y > Random.Range(55, 65))
+                {
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[7]));
+                    leadAmount++;
+                }
+                if (aluminumMap[x, y] == 1 && y > Random.Range(85, 95))
+                {
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[6]));
+                    aluminumAmount++;
+                }
+                if (crystalMap[x, y] == 1 && y > Random.Range(100, 105))
+                {
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[5]));
+                    crystalsAmount++;
+                }
+
                 botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
                 
             }
         }
 
+        Debug.Log("Generated " + coalAmount + " Coal");
         Debug.Log("Generated " + ironAmount + " Iron Ore");
         Debug.Log("Generated " + copperAmount + " Copper Ore");
         Debug.Log("Generated " + goldAmount + " Gold Ore");
+        Debug.Log("Generated " + crystalsAmount + " Rare Crystals");
+        Debug.Log("Generated " + aluminumAmount + " Aluminum Ore");
+        Debug.Log("Generated " + leadAmount + " Lead Ore");
     }
 
     public ResourceTile CreateTile(ResourceTile _baseTile)

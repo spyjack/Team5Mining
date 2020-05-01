@@ -10,8 +10,5 @@ EditorBuildSettings:
     guid: 72f60c5533bb99944acf2a76ebe08a39
   - enabled: 1
     path: Assets/Scenes/GameScene-Official.unity
-    guid: 3c7bb36b6cc015b44a2afceb3aa9552a
-  - enabled: 1
-    path: Assets/Scenes/GameScene-OrionTesting.unity
-    guid: 875e18d56f5c84f4eae46e22f8fcef16
+    guid: 69d1405ab9eb7a84db51a93ef090040f
   m_configObjects: {}

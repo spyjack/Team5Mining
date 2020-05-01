@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca050466eb673d1458aa8b4fb53e9ba3, type: 3}
-  m_Name: IronOre
+  m_Name: Coal
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -5930158604282628446, guid: 6bcee8482f0a4e24ca060d441100a446,
+  m_Sprite: {fileID: -783099398357981974, guid: c333774cd8e1f3044a811bf72d7280e1,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
@@ -36,10 +36,9 @@ MonoBehaviour:
   m_Flags: 1
   m_ColliderType: 2
   tileTransform: {x: 0, y: 0, z: 0}
-  health: 120
-  resourceType: 4
+  health: 40
+  resourceType: 10
   hardness: 1
   isDestructible: 1
   destructionOverlay: {fileID: 0}
-  glowObject: {fileID: 1022720826224035673, guid: 3699cd68ac3977e4cb89be7b995a3cc1,
-    type: 3}
+  glowObject: {fileID: 0}

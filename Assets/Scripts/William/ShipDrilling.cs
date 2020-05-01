@@ -32,7 +32,7 @@ public class ShipDrilling : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (!drillActive && other.tag == "Ground")
+        if (!drillActive && other.tag == "Ground" && vehicleMain.Inventory.GetFuelAmount() > 0)
         {
             StartCoroutine(DrillRepeated());
         }else
@@ -56,10 +56,11 @@ public class ShipDrilling : MonoBehaviour
         int _hardnessCount = 0;
         while (true)
         {
+            float gasLeft = vehicleMain.Inventory.GetFuelAmount();
             if (!drillActive && vehicleMover.IsMining)
             {
                 drillActive = true;
-            }else if (!vehicleMover.IsMining)
+            }else if (!vehicleMover.IsMining || gasLeft <= 0)
             {
                 drillActive = false;
                 yield break;

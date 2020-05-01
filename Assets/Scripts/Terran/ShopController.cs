@@ -85,7 +85,7 @@ public class ShopController : MonoBehaviour
     VehicleClass selectedVehicle = null;
 
     [SerializeField]
-    int selectedVehicleIndex = 0;
+    int selectedVehicleIndex = -1;
 
     [SerializeField]
     GameObject shipSelectorPrefab = null;
@@ -223,11 +223,14 @@ public class ShopController : MonoBehaviour
 
     public void SelectShipTab(VehicleClass _vehicle)
     {
+        if (shipSelectors.Count > 0)
+        shipSelectors[selectedVehicleIndex].transform.localScale = new Vector3(1, 1, 1);
         for (int i = 0; i < shipSelectors.Count; i++)
         {
             if (shipSelectors[i].Vehicle == _vehicle)
             {
                 selectedVehicleIndex = i;
+                shipSelectors[i].transform.localScale = new Vector3(1, 1.1f, 1);
                 break;
             }
         }

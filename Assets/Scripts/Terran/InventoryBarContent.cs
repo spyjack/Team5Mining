@@ -91,7 +91,6 @@ public class InventoryBarContent : MonoBehaviour
             isHeld = true;
             emptyContentIcon.SetActive(true);
             contentMain.SetActive(false);
-            
         }
     }
 }

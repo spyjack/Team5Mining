@@ -35,8 +35,10 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 2
-  health: 120
+  tileTransform: {x: 0, y: 0, z: 0}
+  health: 80
   resourceType: 6
   hardness: 2
   isDestructible: 1
   destructionOverlay: {fileID: 0}
+  glowObject: {fileID: 0}

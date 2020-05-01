@@ -3800,9 +3800,28 @@ MonoBehaviour:
     birthLimit: 10
     deathLimit: 2
     iterations: 7
+  - resourceType: 7
+    iniChance: 18
+    birthLimit: 10
+    deathLimit: 2
+    iterations: 7
+  - resourceType: 8
+    iniChance: 18
+    birthLimit: 10
+    deathLimit: 2
+    iterations: 7
+  - resourceType: 9
+    iniChance: 18
+    birthLimit: 10
+    deathLimit: 2
+    iterations: 7
+  - resourceType: 10
+    iniChance: 48
+    birthLimit: 4
+    deathLimit: 2
+    iterations: 8
   tmpSize: {x: 80, y: 160, z: 0}
   topMap: {fileID: 1509603832}
-  coalMap: {fileID: 2020361061}
   botMap: {fileID: 143468885}
   topTile: {fileID: 11400000, guid: 58f5a58eae5b65d4780ee7e760d1ae5a, type: 2}
   coalTile: {fileID: 11400000, guid: 325a9759eac07304cafc6bd536aef229, type: 2}
@@ -3813,6 +3832,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1cd425386616e1c4aacc0fb6b7246a99, type: 2}
   - {fileID: 11400000, guid: ad1d3b39977cc644fa46c3a351bafc56, type: 2}
   - {fileID: 11400000, guid: 2b77641915679794eb92b3f10b4548f7, type: 2}
+  - {fileID: 11400000, guid: 3be9a89a0375f78439e5f40e506cd9ed, type: 2}
+  - {fileID: 11400000, guid: c1d185cd4633f264f8cd938b1cbe3de2, type: 2}
+  - {fileID: 11400000, guid: 7c326b0758bbfa4468d628688ef0f772, type: 2}
+  - {fileID: 11400000, guid: 420c3ba880a0b2b4d8ca23095e8a0dbf, type: 2}
   testSprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
     type: 3}
 --- !u!4 &847057184
@@ -7569,7 +7592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5b268486ac2c846986a8560d7aab32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 100
+  money: 25000
   workerInventory: []
   partsInventory: []
   depthLabel: {fileID: 136213136}
@@ -8046,6 +8069,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 312065265839323754, guid: f865597a29e467e4fa371b3a6051d59f,
+        type: 3}
+      propertyPath: shipEditor
+      value: 
+      objectReference: {fileID: 2047784327}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f865597a29e467e4fa371b3a6051d59f, type: 3}
 --- !u!114 &4303793976837450684
@@ -8398,7 +8426,7 @@ MonoBehaviour:
     type: 3}
   workerItemPrefab: {fileID: 8168691339628166291, guid: 740c9b01d8a1755418061723d5b47a98,
     type: 3}
-  shipEditor: {fileID: 0}
+  shipEditor: {fileID: 2047784327}
 --- !u!1001 &6168588788375782226
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -818,7 +818,7 @@ MonoBehaviour:
   baseWeight: 50
   weight: 100
   fuel: 60
-  fuelMax: 1500
+  fuelMax: 100
   acceleration: 60
   drillSpeed: 1
   isSelected: 0

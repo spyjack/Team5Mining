@@ -46,6 +46,7 @@ public class ShipSelector : MonoBehaviour
 
     void SelectTab()
     {
+        this.transform.localScale = new Vector3(1, 1.1f, 1);
         shopMain.SelectShipTab(vehicleIndex);
     }
 
