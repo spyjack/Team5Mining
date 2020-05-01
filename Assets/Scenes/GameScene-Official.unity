@@ -2048,7 +2048,6 @@ GameObject:
   - component: {fileID: 444480640}
   - component: {fileID: 444480642}
   - component: {fileID: 444480643}
-  - component: {fileID: 444480644}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -2152,33 +2151,6 @@ MonoBehaviour:
   sunLight: {fileID: 1612446893}
   maxHeight: 20
   maxDepth: 10
---- !u!114 &444480644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444480638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7824b14e08ebf948ad3d2c9ce9079ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: 94c3e53d2beba7c44bfe4a68d0b5879f, type: 3}
-  bend: 8
-  scanlineSize1: 200
-  scanlineSpeed1: -10
-  scanlineSize2: 20
-  scanlineSpeed2: -3
-  scanlineAmount: 0.025
-  vignetteSize: 1.9
-  vignetteSmoothness: 0.6
-  vignetteEdgeRound: 8
-  noiseSize: 50
-  noiseAmount: 0.025
-  redOffset: {x: -0.005, y: 0}
-  blueOffset: {x: 0, y: -0.001}
-  greenOffset: {x: -0.005, y: 0.0025}
 --- !u!1 &458833790
 GameObject:
   m_ObjectHideFlags: 0
@@ -3441,9 +3413,12 @@ MonoBehaviour:
   maxCapacityText: {fileID: 1736608191}
   dockedShipsGroup: {fileID: 1813781272}
   resourceListGroup: {fileID: 1718701718}
+  helpResourcesText: {fileID: 0}
   marketTab: {fileID: 1673783719}
   barracksTab: {fileID: 1835110399}
   resourcesTab: {fileID: 1366543918}
+  openShopButton: {fileID: 0}
+  closeShopButton: {fileID: 0}
   shopObject: {fileID: 614006085}
   tierProbability:
     tier1Chance: 75
@@ -3662,7 +3637,6 @@ MonoBehaviour:
   topTile: {fileID: 11400000, guid: 58f5a58eae5b65d4780ee7e760d1ae5a, type: 2}
   coalTile: {fileID: 11400000, guid: 325a9759eac07304cafc6bd536aef229, type: 2}
   botTile: {fileID: 11400000, guid: 1e90fd8145488584ca4dccd070cde782, type: 2}
-  loadingScreen: {fileID: 0}
 --- !u!4 &847057184
 Transform:
   m_ObjectHideFlags: 0
@@ -4799,7 +4773,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.299988, y: 7.200012}
+  m_AnchoredPosition: {x: -9.299988, y: 7.199951}
   m_SizeDelta: {x: 18.6, y: -65.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1509603828
@@ -5195,7 +5169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.4, y: 0}
+  m_AnchoredPosition: {x: -4.399994, y: 0}
   m_SizeDelta: {x: -45.4, y: -16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1603188305
@@ -5444,7 +5418,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.900024, y: 7.200012}
+  m_AnchoredPosition: {x: 10.900024, y: 7.199951}
   m_SizeDelta: {x: -65.1, y: -65.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1691831283
@@ -6270,7 +6244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: 7.200012}
+  m_AnchoredPosition: {x: -0.00012207031, y: 7.199951}
   m_SizeDelta: {x: 0.00012207, y: -65.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1840535845
@@ -7062,10 +7036,12 @@ MonoBehaviour:
   dirtyNav: 1
   camBounds: {fileID: 2047784324}
   moneyText: {fileID: 1768535905}
-  depthGoalsText: {fileID: 1931925227}
+  depthGoalText: {fileID: 0}
+  depthCurrentText: {fileID: 0}
   shipLogsText: {fileID: 2100242060}
   partsInventoryBar: {fileID: 4303793977628820491}
   workersInventoryBar: {fileID: 766722761}
+  shipEditor: {fileID: 0}
 --- !u!1 &2060927852
 GameObject:
   m_ObjectHideFlags: 0
@@ -7967,6 +7943,7 @@ MonoBehaviour:
     type: 3}
   workerItemPrefab: {fileID: 8168691339628166291, guid: 740c9b01d8a1755418061723d5b47a98,
     type: 3}
+  shipEditor: {fileID: 0}
 --- !u!1001 &6746278845028057719
 PrefabInstance:
   m_ObjectHideFlags: 0
