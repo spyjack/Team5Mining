@@ -11,6 +11,9 @@ public class ShipDrilling : MonoBehaviour
     public GameObject drill;
 
     [SerializeField]
+    LayerMask miningLayerMask = new LayerMask();
+
+    [SerializeField]
     public CircleCollider2D drillCollider = null;
 
     [SerializeField]
@@ -19,12 +22,107 @@ public class ShipDrilling : MonoBehaviour
     [SerializeField]
     VehicleMovement vehicleMover = null;
 
+    [SerializeField]
+    bool drillActive = false;
+
     //Added object pooling as it currently instantiates waaay too many particles - Terran
     [SerializeField]
     List<GameObject> drillParticlesPooled = new List<GameObject>();
 
-    
-    public void OnCollisionEnter2D(Collision2D collision)
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!drillActive && other.tag == "Ground")
+        {
+            StartCoroutine(DrillRepeated());
+        }else
+        {
+            print("Broke Drill");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        StopCoroutine(DrillRepeated());
+    }
+
+    IEnumerator DrillRepeated()
+    {
+        if (drillActive || !vehicleMover.IsMining)
+        {
+            yield break;
+        }
+        print("New Coroutine Started!");
+        int _hardnessCount = 0;
+        while (true)
+        {
+            if (!drillActive && vehicleMover.IsMining)
+            {
+                drillActive = true;
+            }else if (!vehicleMover.IsMining)
+            {
+                drillActive = false;
+                yield break;
+            }
+            _hardnessCount = 0;
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, drillCollider.radius, transform.forward, drillCollider.radius, miningLayerMask);
+            if (hits.Length > 0)
+            {
+                print(hits[0].transform.gameObject.layer);
+                foreach (RaycastHit2D hit in hits)
+                {
+                    //print("DrillRepeated");
+                    Vector2 hitPosition = new Vector2();
+
+                    hitPosition.x = hit.point.x;
+                    hitPosition.y = hit.point.y;
+
+                    hitPosition.x = hit.point.x;
+                    hitPosition.y = hit.point.y;
+
+                    if (tilemap.GetTile(tilemap.WorldToCell(hitPosition)) != null)
+                    {
+                        ResourceTile _tile = tilemap.GetTile<ResourceTile>(tilemap.WorldToCell(hitPosition));
+                        if (_tile.Hardness <= vehicleMain.DrillTier)
+                        {
+                            _tile.TakeDamage(5);
+                            print("Tile Health " + _tile.Health);
+                            if (_tile.Health <= 0)
+                            {
+                                //Add a resource
+                                vehicleMain.Inventory.AddResource(_tile.Resource, 1 * vehicleMain.DrillEfficiency);
+                                tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+                            }
+                        }else
+                        {
+                            _hardnessCount++;
+                        }
+                        vehicleMain.UseFuel(-1 * vehicleMain.DrillFuelEfficiency);
+                    }
+                   
+                    //Code for Particle system spawning.
+                    //CreateParticle(this.transform.position);
+                    drill.transform.parent = drill.transform;
+                    //Consume a fuel with every block mined
+
+                    if (_hardnessCount >= hits.Length)
+                    {
+                        Debug.LogWarning("Soil is too hard");
+                        drillActive = false;
+                        yield break;
+                    }
+                }
+                GameObject.FindObjectOfType<PlayerController>().dirtyNav = true;
+            }else
+            {
+                drillActive = false;
+                yield break;
+            }
+            yield return new WaitForSeconds(vehicleMain.DrillSpeed);
+        }
+    }
+
+    /*public void OnCollisionEnter2D(Collision2D collision)
     {
         Vector3 hitPosition = Vector3.zero;
         foreach (ContactPoint2D hit in collision.contacts)
@@ -37,19 +135,32 @@ public class ShipDrilling : MonoBehaviour
             hitPosition.x = hit.point.x;
             hitPosition.y = hit.point.y;
 
-            tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+            if (tilemap.GetTile(tilemap.WorldToCell(hitPosition)) != null)
+            {
+                ResourceTile _tile = tilemap.GetTile<ResourceTile>(tilemap.WorldToCell(hitPosition));
+                _tile.TakeDamage(5);
+                print("Tile Health " + _tile.Health);
+                if (_tile.Health <= 0)
+                {
+                    vehicleMain.Inventory.AddResource(_tile.Resource, 1);
+                    tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+                }
+            }
+            //tilemap.GetTile<ResourceTile>(tilemap.WorldToCell(hitPosition)).TakeDamage(5);
+            //tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+
             //Code for Particle system spawning.
             CreateParticle(this.transform.position);
             drill.transform.parent = drill.transform;
             //Consume a fuel with every block mined
             vehicleMain.UseFuel(-1);
             //Add a resource
-            vehicleMain.Inventory.AddRandomResource(1);
+            //vehicleMain.Inventory.AddRandomResource(1);
         }
         GameObject.FindObjectOfType<PlayerController>().dirtyNav = true;
-    }
+    }*/
 
-    
+
 
     void CreateParticle(Vector2 position)
     {

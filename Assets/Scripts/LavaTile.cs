@@ -43,11 +43,11 @@ public class LavaTile : TerrainTile {
 #endif
 
     //Heritage from TerrainTile could do this with  GetTileData too?
-    public override Sprite[] GetSprite(string textName)
-    {
-        Sprite[] myTextures= base.GetSprite(textName);
-        return myTextures;
-    }
+    //public override Sprite[] GetSprite(string textName)
+    //{
+    //    Sprite[] myTextures= base.GetSprite(textName);
+    //    return myTextures;
+    //}
 
 
 }

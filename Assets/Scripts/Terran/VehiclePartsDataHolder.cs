@@ -133,10 +133,10 @@ public class VehiclePartsDataHolder : MonoBehaviour
                 _part = partsDrillList[0];
                 return;
             case 2:
-                _part = partsDrillList[0];
+                _part = partsDrillList[1];
                 return;
             case 3:
-                _part = partsDrillList[0];
+                _part = partsDrillList[2];
                 return;
         }
         _part = null;

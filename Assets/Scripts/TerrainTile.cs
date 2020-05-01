@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.Tilemaps;
 
-public abstract class TerrainTile : Tile{
+public abstract class TerrainTile : Tile
+{
 
 
     List<int> specialvals;
@@ -24,18 +25,12 @@ public abstract class TerrainTile : Tile{
         specialvals.Add(2);
         specialvalsCalc = new List<int> { 115,1015,2015,3007,3115,3013,3007,3015,3113,3115,4002,4115,5014,5015,5108,5115,6015,6100,6115,8115,9015};
 
+        //Debug.Log(health);
+        //go = new GameObject();
 
         return true;
 
     }
-    /*public void UpdateDB(Object myAT , string name)
-    {
-        AssetDatabase.CreateAsset(myAT, "Assets/Tiles/" + name + "");
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-
-    }*/
-
 
     //Kann sein, dass die hier oben stehen müssen, weil wir sie sonst bei Awake nicht instanzieren können
     public SpriteSlot[] spriteSlots;
@@ -44,10 +39,6 @@ public abstract class TerrainTile : Tile{
     //Ich denke die Funktion wird aufgerufen, wenn das Tile sich selbst auf die Tilemap zeichnet
 	public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
 	{
-        
-
-        //Hier wird gecheckt, ob oben, rechts, links oder unten schon ein Walltile ist
-        //Ein Index wird gebildet
         //Probably so that no exception is produced
         //Acid Tile has less than WallTile
         if (spriteSlots.Length < 9) return;
@@ -69,19 +60,11 @@ public abstract class TerrainTile : Tile{
                 }
         }
 
-
-        //Anschließend wird geschaut, welche Tiles daneben kein Tile haben
-
-        //Je nach Index wird das jeweilige Tile ausgewählt, das passt
-        //Slot wird aus spriteSlots der mit Prefabs versehen ist gefüllt
-        //Nummer vier, falls Random Tiles reinkommen, glaube ich
         //ChangeYT
         //Standard if no sprites around
         SpriteSlot slot = spriteSlots[11];
         	switch (mask)
         	{
-            //Andersrum denken: Welche Position der Acht-Tiles gehört zu welcher Summe?
-
                 //YT New
         		case  1: slot = spriteSlots[11]; break;
         		case  4: slot = spriteSlots[1]; break;
@@ -97,7 +80,6 @@ public abstract class TerrainTile : Tile{
         		case 12: slot = spriteSlots[2]; break;
         		case 13: slot = spriteSlots[7]; break;
         		case 14: slot = spriteSlots[1]; break;
-                //Wieso gibt es den nicht für WallTile? Weil das dann Floor ist?
         		case 15: slot = spriteSlots[6]; break;
         		case 115: slot = spriteSlots[9]; break;
         		case 1015: slot = spriteSlots[3]; break;

@@ -1,4 +1,4 @@
-﻿Shader "Hidden/CTRShader"
+﻿Shader "Custom/CTRShader"
 {
 	Properties
 	{

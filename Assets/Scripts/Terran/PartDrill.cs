@@ -6,7 +6,7 @@ using UnityEngine;
 public class PartDrill : PartBase
 {
     [SerializeField]
-    int _strengthLevel = 1; //What tier of terrain can it mine
+    int _strengthLevel = 1; //What tier of terrain can it mine + how fast it mines
 
     [SerializeField]
     float _efficiency = 0.25f; //What percent of minerals it collects

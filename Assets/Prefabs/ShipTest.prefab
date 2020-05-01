@@ -261,7 +261,6 @@ GameObject:
   - component: {fileID: 6746278844054704885}
   - component: {fileID: 6746278844054704883}
   - component: {fileID: 6746278844054704884}
-  - component: {fileID: 6746278844054704882}
   m_Layer: 2
   m_Name: DrillBit
   m_TagString: Untagged
@@ -294,12 +293,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.099999964, y: 0}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.55
+  m_Radius: 0.75
 --- !u!114 &6746278844054704884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,28 +316,14 @@ MonoBehaviour:
     type: 3}
   drillBitPos: {x: 0, y: 0, z: 0}
   drill: {fileID: 6746278844054704886}
+  miningLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   drillCollider: {fileID: 6746278844054704883}
   vehicleMain: {fileID: 6746278845522855346}
   vehicleMover: {fileID: 6746278845522855345}
+  drillActive: 0
   drillParticlesPooled: []
---- !u!114 &6746278844054704882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6746278844054704886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3f32f7a3d958744b7758df52782953, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  castDistance: 1
-  raycastPoint: {fileID: 6746278844054704885}
-  layer:
-    serializedVersion: 2
-    m_Bits: 256
-  map: {fileID: 0}
 --- !u!1 &6746278844481943566
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +349,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6746278844481943566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.179, y: 0.5, z: -0.25}
+  m_LocalPosition: {x: 0.001, y: 0.003, z: -0.25}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 6746278844054704885}
@@ -406,7 +391,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7757344281845475372, guid: c75da71a4fc381d4693cbff279dd78cc,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -833,8 +818,9 @@ MonoBehaviour:
   baseWeight: 50
   weight: 100
   fuel: 60
-  fuelMax: 150
+  fuelMax: 1500
   acceleration: 60
+  drillSpeed: 1
   isSelected: 0
   cost: 10
   crew:
@@ -860,9 +846,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0.25}
+  m_Size: {x: 1.25, y: 1.25}
+  m_Direction: 0
 --- !u!114 &6746278845522855348
 MonoBehaviour:
   m_ObjectHideFlags: 0

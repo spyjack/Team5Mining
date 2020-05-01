@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private int money = 100;
+    private double money = 100;
 
     [SerializeField]
     private List<WorkerBase> workerInventory = new List<WorkerBase>();
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     ShipEditor shipEditor = null;
 
-    public int Money
+    public double Money
     {
         get { return money; }
         set { money = value; }

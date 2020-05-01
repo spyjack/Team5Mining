@@ -111,7 +111,7 @@ public class WorkerDataHolder : MonoBehaviour
 
     public static void ReadString(string filename, List<string> output)
     {
-        string path = "Assets/Resources/Eng/" + filename;
+        string path = Application.dataPath + "/StreamingAssets/Eng/" + filename;
 
         //Read the text from directly from the test.txt file
         StreamReader reader = new StreamReader(path);

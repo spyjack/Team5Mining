@@ -66,6 +66,15 @@ public class ResourceClass
             case ResourceId.Lead:
                 weightPerUnit = 321.6f;
                 break;
+            case ResourceId.Aluminum:
+                weightPerUnit = 169f;
+                break;
+            case ResourceId.Crystals:
+                weightPerUnit = 600f;
+                break;
+            case ResourceId.Coal:
+                weightPerUnit = 53.4f;
+                break;
         }
     }
 
@@ -90,6 +99,9 @@ public enum ResourceId
     Iron,
     Copper,
     Gold,
-    Lead
+    Lead,
+    Aluminum,
+    Crystals,
+    Coal
 
 }

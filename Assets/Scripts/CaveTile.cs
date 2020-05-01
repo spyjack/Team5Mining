@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class CaveTile : TerrainTile {
 
-
+/*
 #if UNITY_EDITOR
     [MenuItem("Assets/Create/CaveTile",false,1)]
         private static void CreateIslandTile()
@@ -44,14 +44,14 @@ public class CaveTile : TerrainTile {
         return myTextures;
     }
 #endif
-
+*/
 
     //Heritage from TerrainTile could do this with  GetTileData too?
-    public override Sprite[] GetSprite(string textName)
-    {
-        Sprite[] myTextures= base.GetSprite(textName);
-        return myTextures;
-    }
+    //public override Sprite[] GetSprite(string textName)
+    //{
+    //    Sprite[] myTextures= base.GetSprite(textName);
+    //    return myTextures;
+    //}
 
 
 }

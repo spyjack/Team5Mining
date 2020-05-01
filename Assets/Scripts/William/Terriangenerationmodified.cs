@@ -5,18 +5,15 @@ using UnityEngine;
 
 public class Terriangenerationmodified : MonoBehaviour
 {
-    [Range(0, 100)]
-    public int iniChance;
-    [Range(1, 8)]
-    public int birthLimit;
-    [Range(1, 8)]
-    public int deathLimit;
+    [SerializeField]
+    List<TerrainProbabilities> terrainInits = new List<TerrainProbabilities>();
 
-    [Range(1, 10)]
-    public int numR;
     private int count = 0;
 
     private int[,] terrainMap;
+    private int[,] ironMap;
+    private int[,] copperMap;
+    private int[,] goldMap;
     public Vector3Int tmpSize;
     public Tilemap topMap;
     public Tilemap coalMap;
@@ -24,6 +21,12 @@ public class Terriangenerationmodified : MonoBehaviour
     public TerrainTile topTile;
     public TerrainTile coalTile;
     public AnimatedTile botTile;
+
+    [SerializeField]
+    private List<ResourceTile> terrainTilesList;
+
+    [SerializeField]
+    Sprite testSprite = null;
 
     int width;
     int height;
@@ -33,51 +36,113 @@ public class Terriangenerationmodified : MonoBehaviour
 
     public void Start()
     {
-        doSim(numR);
+        doSim();
     }
 
 
-    public void doSim(int nu)
+    public void doSim()
     {
         clearMap(false);
         width = tmpSize.x;
         height = tmpSize.y;
 
+        int ironAmount = 0;
+        int copperAmount = 0;
+        int goldAmount = 0;
+
         if (terrainMap == null)
         {
             terrainMap = new int[width, height];
-            initPos();
+            initPos(terrainInits[0], terrainMap);
         }
-
-
-        for (int i = 0; i < nu; i++)
+        if (ironMap == null)
         {
-            terrainMap = genTilePos(terrainMap);
+            ironMap = new int[width, height];
+            initPos(terrainInits[1], ironMap);
+        }
+        if (copperMap == null)
+        {
+            copperMap = new int[width, height];
+            initPos(terrainInits[2], copperMap);
+        }
+        if (goldMap == null)
+        {
+            goldMap = new int[width, height];
+            initPos(terrainInits[3], goldMap);
         }
 
+        foreach (TerrainProbabilities _terrainProbs in terrainInits)
+        {
+            for (int i = 0; i < _terrainProbs.iniChance; i++)
+            {
+                terrainMap = genTilePos(terrainMap, terrainInits[0]);
+                ironMap = genTilePos(ironMap, terrainInits[1]);
+                copperMap = genTilePos(copperMap, terrainInits[2]);
+                goldMap = genTilePos(goldMap, terrainInits[3]);
+            }
+        }
+        
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                if (terrainMap[x, y] == 1)
+                if (terrainMap[x, y] == 1 && y < Random.Range(15,25))
                 {//You were missing these curly braces, so the if statement only set the top tile as it was the first below the if statement.
-                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile);
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
-                    coalMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), coalTile);
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[0]));
+                    
+                }else if (terrainMap[x, y] == 1)
+                {
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[1]));
                 }
+                if(ironMap[x,y] == 1 && y > 20)
+                {
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[2]));
+                    ironAmount++;
+                }
+                if (copperMap[x, y] == 1 && ironMap[x, y] == 0 && y > Random.Range(15, 35))
+                {
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[3]));
+                    copperAmount++;
+                }
+                if (goldMap[x, y] == 1 && y > Random.Range(45, 55))
+                {
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[4]));
+                    goldAmount++;
+                }
+                
+                botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
+                
             }
         }
 
-
+        Debug.Log("Generated " + ironAmount + " Iron Ore");
+        Debug.Log("Generated " + copperAmount + " Copper Ore");
+        Debug.Log("Generated " + goldAmount + " Gold Ore");
     }
 
-    public void initPos()
+    public ResourceTile CreateTile(ResourceTile _baseTile)
+    {
+        ResourceTile _newTile = ScriptableObject.CreateInstance<ResourceTile>();
+        _newTile.sprite = _baseTile.sprite;
+        _newTile.SetHealth(_baseTile.Health);
+        _newTile.Resource = _baseTile.Resource;
+
+        return _newTile;
+    }
+
+    public void initPos(TerrainProbabilities _terrainInits, int[,] _map)
     {
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                terrainMap[x, y] = Random.Range(1, 101) < iniChance ? 1 : 0;
+                if (Random.Range(1, 101) < _terrainInits.iniChance)
+                {
+                    _map[x, y] = 1;
+                }else
+                {
+                    _map[x, y] = 0;
+                }
             }
 
         }
@@ -85,7 +150,7 @@ public class Terriangenerationmodified : MonoBehaviour
     }
 
 
-    public int[,] genTilePos(int[,] oldMap)
+    public int[,] genTilePos(int[,] oldMap, TerrainProbabilities _terrainInits)
     {
         int[,] newMap = new int[width, height];
         int neighb;
@@ -112,7 +177,7 @@ public class Terriangenerationmodified : MonoBehaviour
 
                 if (oldMap[x, y] == 1)
                 {
-                    if (neighb < deathLimit) newMap[x, y] = 0;
+                    if (neighb < _terrainInits.deathLimit) newMap[x, y] = 0;
 
                     else
                     {
@@ -123,7 +188,7 @@ public class Terriangenerationmodified : MonoBehaviour
 
                 if (oldMap[x, y] == 0)
                 {
-                    if (neighb > birthLimit) newMap[x, y] = 1;
+                    if (neighb > _terrainInits.birthLimit) newMap[x, y] = 1;
 
                     else
                     {
@@ -141,63 +206,6 @@ public class Terriangenerationmodified : MonoBehaviour
         return newMap;
     }
 
-
-    void Update()
-    {
-
-        /*if (Input.GetMouseButtonDown(0))
-        {
-            doSim(numR);
-        }
-
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            clearMap(true);
-        }
-
-
-
-        if (Input.GetMouseButton(2))
-        {
-            SaveAssetMap();
-            count++;
-        }
-        */
-
-
-
-
-
-
-
-
-    }
-
-
-    /*public void SaveAssetMap()
-    {
-        string saveName = "tmapXY_" + count;
-        var mf = GameObject.Find("Grid");
-
-        if (mf)
-        {
-            var savePath = "Assets/" + saveName + ".prefab";
-            if (PrefabUtility.CreatePrefab(savePath, mf))
-            {
-                EditorUtility.DisplayDialog("Tilemap saved", "Your Tilemap was saved under" + savePath, "Continue");
-            }
-            else
-            {
-                EditorUtility.DisplayDialog("Tilemap NOT saved", "An ERROR occured while trying to saveTilemap under" + savePath, "Continue");
-            }
-
-
-        }
-
-
-    }*/
-
     public void clearMap(bool complete)
     {
 
@@ -213,4 +221,21 @@ public class Terriangenerationmodified : MonoBehaviour
 
 
 
+}
+
+[System.Serializable]
+public struct TerrainProbabilities
+{
+    public ResourceId resourceType;
+
+
+    [Range(0, 100)]
+    public int iniChance;
+    [Range(1, 16)]
+    public int birthLimit;
+    [Range(1, 16)]
+    public int deathLimit;
+
+    [Range(1, 10)]
+    public int iterations;
 }

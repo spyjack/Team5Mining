@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae22fa4f4b03f2b46bab2a09d4c743fd, type: 3}
-  m_Name: CaveTile
+  m_Name: StoneTile
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+  m_Sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
@@ -37,55 +37,55 @@ MonoBehaviour:
   m_ColliderType: 2
   spriteSlots:
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   - sprites:
-    - sprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    - sprite: {fileID: -562605217060080129, guid: 6bcee8482f0a4e24ca060d441100a446,
         type: 3}
       probability: 1
   preview: {fileID: 0}
