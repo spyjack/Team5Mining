@@ -202,6 +202,15 @@ public class ResourceInventoryClass
             case ResourceId.Lead:
                 return "Lead Ore";
 
+            case ResourceId.Aluminum:
+                return "Aluminum Ore";
+
+            case ResourceId.Crystals:
+                return "Rare Crystals";
+
+            case ResourceId.Coal:
+                return "Coal";
+
             default:
                 return "Unkown Material";
                 

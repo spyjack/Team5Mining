@@ -3446,11 +3446,11 @@ MonoBehaviour:
     buyPricerPerUnit: 0
     saleModifier: 1
   - resource: 4
-    salePricerPerUnit: 84
+    salePricerPerUnit: 100
     buyPricerPerUnit: 0
     saleModifier: 1
   - resource: 5
-    salePricerPerUnit: 500
+    salePricerPerUnit: 150
     buyPricerPerUnit: 0
     saleModifier: 1
   - resource: 6
@@ -3459,6 +3459,18 @@ MonoBehaviour:
     saleModifier: 1
   - resource: 7
     salePricerPerUnit: 600
+    buyPricerPerUnit: 0
+    saleModifier: 1
+  - resource: 8
+    salePricerPerUnit: 500
+    buyPricerPerUnit: 0
+    saleModifier: 1
+  - resource: 9
+    salePricerPerUnit: 1000
+    buyPricerPerUnit: 0
+    saleModifier: 1
+  - resource: 10
+    salePricerPerUnit: 50
     buyPricerPerUnit: 0
     saleModifier: 1
   selectedVehicle: {fileID: 0}
@@ -3779,7 +3791,7 @@ MonoBehaviour:
     deathLimit: 3
     iterations: 6
   - resourceType: 5
-    iniChance: 30
+    iniChance: 28
     birthLimit: 16
     deathLimit: 2
     iterations: 10
