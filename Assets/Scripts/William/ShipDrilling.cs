@@ -69,6 +69,7 @@ public class ShipDrilling : MonoBehaviour
             if (hits.Length > 0)
             {
                 print(hits[0].transform.gameObject.layer);
+                bool hasChanged = false;
                 foreach (RaycastHit2D hit in hits)
                 {
                     //print("DrillRepeated");
@@ -92,6 +93,7 @@ public class ShipDrilling : MonoBehaviour
                                 //Add a resource
                                 vehicleMain.Inventory.AddResource(_tile.Resource, 1 * vehicleMain.DrillEfficiency);
                                 tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+                                hasChanged = true;
                             }
                         }else
                         {
@@ -112,6 +114,7 @@ public class ShipDrilling : MonoBehaviour
                         yield break;
                     }
                 }
+                if (hasChanged)
                 GameObject.FindObjectOfType<PlayerController>().dirtyNav = true;
             }else
             {

@@ -126,6 +126,7 @@ public class Terriangenerationmodified : MonoBehaviour
         _newTile.sprite = _baseTile.sprite;
         _newTile.SetHealth(_baseTile.Health);
         _newTile.Resource = _baseTile.Resource;
+        _newTile.glowObject = _baseTile.glowObject;
 
         return _newTile;
     }

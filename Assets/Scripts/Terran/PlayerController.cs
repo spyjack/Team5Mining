@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     AstarPath astar = null;
 
     public bool dirtyNav = true;
+    public bool recentMinerToggle = true;
 
     [SerializeField]
     BoxCollider2D camBounds = null;
@@ -202,10 +203,11 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(0.25f * playerShips.Count);
-            if (dirtyNav)
+            if (dirtyNav && recentMinerToggle)
             {
                 astar.Scan(astar.graphs[0]);
                 dirtyNav = false;
+                recentMinerToggle = false;
             }
         }
     }

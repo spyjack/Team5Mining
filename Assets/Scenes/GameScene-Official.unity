@@ -7593,6 +7593,7 @@ MonoBehaviour:
   playerShips: []
   astar: {fileID: 458833791}
   dirtyNav: 1
+  recentMinerToggle: 1
   camBounds: {fileID: 2047784324}
   moneyText: {fileID: 1768535905}
   depthGoalText: {fileID: 31931994}

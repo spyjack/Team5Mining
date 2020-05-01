@@ -286,14 +286,13 @@ public class VehicleMovement : MonoBehaviour
             seeker.graphMask = GraphMask.FromGraphName("Cleared Paths");
             minerMode = false;
             GetComponentInChildren<ShipDrilling>().drillCollider.enabled = false;
-
+            FindObjectOfType<PlayerController>().recentMinerToggle = true;
         }
         else
         {
             seeker.graphMask = GraphMask.FromGraphName("Mining Paths");
             GetComponentInChildren<ShipDrilling>().drillCollider.enabled = true;
             minerMode = true;
-
         }
     }
 }

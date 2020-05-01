@@ -25,7 +25,7 @@ public class ResourceTile : Tile
     GameObject destructionOverlay = null;
 
     [SerializeField]
-    GameObject glowObject = null;
+    public GameObject glowObject = null;
 
     public int Health
     {
@@ -53,10 +53,11 @@ public class ResourceTile : Tile
         }
         if (glowObject != null)
         {
-            Debug.Log("Spawn Light");
-            Vector3 spawnPos = GameObject.FindGameObjectWithTag("Ground").GetComponent<Tilemap>().CellToWorld(position);
-            spawnPos.z -= 3;
-            Instantiate(glowObject, spawnPos, Quaternion.identity);
+            //Debug.Log("Spawn Light");
+            //Vector3 spawnPos = GameObject.FindGameObjectWithTag("Ground").GetComponent<Tilemap>().CellToWorld(position);
+            //spawnPos.z -= 3;
+            //if (Random.Range(1,11)>6)
+            //    Instantiate(glowObject, spawnPos, Quaternion.identity);
         }
         return base.StartUp(position, tilemap, go);
     }
