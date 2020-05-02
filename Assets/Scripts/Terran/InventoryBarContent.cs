@@ -44,26 +44,32 @@ public class InventoryBarContent : MonoBehaviour
 
     public void AddContent(WorkerBase _worker)
     {
-        workerContent = _worker;
-        partContent = null;
-        type = ContentType.Worker;
-        hasContent = true;
-        contentIcon.sprite = workerContent.Portrait;
-        emptyContentIcon.SetActive(false);
-        contentMain.SetActive(true);
-        contentButton.onClick.AddListener(OnPickUp);
+        if (_worker != null)
+        {
+            workerContent = _worker;
+            partContent = null;
+            type = ContentType.Worker;
+            hasContent = true;
+            contentIcon.sprite = workerContent.Portrait;
+            emptyContentIcon.SetActive(false);
+            contentMain.SetActive(true);
+            contentButton.onClick.AddListener(OnPickUp);
+        }
     }
 
     public void AddContent(PartBase _part)
     {
-        partContent = _part;
-        workerContent = null;
-        type = ContentType.Part;
-        hasContent = true;
-        contentIcon.sprite = partContent.Icon;
-        emptyContentIcon.SetActive(false);
-        contentMain.SetActive(true);
-        contentButton.onClick.AddListener(OnPickUp);
+        if (_part != null)
+        {
+            partContent = _part;
+            workerContent = null;
+            type = ContentType.Part;
+            hasContent = true;
+            contentIcon.sprite = partContent.Icon;
+            emptyContentIcon.SetActive(false);
+            contentMain.SetActive(true);
+            contentButton.onClick.AddListener(OnPickUp);
+        }
     }
 
     public void RemoveContent()

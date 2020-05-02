@@ -4477,7 +4477,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847057182}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ab93f38ef0cfcf4a9391c64eaf031da, type: 3}
   m_Name: 
@@ -9211,8 +9211,6 @@ MonoBehaviour:
   heldPreviewThumbnail: {fileID: 6234867497498248137}
   gfxRaycast: {fileID: 774070987}
   eventSystem: {fileID: 889912843}
-  nextShipButton: {fileID: 845360530}
-  prevShipButton: {fileID: 1892420817}
   helpText: {fileID: 323214664}
   openMenuButton: {fileID: 1506469050}
   closeMenuButton: {fileID: 1281362616}

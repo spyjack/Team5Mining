@@ -408,7 +408,7 @@ public class ShopController : MonoBehaviour
 
     public void PurchasePart(PartItemConnector _part)
     {
-        if (player.Money - _part.partItem.Cost >= 0 && !_part.isPurchased)
+        if (player.Money - _part.partItem.Cost >= 0 && !_part.isPurchased && player.PartsInventory.ItemCount < player.PartsInventory.MaxItems)
         {
             player.Money -= _part.partItem.Cost;
             _part.isPurchased = true;

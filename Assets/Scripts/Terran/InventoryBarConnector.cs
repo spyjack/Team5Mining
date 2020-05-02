@@ -53,12 +53,6 @@ public class InventoryBarConnector : MonoBehaviour
         ResetItems(contentType);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ResetItems(ContentType _contentType)
     {
         GameObject itemPrefab = null;
@@ -98,7 +92,6 @@ public class InventoryBarConnector : MonoBehaviour
         {
             if (!item.HasContent)
             {
-                print("Adding Content");
                 item.AddContent(_worker);
                 item.shipEditor = shipEditor;
                 currentItems++;

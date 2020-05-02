@@ -49,7 +49,7 @@ public class VehicleClass : MonoBehaviour
 
     [Header("Crew Stats")]
     [SerializeField]
-    WorkerBase[] crew = new WorkerBase[3]; //0 - Captain, 1 - Operator, 2 - Engineer
+    WorkerBase[] crew = new WorkerBase[4]; //0 - Captain, 1 - Engineer, 2 - Operator, 3 - Spare Hands
     //bool hasRations = false;
 
     [Header("Vehicle Parts")]
@@ -262,6 +262,90 @@ public class VehicleClass : MonoBehaviour
         acceleration = CalculateAcceleration();
         if (drill != null)
             drillSpeed = CalculateDrillSpeed();
+    }
+
+    public void AssignWorker(WorkStation _station, WorkerBase _worker)
+    {
+        
+        switch (_station)
+        {
+            case WorkStation.None:
+                return;
+            case WorkStation.Cabin:
+                crew[0] = _worker;
+                _worker.Station = _station;
+                return;
+            case WorkStation.Engine:
+                if (cabin != null && cabin.CrewCapacity >= 1)
+                {
+                    crew[2] = _worker;
+                    _worker.Station = _station;
+                }
+                return;
+            case WorkStation.Drill:
+                if (cabin != null && cabin.CrewCapacity >= 2)
+                {
+                    crew[1] = _worker;
+                    _worker.Station = _station;
+                }
+                return;
+            case WorkStation.Spare:
+                if (cabin != null && cabin.CrewCapacity >= 3)
+                {
+                    crew[3] = _worker;
+                    _worker.Station = _station;
+                }
+                return;
+        }
+        RecalculateStats();
+    }
+
+    public bool CanAssignWorker(WorkStation _station)
+    {
+        switch (_station)
+        {
+            case WorkStation.None:
+                return false;
+            case WorkStation.Cabin:
+                return true;
+            case WorkStation.Engine:
+                if (cabin != null && cabin.CrewCapacity >= 1)
+                {
+                    return true;
+                }
+                break;
+            case WorkStation.Drill:
+                if (cabin != null && cabin.CrewCapacity >= 2)
+                {
+                    return true;
+                }
+                break;
+            case WorkStation.Spare:
+                if (cabin != null && cabin.CrewCapacity >= 3)
+                {
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
+
+    public WorkerBase GetWorker(WorkStation _station)
+    {
+        switch (_station)
+        {
+            case WorkStation.None:
+                return null;
+            case WorkStation.Cabin:
+                return crew[0];
+            case WorkStation.Engine:
+                return crew[2];
+            case WorkStation.Drill:
+                return crew[1];
+            case WorkStation.Spare:
+                return crew[3];
+        }
+        return null;
     }
 
     public void InstallPart(PartBody _part)

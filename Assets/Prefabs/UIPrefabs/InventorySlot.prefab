@@ -364,10 +364,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  hasContent: 0
   contentIcon: {fileID: 8168691339898647210}
   contentButton: {fileID: 8168691338762683785}
   emptyContentIcon: {fileID: 8168691338264604338}
   contentMain: {fileID: 8168691339990308105}
+  workerContent: {fileID: 0}
+  partContent: {fileID: 0}
+  shipEditor: {fileID: 0}
 --- !u!1 &8168691339898647208
 GameObject:
   m_ObjectHideFlags: 0

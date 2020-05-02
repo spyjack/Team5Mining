@@ -40,12 +40,6 @@ public class ShipEditor : MonoBehaviour
     EventSystem eventSystem = null;
 
     [SerializeField]
-    Button nextShipButton = null;
-
-    [SerializeField]
-    Button prevShipButton = null;
-
-    [SerializeField]
     Text helpText = null;
 
     [SerializeField]
@@ -92,37 +86,74 @@ public class ShipEditor : MonoBehaviour
                     if (heldItem.partContent is PartDrill && _component.partType == PartType.Drill)
                     {
                         _component.AddPart(heldItem.partContent);
+                        Drop();
+                        editorTabs[openEditorIndex].FinalizeChanges();
+                        return;
                     }
                     else if (heldItem.partContent is PartCabin && _component.partType == PartType.Cabin)
                     {
                         _component.AddPart(heldItem.partContent);
+                        Drop();
+                        editorTabs[openEditorIndex].FinalizeChanges();
+                        return;
                     }
                     else if (heldItem.partContent is PartEngine && _component.partType == PartType.Engine)
                     {
                         _component.AddPart(heldItem.partContent);
+                        Drop();
+                        editorTabs[openEditorIndex].FinalizeChanges();
+                        return;
                     }
                     else if (heldItem.partContent is PartWheel && _component.partType == PartType.Wheels)
                     {
                         _component.AddPart(heldItem.partContent);
+                        Drop();
+                        editorTabs[openEditorIndex].FinalizeChanges();
+                        return;
                     }
                     else if (heldItem.partContent is PartUpgrade && _component.partType == PartType.Upgrade)
                     {
                         _component.AddPart(heldItem.partContent);
+                        Drop();
+                        editorTabs[openEditorIndex].FinalizeChanges();
+                        return;
                     }else
                     {
                         Drop();
                     }
+                    
 
-                }
-                else if(heldItem == null && result.gameObject.tag == "PartComponent")
-                {
-                    print("Do something");
                 }
                 else
                 {
                     Drop();
                 }
                     
+            }
+        }else if (Input.GetMouseButtonDown(1))
+        {
+            PointerEventData _pointerEvenData = new PointerEventData(eventSystem);
+            _pointerEvenData.position = Input.mousePosition;
+            List<RaycastResult> results = new List<RaycastResult>();
+            gfxRaycast.Raycast(_pointerEvenData, results);
+            foreach (RaycastResult result in results)
+            {
+                if (heldItem == null && result.gameObject.tag == "PartComponent")
+                {
+                    PlayerController _player = FindObjectOfType<PlayerController>();
+                    if (_player.PartsInventory.ItemCount < _player.PartsInventory.MaxItems)
+                    {
+                        VehicleEditorComponent editorComponent = result.gameObject.GetComponentInParent<VehicleEditorComponent>();
+                        _player.AddPart(editorComponent.installedPart);
+                        editorComponent.RemovePart();
+                        editorTabs[openEditorIndex].FinalizeChanges();
+                        return;
+                    }
+                }
+                else
+                {
+                    Drop();
+                }
             }
         }
     }

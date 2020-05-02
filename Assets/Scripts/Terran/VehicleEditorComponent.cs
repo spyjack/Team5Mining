@@ -125,6 +125,39 @@ public class VehicleEditorComponent : MonoBehaviour
         }
     }
 
+    public void RemovePart()
+    {
+        installedPart = null;
+        switch (partType)
+        {
+            case PartType.Drill:
+                    titleText.text = "Drill";
+                    icon.sprite = null;
+                    icon.color = new Color(1, 1, 1, 0);
+                break;
+            case PartType.Cabin:
+                    titleText.text = "Cabin";
+                    icon.sprite = null;
+                    icon.color = new Color(1, 1, 1, 0);
+                break;
+            case PartType.Engine:
+                    titleText.text = "Engine";
+                    icon.sprite = null;
+                    icon.color = new Color(1, 1, 1, 0);
+                break;
+            case PartType.Wheels:
+                    titleText.text = "Wheels";
+                    icon.sprite = null;
+                    icon.color = new Color(1, 1, 1, 0);
+                break;
+            case PartType.Upgrade:
+                    titleText.text = "Equipment";
+                    icon.sprite = null;
+                    icon.color = new Color(1, 1, 1, 0);
+                break;
+        }
+    }
+
     public void AddPart(PartBase _part)
     {
         installedPart = _part;

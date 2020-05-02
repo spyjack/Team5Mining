@@ -30,45 +30,81 @@ public class EditorTabConnector : MonoBehaviour
                     vehicle.GetPart(out PartDrill _drill);
                     if (_drill == null || _drill != (PartDrill)_editorComponent.installedPart)
                     {
+                        if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
+                        {
+                            _player.RemovePart(_editorComponent.installedPart);
+                            _player.AddPart(_drill);
+                        }
                         vehicle.InstallPart((PartDrill)_editorComponent.installedPart);
-                        _player.RemovePart(_editorComponent.installedPart);
                     }
                     break;
                 case PartType.Cabin:
                     vehicle.GetPart(out PartCabin _cabin);
                     if (_cabin == null || _cabin != (PartCabin)_editorComponent.installedPart)
                     {
+                        if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
+                        {
+                            _player.RemovePart(_editorComponent.installedPart);
+                            _player.AddPart(_cabin);
+                        }
                         vehicle.InstallPart((PartCabin)_editorComponent.installedPart);
-                        _player.RemovePart(_editorComponent.installedPart);
                     }
                     break;
                 case PartType.Engine:
                     vehicle.GetPart(out PartEngine _engine);
                     if (_engine == null || _engine != (PartEngine)_editorComponent.installedPart)
                     {
+                        if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
+                        {
+                            _player.RemovePart(_editorComponent.installedPart);
+                            _player.AddPart(_engine);
+                        }
                         vehicle.InstallPart((PartEngine)_editorComponent.installedPart);
-                        _player.RemovePart(_editorComponent.installedPart);
                     }
                     break;
                 case PartType.Wheels:
                     vehicle.GetPart(out PartWheel _wheels);
                     if (_wheels == null || _wheels != (PartWheel)_editorComponent.installedPart)
                     {
+                        if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
+                        {
+                            _player.RemovePart(_editorComponent.installedPart);
+                            _player.AddPart(_wheels);
+                        }
                         vehicle.InstallPart((PartWheel)_editorComponent.installedPart);
-                        _player.RemovePart(_editorComponent.installedPart);
                     }
                     break;
                 case PartType.Upgrade:
                     vehicle.GetPart(out PartUpgrade _upgrade);
                     if (_upgrade == null || _upgrade != (PartUpgrade)_editorComponent.installedPart)
                     {
+                        if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
+                        {
+                            _player.RemovePart(_editorComponent.installedPart);
+                            _player.AddPart(_upgrade);
+                        }
                         vehicle.InstallPart((PartUpgrade)_editorComponent.installedPart);
-                        _player.RemovePart(_editorComponent.installedPart);
                     }
                     break;
             }
         }
     }
+
+    public void FinalizeChanges(PartDrill _drillPart)
+    {
+        PlayerController _player = FindObjectOfType<PlayerController>();
+        vehicle.GetPart(out PartDrill _drill);
+        if (_drill == null || _drill != _drillPart)
+        {
+            if (_drillPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
+            {
+                _player.RemovePart(_drillPart);
+                _player.AddPart(_drill);
+            }
+            vehicle.InstallPart(_drillPart);
+        }
+    }
+
 
     public void RefreshComponents()
     {

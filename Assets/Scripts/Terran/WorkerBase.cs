@@ -76,6 +76,12 @@ public class WorkerBase : ScriptableObject
         get { return cost; }
         set { cost = value; }
     }
+
+    public WorkStation Station
+    {
+        get { return _equippedStation; }
+        set { _equippedStation = value; }
+    }
 }
 
 public enum Gender
@@ -91,5 +97,5 @@ public enum WorkStation
     Cabin,
     Engine,
     Drill,
-    Equipment
+    Spare
 }

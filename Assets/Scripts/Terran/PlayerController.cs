@@ -78,6 +78,11 @@ public class PlayerController : MonoBehaviour
         set { money = value; }
     }
 
+    public InventoryBarConnector PartsInventory
+    {
+        get { return partsInventoryBar; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
