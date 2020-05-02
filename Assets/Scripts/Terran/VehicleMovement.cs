@@ -82,6 +82,7 @@ public class VehicleMovement : MonoBehaviour
         ToggleMinerMode(true);
 
         InvokeRepeating("UpdatePath", 0f, 1f);
+        AddTargetPoint(this.transform.position);
     }
 
     private void Update()
@@ -100,8 +101,7 @@ public class VehicleMovement : MonoBehaviour
             AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }else if ((Input.GetMouseButtonDown(2) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
         {
-            ClearTargets();
-            path.vectorPath.Clear();
+            ClearPath();
         }
 
         if (targetPositions.Count > 0)
@@ -185,6 +185,13 @@ public class VehicleMovement : MonoBehaviour
             //Debug.DrawLine(rb.position, GetPointInDirection(rb.position, path.vectorPath[currentWaypoint], 20), Color.magenta, 1f);
             //print(path.vectorPath[currentWaypoint]);
         }
+    }
+
+    public void ClearPath()
+    {
+        ClearTargets();
+        path.vectorPath.Clear();
+        rb.velocity = Vector3.zero;
     }
 
     void UpdatePath()

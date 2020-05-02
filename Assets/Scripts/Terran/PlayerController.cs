@@ -66,6 +66,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     ShipEditor shipEditor = null;
 
+    [SerializeField]
+    GameObject StoreUIObj = null;
+
+    [SerializeField]
+    GameObject EditorUIObj = null;
+
     public double Money
     {
         get { return money; }
@@ -118,6 +124,12 @@ public class PlayerController : MonoBehaviour
         partsInventoryBar.AddItem(_part);
     }
 
+    public void RemovePart(PartBase _part)
+    {
+        partsInventory.Remove(_part);
+        partsInventoryBar.RemoveItem(_part);
+    }
+
     public float GetMaxParts()
     {
         return partsInventoryBar.MaxItems;
@@ -138,8 +150,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            print("casting");
-            if (hit.collider != null && hit.collider.gameObject.GetComponent<VehicleClass>() != null)
+            //print("casting");
+            if (hit.collider != null && hit.collider.gameObject.GetComponent<VehicleClass>() != null && !StoreUIObj.activeInHierarchy && !EditorUIObj.activeInHierarchy)
             {
                 VehicleClass ship = hit.collider.gameObject.GetComponent<VehicleClass>();
                 if (ship.Selected)
@@ -154,9 +166,26 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            foreach (Transform _vehicle in playerShips)
+            DeselectAllShips();
+        }
+    }
+
+    public void DeselectAllShips()
+    {
+        foreach (Transform _vehicle in playerShips)
+        {
+            _vehicle.GetComponent<VehicleClass>().Selected = false;
+        }
+    }
+
+    public void CancelSelectedTargets()
+    {
+        foreach (Transform _vehicle in playerShips)
+        {
+            VehicleClass _vehicleClass = _vehicle.GetComponent<VehicleClass>();
+            if (_vehicleClass.Selected)
             {
-                _vehicle.GetComponent<VehicleClass>().Selected = false;
+                _vehicleClass.MovementScript.ClearPath();
             }
         }
     }

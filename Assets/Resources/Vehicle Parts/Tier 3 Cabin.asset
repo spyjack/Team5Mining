@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37fabc0384f6e90478feb2ae702d9fe3, type: 3}
-  m_Name: Base Cab
+  m_Name: Tier 3 Cabin
   m_EditorClassIdentifier: 
-  _partName: Cramped Cabin
-  _image: {fileID: 936464341002292260, guid: 8d18009fd96184c4d9a7474b5d2dfbcf, type: 3}
+  _partName: Observatory
+  _image: {fileID: -8454846546737590093, guid: 8d18009fd96184c4d9a7474b5d2dfbcf, type: 3}
   _uiIcon: {fileID: 21300000, guid: 753baae7059a00941a0e70b89d615308, type: 3}
-  _baseCost: 100
-  _tier: 1
+  _baseCost: 300
+  _tier: 3
   _fuelEfficiency: 1
   _weight: 10
   _fuelCapacity: 1
-  _crewCapacity: 1
+  _crewCapacity: 3
   _healthBonus: 0

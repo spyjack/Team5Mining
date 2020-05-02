@@ -810,6 +810,7 @@ MonoBehaviour:
     resources: []
     maxCapacity: 0
     usedCapacity: 0
+  vehicleMover: {fileID: 6746278845522855345}
   selectionSprite: {fileID: 366275510}
   shipName: S.S. Unnamed
   health: 10

@@ -11,6 +11,7 @@ TagManager:
   - Vehicle
   - Thumbnail
   - CRT
+  - PartComponent
   layers:
   - Default
   - TransparentFX

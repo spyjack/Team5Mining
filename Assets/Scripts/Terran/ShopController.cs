@@ -10,6 +10,9 @@ public class ShopController : MonoBehaviour
     PlayerController player = null;
 
     [SerializeField]
+    ShipEditor shipEditor = null;
+
+    [SerializeField]
     List<VehicleClass> dockedShips = new List<VehicleClass>();
 
     [Header("Part Market")]
@@ -135,11 +138,19 @@ public class ShopController : MonoBehaviour
     private GameObject shopObject = null;
 
     [SerializeField]
+    private GameObject editorFromShopButton = null;
+
+    [SerializeField]
     private TierProbability tierProbability = new TierProbability();
 
     public VehicleClass SelectedShip
     {
         get { return selectedVehicle; }
+    }
+
+    public List<VehicleClass> DockedShips
+    {
+        get { return dockedShips; }
     }
     // Start is called before the first frame update
     void Start()
@@ -207,6 +218,8 @@ public class ShopController : MonoBehaviour
 
     public void OnOpenShop()
     {
+        player.CancelSelectedTargets();
+        player.DeselectAllShips();
         openShopButton.SetActive(false);
         closeShopButton.SetActive(true);
         OnMarketTab();
@@ -219,6 +232,12 @@ public class ShopController : MonoBehaviour
         openShopButton.SetActive(true);
         closeShopButton.SetActive(false);
         shopObject.SetActive(false);
+    }
+
+    public void OnOpenEditorFromStore()
+    {
+        shipEditor.GoToShipEditor(selectedVehicle);
+        shipEditor.transform.gameObject.SetActive(true);
     }
 
     public void SelectShipTab(VehicleClass _vehicle)
@@ -632,9 +651,13 @@ public class ShopController : MonoBehaviour
         dockedShips.Add(_vehicle);
 
         if (dockedShips.Count == 1)
+        {
             SelectShipTab(_vehicle);
+            editorFromShopButton.SetActive(true);
+        }
 
         helpResourcesText.gameObject.SetActive(false);
+        shipEditor.RefreshTabs();
 
         foreach (ShipSelector sellector in shipSelectors)
         {
@@ -645,6 +668,7 @@ public class ShopController : MonoBehaviour
             }
         }
         AddShipSelector(_vehicle);
+        shipEditor.CreateShipEditor(_vehicle);
     }
 
     void UndockShip(VehicleClass _vehicle)
@@ -666,11 +690,27 @@ public class ShopController : MonoBehaviour
             currentCapacityText.text = "0";
             maxCapacityText.text = "0";
             helpResourcesText.gameObject.SetActive(true);
+            editorFromShopButton.SetActive(false);
+            shipEditor.CloseTab();
         }
         else
         {
             SelectShipTab(dockedShips[0]);
+            if (shipEditor.ActiveShip == _vehicle)
+            {
+                shipEditor.GoToNextShipEditor();
+            }
         }
+    }
+
+    public bool IsDocked(VehicleClass _vehicle)
+    {
+        foreach(VehicleClass _dockedShip in dockedShips)
+        {
+            if (_vehicle == _dockedShip)
+                return true;
+        }
+        return false;
     }
 
     void CreateResourceList()
@@ -795,9 +835,18 @@ public class ShopController : MonoBehaviour
             }
         }
         return 0f;
-    }
+    } 
 
-    
+    public void RefreshSelectorTabNames()
+    {
+        for (int i = 0; i < shipSelectors.Count; i++)
+        {
+            if(shipSelectors[i].tabName != shipSelectors[i].Vehicle.ShipName)
+            {
+                shipSelectors[i].RefreshName();
+            }
+        }
+    }
 }
 
 [System.Serializable]

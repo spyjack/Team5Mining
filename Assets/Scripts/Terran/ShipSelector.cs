@@ -18,7 +18,7 @@ public class ShipSelector : MonoBehaviour
     Button selectButton = null;
 
     [SerializeField]
-    string tabName = "Unnamed";
+    public string tabName = "Unnamed";
 
     public VehicleClass Vehicle
     {
@@ -50,4 +50,9 @@ public class ShipSelector : MonoBehaviour
         shopMain.SelectShipTab(vehicleIndex);
     }
 
+    public void RefreshName()
+    {
+        tabName = vehicleIndex.ShipName;
+        tabText.text = tabName;
+    }
 }

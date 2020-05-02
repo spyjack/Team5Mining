@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9b872c95a8a3a74aa8ecad7333dae2d, type: 3}
-  m_Name: Base Engine
+  m_Name: Tier 2 Engine
   m_EditorClassIdentifier: 
-  _partName: Shoddy Engine
+  _partName: Spudnick Engine
   _image: {fileID: 0}
   _uiIcon: {fileID: 21300000, guid: 16f61c35b36ea2c4e91db3a34feb54d9, type: 3}
-  _baseCost: 100
-  _tier: 1
+  _baseCost: 250
+  _tier: 2
   _fuelEfficiency: 1
-  _weight: 10
-  _horsePower: 1
-  _maxSpeed: 200
+  _weight: 100
+  _horsePower: 2
+  _maxSpeed: 300

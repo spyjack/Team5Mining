@@ -75,13 +75,13 @@ public class VehiclePartsDataHolder : MonoBehaviour
             case 0:
                 return partsCabinList[Random.Range(0, partsCabinList.Count)];
             case 1:
-                return partsDrillList[Random.Range(0, partsCabinList.Count)];
+                return partsDrillList[Random.Range(0, partsDrillList.Count)];
             case 2:
-                return partsEngineList[Random.Range(0, partsCabinList.Count)];
+                return partsEngineList[Random.Range(0, partsEngineList.Count)];
             case 3:
-                return partsWheelList[Random.Range(0, partsCabinList.Count)];
+                return partsWheelList[Random.Range(0, partsWheelList.Count)];
             case 4:
-                return partsUpgradeList[Random.Range(0, partsCabinList.Count)];
+                return partsUpgradeList[Random.Range(0, partsUpgradeList.Count)];
             default:
                 return partsCabinList[Random.Range(0, partsCabinList.Count)];
         }

@@ -8,6 +8,9 @@ public class VehicleClass : MonoBehaviour
     private ResourceInventoryClass resourceInventory = null;
 
     [SerializeField]
+    private VehicleMovement vehicleMover = null;
+
+    [SerializeField]
     private GameObject selectionSprite = null;
 
     [Header("Vehicle Stats")]
@@ -117,10 +120,16 @@ public class VehicleClass : MonoBehaviour
     {
         get { return resourceInventory; }
     }
+
+    public VehicleMovement MovementScript
+    {
+        get { return vehicleMover; }
+    }
     // Start is called before the first frame update
     void Start()
     {
         RecalculateStats();
+        resourceInventory = new ResourceInventoryClass(inventoryCapacity);
         Refuel(fuelMax);
     }
 
@@ -139,40 +148,6 @@ public class VehicleClass : MonoBehaviour
             {
                 selectionSprite.SetActive(false);
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Insert))
-        {
-            int num = Random.Range(0, 6);
-            int randAmount = Random.Range(10, 60);
-            switch (num)
-            {
-                case 0:
-                    resourceInventory.AddResource(ResourceId.Fuel, randAmount);
-                    print("Added " + randAmount + " " + ResourceId.Fuel + " to " + name);
-                    break;
-                case 1:
-                    resourceInventory.AddResource(ResourceId.Dirt, randAmount);
-                    print("Added " + randAmount + " " + ResourceId.Dirt + " to " + name);
-                    break;
-                case 2:
-                    resourceInventory.AddResource(ResourceId.Stone, randAmount);
-                    print("Added " + randAmount + " " + ResourceId.Stone + " to " + name);
-                    break;
-                case 3:
-                    resourceInventory.AddResource(ResourceId.Iron, randAmount);
-                    print("Added " + randAmount + " " + ResourceId.Iron + " to " + name);
-                    break;
-                case 4:
-                    resourceInventory.AddResource(ResourceId.Copper, randAmount);
-                    print("Added " + randAmount + " " + ResourceId.Copper + " to " + name);
-                    break;
-                case 5:
-                    resourceInventory.AddResource(ResourceId.Gold, randAmount);
-                    print("Added " + randAmount + " " + ResourceId.Gold + " to " + name);
-                    break;
-            }
-
         }
     }
 
@@ -275,11 +250,14 @@ public class VehicleClass : MonoBehaviour
     {
         if (vehicleBase != null)
         {
-            inventoryCapacity = vehicleBase.Capacity;
+            if (inventoryCapacity != vehicleBase.Capacity)
+            {
+                inventoryCapacity = vehicleBase.Capacity;
+                resourceInventory = new ResourceInventoryClass(inventoryCapacity);
+            }
             healthMax = vehicleBase.Health;
             baseWeight = vehicleBase.Weight;
         }
-        resourceInventory = new ResourceInventoryClass(inventoryCapacity);
         weight = CalculateWeight();
         acceleration = CalculateAcceleration();
         if (drill != null)
