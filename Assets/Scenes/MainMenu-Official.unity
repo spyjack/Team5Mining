@@ -883,18 +883,68 @@ MonoBehaviour:
   m_GameObject: {fileID: 432492404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95bdd4612c34f2f4b8b7020960406095, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ab93f38ef0cfcf4a9391c64eaf031da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iniChance: 25
-  birthLimit: 3
-  deathLimit: 2
-  numR: 6
-  tmpSize: {x: 40, y: 40, z: 0}
+  terrainInits:
+  - resourceType: 2
+    iniChance: 50
+    birthLimit: 4
+    deathLimit: 2
+    iterations: 8
+  - resourceType: 4
+    iniChance: 40
+    birthLimit: 12
+    deathLimit: 3
+    iterations: 6
+  - resourceType: 5
+    iniChance: 28
+    birthLimit: 16
+    deathLimit: 2
+    iterations: 10
+  - resourceType: 6
+    iniChance: 18
+    birthLimit: 10
+    deathLimit: 2
+    iterations: 7
+  - resourceType: 7
+    iniChance: 18
+    birthLimit: 10
+    deathLimit: 2
+    iterations: 7
+  - resourceType: 8
+    iniChance: 18
+    birthLimit: 10
+    deathLimit: 2
+    iterations: 7
+  - resourceType: 9
+    iniChance: 18
+    birthLimit: 10
+    deathLimit: 2
+    iterations: 7
+  - resourceType: 10
+    iniChance: 48
+    birthLimit: 4
+    deathLimit: 2
+    iterations: 8
+  tmpSize: {x: 40, y: 50, z: 0}
   topMap: {fileID: 749323357}
   botMap: {fileID: 252775266}
   topTile: {fileID: 11400000, guid: 58f5a58eae5b65d4780ee7e760d1ae5a, type: 2}
-  botTile: {fileID: 11400000, guid: e27058c793972bb4fb199c8dc39bd045, type: 2}
+  coalTile: {fileID: 11400000, guid: 325a9759eac07304cafc6bd536aef229, type: 2}
+  botTile: {fileID: 11400000, guid: 1e90fd8145488584ca4dccd070cde782, type: 2}
+  terrainTilesList:
+  - {fileID: 11400000, guid: 5288b5961ae004b4e927dff49375ffb2, type: 2}
+  - {fileID: 11400000, guid: b17c51a624effc3448f2f25f7fe4a131, type: 2}
+  - {fileID: 11400000, guid: 1cd425386616e1c4aacc0fb6b7246a99, type: 2}
+  - {fileID: 11400000, guid: ad1d3b39977cc644fa46c3a351bafc56, type: 2}
+  - {fileID: 11400000, guid: 2b77641915679794eb92b3f10b4548f7, type: 2}
+  - {fileID: 11400000, guid: 3be9a89a0375f78439e5f40e506cd9ed, type: 2}
+  - {fileID: 11400000, guid: c1d185cd4633f264f8cd938b1cbe3de2, type: 2}
+  - {fileID: 11400000, guid: 7c326b0758bbfa4468d628688ef0f772, type: 2}
+  - {fileID: 11400000, guid: 420c3ba880a0b2b4d8ca23095e8a0dbf, type: 2}
+  testSprite: {fileID: 6682738439518977790, guid: 6bcee8482f0a4e24ca060d441100a446,
+    type: 3}
 --- !u!4 &432492406
 Transform:
   m_ObjectHideFlags: 0
