@@ -33,6 +33,12 @@ public class WorkerBase : ScriptableObject
     int operating = 1;
 
     [SerializeField]
+    bool isStarving = false;
+
+    [SerializeField]
+    bool isDead = false;
+
+    [SerializeField]
     float cost = 1;
 
     public string WorkerName
@@ -77,10 +83,58 @@ public class WorkerBase : ScriptableObject
         set { cost = value; }
     }
 
+    public bool Starvation
+    {
+        get { return isStarving; }
+    }
+
+    public bool Dead
+    {
+        get { return isDead; }
+    }
+
     public WorkStation Station
     {
         get { return _equippedStation; }
         set { _equippedStation = value; }
+    }
+
+    public void Eat()
+    {
+        if (isStarving)
+        {
+            isStarving = false;
+        }
+        if (currentHealth < maxHealth)
+            currentHealth++;
+    }
+
+    public void Starve()
+    {
+        if (!isStarving)
+        {
+            isStarving = true;
+        }else if (isStarving)
+        {
+            if (currentHealth > 0)
+            {
+                currentHealth--;
+            }else if(currentHealth <= 0)
+            {
+                int rand = Random.Range(1, 4);
+                if (rand == 1)
+                    motorskills = Mathf.Max(1, motorskills - 1);
+                if (rand == 2)
+                    operating = Mathf.Max(1, operating - 1);
+                if (rand == 3)
+                    engineering = Mathf.Max(1, engineering - 1);
+
+                if (engineering == 1 && motorskills == 1 && motorskills == 1)
+                {
+                    isDead = true;
+                }
+            }
+        }
     }
 }
 

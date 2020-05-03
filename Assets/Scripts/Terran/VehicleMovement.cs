@@ -133,7 +133,7 @@ public class VehicleMovement : MonoBehaviour
         }
         Debug.DrawLine(rb.position, drillBit.position, Color.blue);
 
-        if (!vehicleMain.HasPart(PartType.Wheels))
+        if (!vehicleMain.HasPart(PartType.Wheels) || vehicleMain.Crew[0] == null)
         {
             speed = 0;
             ClearPath();
