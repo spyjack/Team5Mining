@@ -115,8 +115,19 @@ public class PlayerController : MonoBehaviour
 
     public void AddWorker(WorkerBase _worker)
     {
-        workerInventory.Add(_worker);
+        if (_worker == null)
+            return;
+
         workersInventoryBar.AddItem(_worker);
+        for (int i = 0; i < workerInventory.Count; i++)
+        {
+            if (workerInventory[i] == null)
+            {
+                workerInventory[i] = _worker;
+                return;
+            }
+        }
+        workerInventory.Add(_worker);
     }
 
     public void RemoveWorker(WorkerBase _worker)
@@ -137,8 +148,19 @@ public class PlayerController : MonoBehaviour
 
     public void AddPart(PartBase _part)
     {
-        partsInventory.Add(_part);
+        if (_part == null)
+            return;
+
         partsInventoryBar.AddItem(_part);
+        for (int i = 0; i < partsInventory.Count; i++)
+        {
+            if (partsInventory[i] == null)
+            {
+                partsInventory[i] = _part;
+                return;
+            }
+        }
+        partsInventory.Add(_part);
     }
 
     public void RemovePart(PartBase _part)
@@ -164,7 +186,7 @@ public class PlayerController : MonoBehaviour
 
     void checkForSelection()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             //print("casting");
@@ -286,7 +308,7 @@ public class PlayerController : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         while (labelColor.a > 0)
         {
             labelColor.a -= 0.25f;

@@ -101,7 +101,7 @@ public class VehicleMovement : MonoBehaviour
         if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity && minerMode)
             ToggleMinerMode(true);
 
-        if (Input.GetMouseButtonDown(0) && vehicleMain.Selected && vehicleMain.HasPart(PartType.Wheels))
+        if (Input.GetMouseButtonDown(1) && vehicleMain.Selected && vehicleMain.HasPart(PartType.Wheels))
         {
             AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }else if ((Input.GetMouseButtonDown(2) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
