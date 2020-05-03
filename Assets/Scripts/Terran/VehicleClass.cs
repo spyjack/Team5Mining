@@ -427,6 +427,31 @@ public class VehicleClass : MonoBehaviour
         RecalculateStats();
     }
 
+    void KillWorker(WorkerBase _worker)
+    {
+        int station = 0;
+        for (station = 0; station < crew.Length; station++)
+        {
+            if(crew[station] == _worker)
+            {
+                AssignWorker(station, null);
+                break;
+            }
+        }
+        if (station == 0 && crewCount > 0)
+        {
+            for (station = crew.Length-1; station >= 0; station--)
+            {
+                if (crew[station] != null)
+                {
+                    AssignWorker(WorkStation.Cabin, crew[station]);
+                    AssignWorker(station, null);
+                    return;
+                }
+            }
+        }
+    }
+
     void ModifyCrewCount(WorkerBase _worker, int _crewPosition)
     {
         if (crew[_crewPosition] == null && _worker != null)
@@ -614,17 +639,25 @@ public class VehicleClass : MonoBehaviour
 
     public void CheckRations()
     {
-        foreach (WorkerBase worker in crew)
+        if (Vector2.Distance(FindObjectOfType<ShopController>().transform.position, this.transform.position) > 5)
         {
-            if (worker != null)
+            foreach (WorkerBase worker in crew)
             {
-                if (worker.Gender != Gender.Other && resourceInventory.GetResourceAmount(ResourceId.Rations) > 0) // If not a mutant or robot
+                if (worker != null)
                 {
-                    resourceInventory.RemoveResource(ResourceId.Rations, 1);
-                }
-                else if (worker.Gender != Gender.Other && resourceInventory.GetResourceAmount(ResourceId.Rations) <= 0)
-                {
-
+                    if (worker.Gender != Gender.Other && resourceInventory.GetResourceAmount(ResourceId.Rations) > 0) // If not a mutant or robot
+                    {
+                        worker.Eat();
+                        resourceInventory.RemoveResource(ResourceId.Rations, 1);
+                    }
+                    else if (worker.Gender != Gender.Other && resourceInventory.GetResourceAmount(ResourceId.Rations) <= 0) //If no rations
+                    {
+                        worker.Starve();
+                        if (worker.Dead)
+                        {
+                            KillWorker(worker);
+                        }
+                    }
                 }
             }
         }

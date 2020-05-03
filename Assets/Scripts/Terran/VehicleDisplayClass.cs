@@ -159,10 +159,21 @@ public class VehicleDisplayClass : MonoBehaviour
 
     public void RefreshUI()
     {
+        if (uiHolder == null)
+            uiHolder = GameObject.Find("ShipUI");
+
         if (uiConnector == null)
             uiConnector = Instantiate(uiPrefab, uiHolder.transform).GetComponent<ShipUIConnector>();
 
         uiConnector.RefreshUI(vehicle);
+    }
+
+    public void RefreshUiInv()
+    {
+        if (uiConnector == null)
+            return;
+
+        uiConnector.RefreshInventoryUI(vehicle);
     }
 
     IEnumerator AnimateDrill()

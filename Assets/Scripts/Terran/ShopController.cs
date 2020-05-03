@@ -82,6 +82,9 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     WorkerDataHolder workerInfoHolder = null;
 
+    [SerializeField]
+    float otherMultiplier = 3;
+
     [Header("Store Values")]
     [SerializeField]
     List<ResourceSaleItem> resourceSaleItems = new List<ResourceSaleItem>();
@@ -479,6 +482,7 @@ public class ShopController : MonoBehaviour
         WorkerCardConnector newWorkerCard = Instantiate(workerCardPrefab, workerCardGroup).GetComponent<WorkerCardConnector>();
         newWorkerCard.worker = _worker;
         newWorkerCard.workerNameText.text = _worker.WorkerName;
+        newWorkerCard.healthSkillText.text = _worker.Health.ToString();
         newWorkerCard.motorSkillText.text = _worker.Motorskills.ToString();
         newWorkerCard.engineerSkillText.text = _worker.Engineering.ToString();
         newWorkerCard.operationSkillText.text = _worker.Operating.ToString();
@@ -493,6 +497,7 @@ public class ShopController : MonoBehaviour
     WorkerBase NewWorker()
     {
         WorkerBase newWorker = ScriptableObject.CreateInstance<WorkerBase>();
+        newWorker.Health = UnityEngine.Random.Range(1, 11);
         newWorker.Motorskills = UnityEngine.Random.Range(1, 11);
         newWorker.Engineering = UnityEngine.Random.Range(1, 11);
         newWorker.Operating = UnityEngine.Random.Range(1, 11);
@@ -524,7 +529,9 @@ public class ShopController : MonoBehaviour
 
     float GetWorkerCost(WorkerBase _worker)
     {
-        return (_worker.Motorskills * _worker.Engineering * _worker.Operating) * UnityEngine.Random.Range(2,6);
+        float workerCost = (_worker.Motorskills * _worker.Engineering * _worker.Operating) * UnityEngine.Random.Range(2, 6);
+        Mathf.RoundToInt(workerCost *= otherMultiplier);
+        return workerCost;
     }
 
     void NewVehicleCard(TierProbability _tierChances)

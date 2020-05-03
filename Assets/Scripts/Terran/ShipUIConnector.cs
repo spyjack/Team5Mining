@@ -17,28 +17,41 @@ public class ShipUIConnector : MonoBehaviour
     [SerializeField]
     List<GenericUIIcon> installedPartsIcons = new List<GenericUIIcon>();
 
+    [SerializeField]
+    Text invCapacityText = null;
+
+    [SerializeField]
+    Text invFuelText = null;
+
+    [SerializeField]
+    Text invRationsText = null;
+
     public void RefreshUI(VehicleClass vehicle)
+    {
+        shipName.text = vehicle.ShipName;
+
+        UpdateParts(vehicle);
+
+        UpdateWorkers(vehicle);
+
+        RefreshInventoryUI(vehicle);
+    }
+
+    public void RefreshInventoryUI(VehicleClass vehicle)
+    {
+        invCapacityText.text = "Capacity Used: " + vehicle.Inventory.UsedCapacity.ToString("F2") + "/" + vehicle.Inventory.Capacity;
+        invFuelText.text = "Fuel Remaining: " + vehicle.Inventory.GetFuelAmount();
+        invRationsText.text = "Rations Remaining: " + vehicle.Inventory.GetResourceAmount(ResourceId.Rations);
+    }
+
+
+    void UpdateParts(VehicleClass vehicle)
     {
         vehicle.GetPart(out PartCabin _cabin);
         vehicle.GetPart(out PartDrill _drill);
         vehicle.GetPart(out PartWheel _wheels);
         vehicle.GetPart(out PartEngine _engine);
         vehicle.GetPart(out PartUpgrade _upgrade);
-
-        shipName.text = vehicle.ShipName;
-
-        for (int cr = 0; cr < vehicle.Crew.Length; cr++)
-        {
-            if (vehicle.Crew[cr] != null && (equippedWorkerIcons[cr].icon != vehicle.Crew[cr].Portrait || !equippedWorkerIcons[cr].gameObject.activeSelf))
-            {
-                equippedWorkerIcons[cr].icon.sprite = vehicle.Crew[cr].Portrait;
-                equippedWorkerIcons[cr].gameObject.SetActive(true);
-            }
-            else if (vehicle.Crew[cr] == null && equippedWorkerIcons[cr].gameObject.activeSelf)
-            {
-                equippedWorkerIcons[cr].gameObject.SetActive(false);
-            }
-        }
 
         if (_cabin != null && !installedPartsIcons[1].gameObject.activeSelf)
         {
@@ -67,5 +80,21 @@ public class ShipUIConnector : MonoBehaviour
             installedPartsIcons[3].icon.sprite = _wheels.Icon;
         }
         else if (_wheels == null && installedPartsIcons[3].gameObject.activeSelf) { installedPartsIcons[3].gameObject.SetActive(false); }
+    }
+
+    void UpdateWorkers(VehicleClass vehicle)
+    {
+        for (int cr = 0; cr < vehicle.Crew.Length; cr++)
+        {
+            if (vehicle.Crew[cr] != null && (equippedWorkerIcons[cr].icon != vehicle.Crew[cr].Portrait || !equippedWorkerIcons[cr].gameObject.activeSelf))
+            {
+                equippedWorkerIcons[cr].icon.sprite = vehicle.Crew[cr].Portrait;
+                equippedWorkerIcons[cr].gameObject.SetActive(true);
+            }
+            else if (vehicle.Crew[cr] == null && equippedWorkerIcons[cr].gameObject.activeSelf)
+            {
+                equippedWorkerIcons[cr].gameObject.SetActive(false);
+            }
+        }
     }
 }

@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     private double money = 100;
 
     [SerializeField]
+    private float eventTimer = 60 * 2;
+
+    [SerializeField]
     private List<WorkerBase> workerInventory = new List<WorkerBase>();
 
     [SerializeField]
@@ -238,7 +241,7 @@ public class PlayerController : MonoBehaviour
                 ship.GetComponent<VehicleClass>().CheckRations();
             }
             storeMain.Restock();
-            yield return new WaitForSeconds(60f * 2f);
+            yield return new WaitForSeconds(eventTimer);
         }
         
     }
