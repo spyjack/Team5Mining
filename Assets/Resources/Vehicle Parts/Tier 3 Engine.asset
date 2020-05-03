@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _partName: Spudnick Engine
   _image: {fileID: 0}
+  _image2: {fileID: 0}
   _uiIcon: {fileID: 21300000, guid: 16f61c35b36ea2c4e91db3a34feb54d9, type: 3}
-  _baseCost: 500
+  _baseCost: 15000
   _tier: 3
   _fuelEfficiency: 1
   _weight: 80
-  _horsePower: 3
+  _horsePower: 6
   _maxSpeed: 250

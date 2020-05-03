@@ -17,7 +17,7 @@ MonoBehaviour:
   _image2: {fileID: -3175925210237304031, guid: d9a6d01f34e4662458d6b7837dfc6e8e,
     type: 3}
   _uiIcon: {fileID: 21300000, guid: caa398c599171d44998f1b8bd920d121, type: 3}
-  _baseCost: 200
+  _baseCost: 6000
   _tier: 2
   _fuelEfficiency: 1
   _weight: 90
