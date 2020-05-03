@@ -16,9 +16,9 @@ MonoBehaviour:
   _image: {fileID: 0}
   _image2: {fileID: 0}
   _uiIcon: {fileID: 21300000, guid: 38740053a70298f4ab8f2a6c8a0d818f, type: 3}
-  _baseCost: 100
+  _baseCost: 3000
   _tier: 1
   _fuelEfficiency: 1
   _weight: 10
-  _horsePower: 1
+  _horsePower: 2
   _maxSpeed: 200
