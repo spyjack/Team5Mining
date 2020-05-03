@@ -155,6 +155,9 @@ public class ResourceInventoryClass
 
     public float GetFuelAmount()
     {
+        if (resources.Count <= 0)
+            return 0f;
+
         if (fuelIndex == -1)
         {
             for (int i = 0; i < resources.Count; i++)

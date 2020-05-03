@@ -96,6 +96,8 @@ public class VehicleMovement : MonoBehaviour
         {
             if (vehicleMain.PartExists(PartType.Drill))
                 ToggleMinerMode(minerMode);
+
+            vehicleMain.VehicleGraphics.RefreshUiInv();
         }
 
         if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity && minerMode)
