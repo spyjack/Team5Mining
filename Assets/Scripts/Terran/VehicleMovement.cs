@@ -232,9 +232,8 @@ public class VehicleMovement : MonoBehaviour
     {
         if (speed > 0)
         {
-            
             vehicleMain.UseFuel(-2);
-            //print(vehicleMain.Fuel);
+            vehicleMain.VehicleGraphics.RefreshUiInv();
         }
 
         yield return new WaitForSeconds(0.5f);

@@ -140,6 +140,9 @@ public class ResourceInventoryClass
 
     public float GetResourceAmount(ResourceId resourceId)
     {
+        if (resources.Count <= 0)
+            return 0f;
+
         foreach (ResourceClass _valuable in resources)
         {
             if (_valuable.Id == resourceId)

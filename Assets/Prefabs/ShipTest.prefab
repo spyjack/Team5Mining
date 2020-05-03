@@ -460,6 +460,10 @@ MonoBehaviour:
   windowRenderer: {fileID: 6746278843993166898}
   wheelRenderer: {fileID: 6746278844968598806}
   headlights: {fileID: 1681674707}
+  uiHolder: {fileID: 0}
+  uiPrefab: {fileID: 3699280422464623561, guid: 0b0f5fab7e91c7044bebfa41f5a495fd,
+    type: 3}
+  uiConnector: {fileID: 0}
 --- !u!1 &6746278844825350097
 GameObject:
   m_ObjectHideFlags: 0

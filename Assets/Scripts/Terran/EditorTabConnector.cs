@@ -239,6 +239,7 @@ public class EditorTabConnector : MonoBehaviour
         {
             nameInput.interactable = false;
             vehicle.ShipName = nameInput.text;
+            vehicle.VehicleGraphics.RefreshUI();
             FindObjectOfType<ShopController>().RefreshSelectorTabNames();
         }else
         {
