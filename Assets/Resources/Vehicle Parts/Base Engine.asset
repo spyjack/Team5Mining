@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _partName: Shoddy Engine
   _image: {fileID: 0}
-  _uiIcon: {fileID: 21300000, guid: 16f61c35b36ea2c4e91db3a34feb54d9, type: 3}
+  _image2: {fileID: 0}
+  _uiIcon: {fileID: 21300000, guid: 38740053a70298f4ab8f2a6c8a0d818f, type: 3}
   _baseCost: 100
   _tier: 1
   _fuelEfficiency: 1
