@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VehicleDisplayClass : MonoBehaviour
 {
+    [Header("Vehicle Connectors")]
     [SerializeField]
     VehicleClass vehicle = null;
 
@@ -13,6 +14,7 @@ public class VehicleDisplayClass : MonoBehaviour
     [SerializeField]
     ShipDrilling vehicleDriller = null;
 
+    [Header("Vehicle Parts")]
     [SerializeField]
     SpriteRenderer drillRenderer = null;
 
@@ -38,11 +40,23 @@ public class VehicleDisplayClass : MonoBehaviour
     [SerializeField]
     GameObject headlights = null;
 
+    [Header("Vehicle UI")]
+    [SerializeField]
+    GameObject uiHolder = null;
+
+    [SerializeField]
+    GameObject uiPrefab = null;
+
+    [SerializeField]
+    ShipUIConnector uiConnector = null;
+
+
     bool isDrillAnimating = false;
     bool isWheelAnimating = false;
     // Start is called before the first frame update
     void Start()
     {
+        uiHolder = GameObject.Find("ShipUI");
         ReDraw();
         StartCoroutine(LightCheck());
     }
@@ -133,6 +147,22 @@ public class VehicleDisplayClass : MonoBehaviour
         if (_wheels != null)
         { wheelRenderer.sprite = _wheels.Image; wheelSpriteAlt = _wheels.SecondaryImage; }
         else { wheelRenderer.sprite = null; }
+
+        RefreshUI();
+    }
+
+    public void SetUI(bool active)
+    {
+        uiConnector.gameObject.SetActive(active);
+        RefreshUI();
+    }
+
+    public void RefreshUI()
+    {
+        if (uiConnector == null)
+            uiConnector = Instantiate(uiPrefab, uiHolder.transform).GetComponent<ShipUIConnector>();
+
+        uiConnector.RefreshUI(vehicle);
     }
 
     IEnumerator AnimateDrill()

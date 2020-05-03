@@ -175,10 +175,12 @@ public class VehicleClass : MonoBehaviour
             if (isSelected && !selectionSprite.activeSelf)
             {
                 selectionSprite.SetActive(true);
+                vehicleGraphics.SetUI(true);
             }
             else if (!isSelected && selectionSprite.activeSelf)
             {
                 selectionSprite.SetActive(false);
+                vehicleGraphics.SetUI(false);
             }
         }
     }
@@ -333,6 +335,9 @@ public class VehicleClass : MonoBehaviour
 
         if (vehicleMover != null)
             vehicleMover.CheckDrillRange(drill);
+
+        if (vehicleGraphics != null)
+            vehicleGraphics.RefreshUI();
     }
 
     public void AssignWorker(WorkStation _station, WorkerBase _worker)

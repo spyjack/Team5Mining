@@ -35,6 +35,7 @@ public class EditorTabConnector : MonoBehaviour
                     {
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
+                            _player.AddPart(_drill);
                             _player.RemovePart(_editorComponent.installedPart);
                         }
                         vehicle.InstallPart((PartDrill)_editorComponent.installedPart);
@@ -46,6 +47,7 @@ public class EditorTabConnector : MonoBehaviour
                     {
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
+                            _player.AddPart(_cabin);
                             _player.RemovePart(_editorComponent.installedPart);
                         }
                         vehicle.InstallPart((PartCabin)_editorComponent.installedPart);
@@ -58,6 +60,7 @@ public class EditorTabConnector : MonoBehaviour
                     {
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
+                            _player.AddPart(_engine);
                             _player.RemovePart(_editorComponent.installedPart);
                         }
                         vehicle.InstallPart((PartEngine)_editorComponent.installedPart);
@@ -69,6 +72,7 @@ public class EditorTabConnector : MonoBehaviour
                     {
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
+                            _player.AddPart(_wheels);
                             _player.RemovePart(_editorComponent.installedPart);
                         }
                         vehicle.InstallPart((PartWheel)_editorComponent.installedPart);
@@ -80,6 +84,7 @@ public class EditorTabConnector : MonoBehaviour
                     {
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
+                            _player.AddPart(_upgrade);
                             _player.RemovePart(_editorComponent.installedPart);
                         }
                         vehicle.InstallPart((PartUpgrade)_editorComponent.installedPart);
@@ -98,6 +103,7 @@ public class EditorTabConnector : MonoBehaviour
         {
             if (_drillPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
             {
+                _player.AddPart(_drill);
                 _player.RemovePart(_drillPart);
             }
             vehicle.InstallPart(_drillPart);
@@ -110,6 +116,7 @@ public class EditorTabConnector : MonoBehaviour
         PlayerController _player = FindObjectOfType<PlayerController>();
         if (editorWorkerComponents[_stationIndex].assignedWorker != null)
         {
+            _player.AddWorker(vehicle.Crew[_stationIndex]);
             _player.RemoveWorker(editorWorkerComponents[_stationIndex].assignedWorker);
         }
         vehicle.AssignWorker(_stationIndex, editorWorkerComponents[_stationIndex].assignedWorker);
@@ -124,6 +131,7 @@ public class EditorTabConnector : MonoBehaviour
             case WorkStation.Cabin:
                 if (editorWorkerComponents[0].assignedWorker != null)
                 {
+                    _player.AddWorker(vehicle.GetWorker(_station));
                     _player.RemoveWorker(editorWorkerComponents[0].assignedWorker);
                 }
                 vehicle.AssignWorker(_station, editorWorkerComponents[0].assignedWorker);
@@ -131,6 +139,7 @@ public class EditorTabConnector : MonoBehaviour
             case WorkStation.Engine:
                 if (editorWorkerComponents[1].assignedWorker != null)
                 {
+                    _player.AddWorker(vehicle.GetWorker(_station));
                     _player.RemoveWorker(editorWorkerComponents[1].assignedWorker);
                 }
                 vehicle.AssignWorker(_station, editorWorkerComponents[1].assignedWorker);
@@ -138,6 +147,7 @@ public class EditorTabConnector : MonoBehaviour
             case WorkStation.Drill:
                 if (editorWorkerComponents[2].assignedWorker != null)
                 {
+                    _player.AddWorker(vehicle.GetWorker(_station));
                     _player.RemoveWorker(editorWorkerComponents[2].assignedWorker);
                 }
                 vehicle.AssignWorker(_station, editorWorkerComponents[2].assignedWorker);
@@ -145,6 +155,7 @@ public class EditorTabConnector : MonoBehaviour
             case WorkStation.Spare:
                 if (editorWorkerComponents[3].assignedWorker != null)
                 {
+                    _player.AddWorker(vehicle.GetWorker(_station));
                     _player.RemoveWorker(editorWorkerComponents[3].assignedWorker);
                 }
                 vehicle.AssignWorker(_station, editorWorkerComponents[3].assignedWorker);
@@ -152,6 +163,7 @@ public class EditorTabConnector : MonoBehaviour
             default:
                 if (editorWorkerComponents[0].assignedWorker != null)
                 {
+                    _player.AddWorker(vehicle.GetWorker(_station));
                     _player.RemoveWorker(editorWorkerComponents[0].assignedWorker);
                 }
                 vehicle.AssignWorker(_station, editorWorkerComponents[0].assignedWorker);
