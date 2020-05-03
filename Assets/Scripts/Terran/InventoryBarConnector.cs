@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class InventoryBarConnector : MonoBehaviour
 {
@@ -30,7 +31,24 @@ public class InventoryBarConnector : MonoBehaviour
     GameObject workerItemPrefab = null;
 
     [SerializeField]
+    GameObject sellMenu = null;
+
+    [SerializeField]
+    Text sellMenuDescText = null;
+
+    [SerializeField]
+    Text sellMenuCostText = null;
+
+    [SerializeField]
     ShipEditor shipEditor = null;
+
+    [SerializeField]
+    EventSystem eventSystem = null;
+
+    [SerializeField]
+    GraphicRaycaster gfxRaycast = null;
+
+    InventoryBarContent selectedBarContent = null;
 
     public int ItemCount
     {
@@ -51,6 +69,73 @@ public class InventoryBarConnector : MonoBehaviour
     void Start()
     {
         ResetItems(contentType);
+        sellMenu.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            PointerEventData _pointerEvenData = new PointerEventData(eventSystem);
+            _pointerEvenData.position = Input.mousePosition;
+            List<RaycastResult> results = new List<RaycastResult>();
+            gfxRaycast.Raycast(_pointerEvenData, results);
+            foreach (RaycastResult result in results)
+            {
+                if (result.gameObject.tag == "InvSlot")
+                {
+                    InventoryBarContent _resultContent = result.gameObject.GetComponentInParent<InventoryBarContent>();
+                    if (_resultContent.type == contentType && !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
+                    {
+                        selectedBarContent = _resultContent;
+                        sellMenu.SetActive(true);
+                        if (contentType == ContentType.Part)
+                        {
+                            sellMenuDescText.text = "Would you like to <b>Sell</b> your " + selectedBarContent.partContent.PartName + "?";
+                            sellMenuCostText.text = "+$" + selectedBarContent.partContent.Cost * 0.75f;
+                        }
+                        else
+                        {
+                            sellMenuDescText.text = "Would you like to <b>Fire</b> " + selectedBarContent.workerContent.WorkerName + "?";
+                            sellMenuCostText.text = "";
+                        }
+                    }else if (_resultContent.type == contentType && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+                    {
+                        selectedBarContent = _resultContent;
+                        SellItem();
+                    }
+                }
+            }
+        }
+    }
+
+    public void SellItem()
+    {
+        for (int i = 0; i < invContent.Count; i++)
+        {
+            if (invContent[i] == selectedBarContent)
+            {
+                PlayerController _player = FindObjectOfType<PlayerController>();
+                if (selectedBarContent.type == ContentType.Part)
+                {
+                    _player.Money += selectedBarContent.partContent.Cost * 0.75f;
+                    _player.RemovePart(selectedBarContent.partContent);
+                }
+                else
+                {
+                    _player.RemoveWorker(selectedBarContent.workerContent);
+                }
+
+                
+                sellMenu.SetActive(false);
+                return;
+            }
+        }
+    }
+
+    public void CancelSell()
+    {
+        sellMenu.SetActive(false);
     }
 
     public void ResetItems(ContentType _contentType)
@@ -144,8 +229,10 @@ public class InventoryBarConnector : MonoBehaviour
         {
             if (item.workerContent == _worker)
             {
+                print("Removing worker " + currentItems);
                 item.RemoveContent();
                 currentItems--;
+                print("Remaining Items " + currentItems);
                 return;
             }
         }

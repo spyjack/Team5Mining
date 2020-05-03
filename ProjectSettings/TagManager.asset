@@ -12,6 +12,8 @@ TagManager:
   - Thumbnail
   - CRT
   - PartComponent
+  - WorkerComponent
+  - InvSlot
   layers:
   - Default
   - TransparentFX

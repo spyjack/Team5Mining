@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
     InventoryBarConnector workersInventoryBar = null;
 
     [SerializeField]
-    ShipEditor shipEditor = null;
+    ShopController storeMain = null;
 
     [SerializeField]
     GameObject StoreUIObj = null;
@@ -83,12 +83,18 @@ public class PlayerController : MonoBehaviour
         get { return partsInventoryBar; }
     }
 
+    public InventoryBarConnector WorkersInventory
+    {
+        get { return workersInventoryBar; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         GetAllShips();
         StartCoroutine(CheckDepths());
         StartCoroutine(UpdateNavmesh());
+        StartCoroutine(EventTimer());
     }
 
     // Update is called once per frame
@@ -111,6 +117,12 @@ public class PlayerController : MonoBehaviour
     {
         workerInventory.Add(_worker);
         workersInventoryBar.AddItem(_worker);
+    }
+
+    public void RemoveWorker(WorkerBase _worker)
+    {
+        workerInventory.Remove(_worker);
+        workersInventoryBar.RemoveItem(_worker);
     }
 
     public float GetMaxWorkers()
@@ -193,6 +205,20 @@ public class PlayerController : MonoBehaviour
                 _vehicleClass.MovementScript.ClearPath();
             }
         }
+    }
+
+    IEnumerator EventTimer()
+    {
+        while(true)
+        {
+            foreach (Transform ship in playerShips)
+            {
+                ship.GetComponent<VehicleClass>().CheckRations();
+            }
+            storeMain.Restock();
+            yield return new WaitForSeconds(60f * 2f);
+        }
+        
     }
 
     IEnumerator CheckDepths()

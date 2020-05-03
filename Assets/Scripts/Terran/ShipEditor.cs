@@ -79,81 +79,155 @@ public class ShipEditor : MonoBehaviour
             gfxRaycast.Raycast(_pointerEvenData, results);
             foreach (RaycastResult result in results)
             {
-                if (heldItem != null && result.gameObject.tag == "PartComponent" && heldItem.type == ContentType.Part)
-                {
-                    
-                    VehicleEditorComponent _component = result.gameObject.GetComponentInParent<VehicleEditorComponent>();
-                    if (heldItem.partContent is PartDrill && _component.partType == PartType.Drill)
-                    {
-                        _component.AddPart(heldItem.partContent);
-                        Drop();
-                        editorTabs[openEditorIndex].FinalizeChanges();
-                        return;
-                    }
-                    else if (heldItem.partContent is PartCabin && _component.partType == PartType.Cabin)
-                    {
-                        _component.AddPart(heldItem.partContent);
-                        Drop();
-                        editorTabs[openEditorIndex].FinalizeChanges();
-                        return;
-                    }
-                    else if (heldItem.partContent is PartEngine && _component.partType == PartType.Engine)
-                    {
-                        _component.AddPart(heldItem.partContent);
-                        Drop();
-                        editorTabs[openEditorIndex].FinalizeChanges();
-                        return;
-                    }
-                    else if (heldItem.partContent is PartWheel && _component.partType == PartType.Wheels)
-                    {
-                        _component.AddPart(heldItem.partContent);
-                        Drop();
-                        editorTabs[openEditorIndex].FinalizeChanges();
-                        return;
-                    }
-                    else if (heldItem.partContent is PartUpgrade && _component.partType == PartType.Upgrade)
-                    {
-                        _component.AddPart(heldItem.partContent);
-                        Drop();
-                        editorTabs[openEditorIndex].FinalizeChanges();
-                        return;
-                    }else
-                    {
-                        Drop();
-                    }
-                    
-
-                }
-                else
-                {
-                    Drop();
-                }
-                    
+                LeftClickActions(result);    
             }
         }else if (Input.GetMouseButtonDown(1))
         {
-            PointerEventData _pointerEvenData = new PointerEventData(eventSystem);
-            _pointerEvenData.position = Input.mousePosition;
-            List<RaycastResult> results = new List<RaycastResult>();
-            gfxRaycast.Raycast(_pointerEvenData, results);
-            foreach (RaycastResult result in results)
+            RightClickActions();
+        }
+    }
+
+    void LeftClickActions(RaycastResult result)
+    {
+        if (heldItem != null && result.gameObject.tag == "PartComponent" && heldItem.type == ContentType.Part)
+        {
+
+            VehicleEditorComponent _component = result.gameObject.GetComponentInParent<VehicleEditorComponent>();
+            if (heldItem.partContent is PartDrill && _component.partType == PartType.Drill)
             {
-                if (heldItem == null && result.gameObject.tag == "PartComponent")
+                _component.AddPart(heldItem.partContent);
+                Drop();
+                editorTabs[openEditorIndex].FinalizeChanges();
+                return;
+            }
+            else if (heldItem.partContent is PartCabin && _component.partType == PartType.Cabin)
+            {
+                _component.AddPart(heldItem.partContent);
+                Drop();
+                editorTabs[openEditorIndex].FinalizeChanges();
+                return;
+            }
+            else if (heldItem.partContent is PartEngine && _component.partType == PartType.Engine)
+            {
+                _component.AddPart(heldItem.partContent);
+                Drop();
+                editorTabs[openEditorIndex].FinalizeChanges();
+                return;
+            }
+            else if (heldItem.partContent is PartWheel && _component.partType == PartType.Wheels)
+            {
+                _component.AddPart(heldItem.partContent);
+                Drop();
+                editorTabs[openEditorIndex].FinalizeChanges();
+                return;
+            }
+            else if (heldItem.partContent is PartUpgrade && _component.partType == PartType.Upgrade)
+            {
+                _component.AddPart(heldItem.partContent);
+                Drop();
+                editorTabs[openEditorIndex].FinalizeChanges();
+                return;
+            }
+            else
+            {
+                Drop();
+            }
+
+
+        }
+        else if (heldItem != null && result.gameObject.tag == "WorkerComponent" && heldItem.type == ContentType.Worker)
+        {
+            EditorWorkerComponent _component = result.gameObject.GetComponentInParent<EditorWorkerComponent>();
+            editorTabs[openEditorIndex].vehicle.GetPart(out PartCabin _cabin);
+            bool canEquipAuxillary = _cabin != null || _component.station == WorkStation.Cabin;
+            if (editorTabs[openEditorIndex].vehicle.CrewCount < editorTabs[openEditorIndex].vehicle.CrewCountMax && canEquipAuxillary)
+            {
+                _component.AddWorker(heldItem.workerContent);
+                Drop();
+                editorTabs[openEditorIndex].EquipWorker(_component.station);
+            }
+            else { Drop(); }
+        }
+        else
+        {
+            Drop();
+        }
+    }
+
+    void RightClickActions()
+    {
+        PointerEventData _pointerEvenData = new PointerEventData(eventSystem);
+        _pointerEvenData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        gfxRaycast.Raycast(_pointerEvenData, results);
+        PlayerController _player = FindObjectOfType<PlayerController>();
+        foreach (RaycastResult result in results)
+        {
+            if (heldItem == null && result.gameObject.tag == "PartComponent")
+            {
+                VehicleEditorComponent editorComponent = result.gameObject.GetComponentInParent<VehicleEditorComponent>();
+                editorTabs[openEditorIndex].vehicle.GetPart(out PartCabin _cabin);
+                if (_player.PartsInventory.ItemCount < _player.PartsInventory.MaxItems && editorComponent.partType != PartType.Cabin)
                 {
-                    PlayerController _player = FindObjectOfType<PlayerController>();
-                    if (_player.PartsInventory.ItemCount < _player.PartsInventory.MaxItems)
+                    _player.AddPart(editorComponent.installedPart);
+                    editorComponent.RemovePart();
+                    editorTabs[openEditorIndex].FinalizeChanges();
+                    return;
+                }
+                else if (_player.PartsInventory.ItemCount < _player.PartsInventory.MaxItems && editorComponent.partType == PartType.Cabin && _cabin != null)
+                {
+                    int cabinmates = 0;
+                    for (int c = 1; c < editorTabs[openEditorIndex].vehicle.Crew.Length; c++)
                     {
-                        VehicleEditorComponent editorComponent = result.gameObject.GetComponentInParent<VehicleEditorComponent>();
+                        if (editorTabs[openEditorIndex].vehicle.Crew[c] != null)
+                            cabinmates++;
+                    }
+                    print("Cabin mates " + cabinmates);
+                    if (_player.WorkersInventory.ItemCount + cabinmates < _player.WorkersInventory.MaxItems)
+                    {
+                        for (int c = 1; c < editorTabs[openEditorIndex].vehicle.Crew.Length; c++)
+                        {
+                            if (editorTabs[openEditorIndex].vehicle.Crew[c] != null)
+                            {
+                                _player.AddWorker(editorTabs[openEditorIndex].vehicle.Crew[c]);
+                                editorTabs[openEditorIndex].vehicle.AssignWorker(c, null);
+                            }
+                        }
+                        _player.AddPart(editorComponent.installedPart);
+                        editorComponent.RemovePart();
+                        editorTabs[openEditorIndex].FinalizeChanges();
+                        return;
+                    }
+                    else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                    {
+                        for (int c = 1; c < selectedShip.Crew.Length; c++)
+                        {
+                            if (selectedShip.Crew[c] != null)
+                            {
+                                editorTabs[openEditorIndex].vehicle.AssignWorker(c, null);
+                            }
+                        }
                         _player.AddPart(editorComponent.installedPart);
                         editorComponent.RemovePart();
                         editorTabs[openEditorIndex].FinalizeChanges();
                         return;
                     }
                 }
-                else
+            }
+            else if (heldItem == null && result.gameObject.tag == "WorkerComponent")
+            {
+                EditorWorkerComponent editorWorkerComponent = result.gameObject.GetComponentInParent<EditorWorkerComponent>();
+                if (_player.WorkersInventory.ItemCount < _player.WorkersInventory.MaxItems && editorWorkerComponent.assignedWorker != null)
                 {
-                    Drop();
+                    _player.AddWorker(editorTabs[openEditorIndex].vehicle.GetWorker(editorWorkerComponent.station));
+                    editorWorkerComponent.RemoveWorker();
+                    editorTabs[openEditorIndex].EquipWorker(editorWorkerComponent.station);
+                    return;
                 }
+            }
+            else
+            {
+                Drop();
             }
         }
     }
@@ -220,7 +294,6 @@ public class ShipEditor : MonoBehaviour
 
     public void GoToShipEditor(int index)
     {
-        print("Changing Ship Editor");
         editorTabs[openEditorIndex].transform.gameObject.SetActive(false);
         editorTabs[index].transform.gameObject.SetActive(true);
         editorTabs[index].RefreshComponents();

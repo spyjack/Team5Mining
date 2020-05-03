@@ -25,6 +25,11 @@ public class ShipDrilling : MonoBehaviour
     [SerializeField]
     bool drillActive = false;
 
+    public bool ActiveDrill
+    {
+        get { return drillActive; }
+    }
+
     //Added object pooling as it currently instantiates waaay too many particles - Terran
     [SerializeField]
     List<GameObject> drillParticlesPooled = new List<GameObject>();
@@ -35,7 +40,8 @@ public class ShipDrilling : MonoBehaviour
         if (!drillActive && other.tag == "Ground" && vehicleMain.Inventory.GetFuelAmount() > 0)
         {
             StartCoroutine(DrillRepeated());
-        }else
+        }
+        else
         {
             print("Broke Drill");
         }
@@ -43,7 +49,11 @@ public class ShipDrilling : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        StopCoroutine(DrillRepeated());
+        if (other.tag == "Ground")
+        {
+            drillActive = false;
+            StopCoroutine(DrillRepeated());
+        }
     }
 
     IEnumerator DrillRepeated()
@@ -52,7 +62,6 @@ public class ShipDrilling : MonoBehaviour
         {
             yield break;
         }
-        print("New Coroutine Started!");
         int _hardnessCount = 0;
         while (true)
         {
@@ -60,7 +69,8 @@ public class ShipDrilling : MonoBehaviour
             if (!drillActive && vehicleMover.IsMining)
             {
                 drillActive = true;
-            }else if (!vehicleMover.IsMining || gasLeft <= 0)
+            }
+            else if (!vehicleMover.IsMining || gasLeft <= 0)
             {
                 drillActive = false;
                 yield break;
@@ -87,22 +97,33 @@ public class ShipDrilling : MonoBehaviour
                         ResourceTile _tile = tilemap.GetTile<ResourceTile>(tilemap.WorldToCell(hitPosition));
                         if (_tile.Hardness <= vehicleMain.DrillTier)
                         {
-                            _tile.TakeDamage(5);
-                            print("Tile Health " + _tile.Health);
+                            int damage = 5;
+                            float collectionBonus = 1;
+                            WorkerBase _drillOperater = vehicleMain.GetWorker(WorkStation.Drill);
+                            if (_drillOperater != null)
+                            {
+                                damage += _drillOperater.Operating;
+                                collectionBonus = (float)_drillOperater.Operating * 0.25f;
+                            }
+                            if (vehicleMain.GetWorker(WorkStation.Spare) != null)
+                                damage += Mathf.RoundToInt((float)vehicleMain.GetWorker(WorkStation.Spare).Operating / 2f);
+                            _tile.TakeDamage(damage);
+                            //print("Tile Health " + _tile.Health);
                             if (_tile.Health <= 0)
                             {
                                 //Add a resource
-                                vehicleMain.Inventory.AddResource(_tile.Resource, 1 * vehicleMain.DrillEfficiency);
+                                vehicleMain.Inventory.AddResource(_tile.Resource, (1 * vehicleMain.DrillEfficiency) + collectionBonus);
                                 tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
                                 hasChanged = true;
                             }
-                        }else
+                        }
+                        else
                         {
                             _hardnessCount++;
                         }
                         vehicleMain.UseFuel(-1 * vehicleMain.DrillFuelEfficiency);
                     }
-                   
+
                     //Code for Particle system spawning.
                     //CreateParticle(this.transform.position);
                     drill.transform.parent = drill.transform;
@@ -116,8 +137,9 @@ public class ShipDrilling : MonoBehaviour
                     }
                 }
                 if (hasChanged)
-                GameObject.FindObjectOfType<PlayerController>().dirtyNav = true;
-            }else
+                    GameObject.FindObjectOfType<PlayerController>().dirtyNav = true;
+            }
+            else
             {
                 drillActive = false;
                 yield break;
@@ -125,46 +147,6 @@ public class ShipDrilling : MonoBehaviour
             yield return new WaitForSeconds(vehicleMain.DrillSpeed);
         }
     }
-
-    /*public void OnCollisionEnter2D(Collision2D collision)
-    {
-        Vector3 hitPosition = Vector3.zero;
-        foreach (ContactPoint2D hit in collision.contacts)
-        {
-            Debug.Log(hit.point);
-
-            hitPosition.x = hit.point.x;
-            hitPosition.y = hit.point.y;
-
-            hitPosition.x = hit.point.x;
-            hitPosition.y = hit.point.y;
-
-            if (tilemap.GetTile(tilemap.WorldToCell(hitPosition)) != null)
-            {
-                ResourceTile _tile = tilemap.GetTile<ResourceTile>(tilemap.WorldToCell(hitPosition));
-                _tile.TakeDamage(5);
-                print("Tile Health " + _tile.Health);
-                if (_tile.Health <= 0)
-                {
-                    vehicleMain.Inventory.AddResource(_tile.Resource, 1);
-                    tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
-                }
-            }
-            //tilemap.GetTile<ResourceTile>(tilemap.WorldToCell(hitPosition)).TakeDamage(5);
-            //tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
-
-            //Code for Particle system spawning.
-            CreateParticle(this.transform.position);
-            drill.transform.parent = drill.transform;
-            //Consume a fuel with every block mined
-            vehicleMain.UseFuel(-1);
-            //Add a resource
-            //vehicleMain.Inventory.AddRandomResource(1);
-        }
-        GameObject.FindObjectOfType<PlayerController>().dirtyNav = true;
-    }*/
-
-
 
     void CreateParticle(Vector2 position)
     {
@@ -194,7 +176,7 @@ public class ShipDrilling : MonoBehaviour
 
     IEnumerator DisablePooledParticles()
     {
-        while(true)
+        while (true)
         {
             for (int i = 0; i < drillParticlesPooled.Count; i++)
             {
@@ -206,53 +188,4 @@ public class ShipDrilling : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
-
-    /*public void OnTriggerEnter2D(Collision2D collision)
-    {
-        Vector3 hitPosition = Vector3.zero;
-        foreach (ContactPoint2D hit in collision.contacts)
-        {
-            Debug.Log(hit.point);
-            hitPosition.x = hit.point.x - 0.1f;
-            hitPosition.y = hit.point.y - 0.1f;
-            tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
-        }
-    }
-    */
-
-    /*
-public void OnTriggerEnter2D(Collision2D coll)
-{
-    Vector3 hitPosition = Vector3.zero;
-    RaycastHit hit;
-    Ray drillingRay = new Ray(transform.position, Vector3.down);
-    if (Physics.Raycast(drillingRay, out hit, 100))
-    {
-        if (hit.collider.tag == "Ground")
-        {
-            Debug.Log(hit.point);
-            hitPosition.x = hit.point.x - 0.1f;
-            hitPosition.y = hit.point.y - 0.1f;
-            tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
-        }
-    }
-
-}
-*/
-
-    /*public void FixedUpdate()
-    {
-        Vector2 hitPos = Vector2.zero;
-        RaycastHit hit;
-        Ray drillingRay = new Ray(transform.position, Vector2.right);
-        Debug.DrawLine(transform.position, Vector2.right);
-        if(Physics.Raycast(drillingRay,out hit,1 ))
-        {
-            if(hit.collider.tag == "Ground")
-            {
-                tilemap.SetTile(tilemap.WorldToCell(hitPos), null);
-            }
-        }
-    }
-    */
 }

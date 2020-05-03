@@ -66,6 +66,9 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     GameObject vehiclePrefab = null;
 
+    [SerializeField]
+    WorkerBase vehicleStartingWorker = null;
+
     [Header("Worker Store")]
     [SerializeField]
     List<WorkerCardConnector> workerConnectors = new List<WorkerCardConnector>();
@@ -143,6 +146,8 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     private TierProbability tierProbability = new TierProbability();
 
+    //[SerializeField]
+
     public VehicleClass SelectedShip
     {
         get { return selectedVehicle; }
@@ -187,10 +192,8 @@ public class ShopController : MonoBehaviour
             marketTab.SetActive(true);
             resourcesTab.SetActive(false);
             barracksTab.SetActive(false);
-            PopulatePartsList();
-            selectedPart = -1;
             partOverviewObj.SetActive(false);
-            PopulateVehicleCard();
+            selectedPart = -1;
         }
     }
 
@@ -201,7 +204,6 @@ public class ShopController : MonoBehaviour
             barracksTab.SetActive(true);
             resourcesTab.SetActive(false);
             marketTab.SetActive(false);
-            PopulateWorkerList();
         }
     }
 
@@ -238,6 +240,16 @@ public class ShopController : MonoBehaviour
     {
         shipEditor.GoToShipEditor(selectedVehicle);
         shipEditor.transform.gameObject.SetActive(true);
+    }
+
+    public void Restock()
+    {
+        print("Store Restocked!");
+        PopulateVehicleCard();
+
+        PopulatePartsList();
+
+        PopulateWorkerList();
     }
 
     public void SelectShipTab(VehicleClass _vehicle)
@@ -521,6 +533,7 @@ public class ShopController : MonoBehaviour
         _newVehicleCard.shopMain = this;
         _newVehicleCard.vehicle = _newVehicleCard.gameObject.AddComponent<VehicleClass>();
         _newVehicleCard.vehicle.ShipName = partDataHolder.ShipNames[UnityEngine.Random.Range(0, partDataHolder.ShipNames.Count)];
+        _newVehicleCard.vehicle.AssignWorker(WorkStation.Cabin, vehicleStartingWorker);
 
         partDataHolder.GetRandomPart(_tierChances, out PartBody _body);
         _newVehicleCard.vehicle.InstallPart(_body);

@@ -8,6 +8,8 @@ public class EditorTabConnector : MonoBehaviour
 {
     public List<VehicleEditorComponent> editorComponents = new List<VehicleEditorComponent>();
 
+    public List<EditorWorkerComponent> editorWorkerComponents = new List<EditorWorkerComponent>();
+
     public Text shipNameText = null;
 
     public InputField nameInput = null;
@@ -17,6 +19,7 @@ public class EditorTabConnector : MonoBehaviour
     private void Start()
     {
         RefreshComponents();
+        RefreshWorkerComponents();
     }
 
     public void FinalizeChanges()
@@ -33,7 +36,6 @@ public class EditorTabConnector : MonoBehaviour
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
                             _player.RemovePart(_editorComponent.installedPart);
-                            _player.AddPart(_drill);
                         }
                         vehicle.InstallPart((PartDrill)_editorComponent.installedPart);
                     }
@@ -45,9 +47,9 @@ public class EditorTabConnector : MonoBehaviour
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
                             _player.RemovePart(_editorComponent.installedPart);
-                            _player.AddPart(_cabin);
                         }
                         vehicle.InstallPart((PartCabin)_editorComponent.installedPart);
+                        RefreshWorkerComponents();
                     }
                     break;
                 case PartType.Engine:
@@ -57,7 +59,6 @@ public class EditorTabConnector : MonoBehaviour
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
                             _player.RemovePart(_editorComponent.installedPart);
-                            _player.AddPart(_engine);
                         }
                         vehicle.InstallPart((PartEngine)_editorComponent.installedPart);
                     }
@@ -69,7 +70,6 @@ public class EditorTabConnector : MonoBehaviour
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
                             _player.RemovePart(_editorComponent.installedPart);
-                            _player.AddPart(_wheels);
                         }
                         vehicle.InstallPart((PartWheel)_editorComponent.installedPart);
                     }
@@ -81,13 +81,13 @@ public class EditorTabConnector : MonoBehaviour
                         if (_editorComponent.installedPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
                         {
                             _player.RemovePart(_editorComponent.installedPart);
-                            _player.AddPart(_upgrade);
                         }
                         vehicle.InstallPart((PartUpgrade)_editorComponent.installedPart);
                     }
                     break;
             }
         }
+        vehicle.VehicleGraphics.ReDraw();
     }
 
     public void FinalizeChanges(PartDrill _drillPart)
@@ -99,9 +99,63 @@ public class EditorTabConnector : MonoBehaviour
             if (_drillPart != null) //if the part isn't just being removed, take it away from the player, then add the old part to the players inv
             {
                 _player.RemovePart(_drillPart);
-                _player.AddPart(_drill);
             }
             vehicle.InstallPart(_drillPart);
+        }
+        vehicle.VehicleGraphics.ReDraw();
+    }
+
+    public void EquipWorker(int _stationIndex)
+    {
+        PlayerController _player = FindObjectOfType<PlayerController>();
+        if (editorWorkerComponents[_stationIndex].assignedWorker != null)
+        {
+            _player.RemoveWorker(editorWorkerComponents[_stationIndex].assignedWorker);
+        }
+        vehicle.AssignWorker(_stationIndex, editorWorkerComponents[_stationIndex].assignedWorker);
+    }
+
+    public void EquipWorker(WorkStation _station)
+    {
+        PlayerController _player = FindObjectOfType<PlayerController>();
+        switch (_station)
+        {
+            
+            case WorkStation.Cabin:
+                if (editorWorkerComponents[0].assignedWorker != null)
+                {
+                    _player.RemoveWorker(editorWorkerComponents[0].assignedWorker);
+                }
+                vehicle.AssignWorker(_station, editorWorkerComponents[0].assignedWorker);
+                return;
+            case WorkStation.Engine:
+                if (editorWorkerComponents[1].assignedWorker != null)
+                {
+                    _player.RemoveWorker(editorWorkerComponents[1].assignedWorker);
+                }
+                vehicle.AssignWorker(_station, editorWorkerComponents[1].assignedWorker);
+                return;
+            case WorkStation.Drill:
+                if (editorWorkerComponents[2].assignedWorker != null)
+                {
+                    _player.RemoveWorker(editorWorkerComponents[2].assignedWorker);
+                }
+                vehicle.AssignWorker(_station, editorWorkerComponents[2].assignedWorker);
+                return;
+            case WorkStation.Spare:
+                if (editorWorkerComponents[3].assignedWorker != null)
+                {
+                    _player.RemoveWorker(editorWorkerComponents[3].assignedWorker);
+                }
+                vehicle.AssignWorker(_station, editorWorkerComponents[3].assignedWorker);
+                return;
+            default:
+                if (editorWorkerComponents[0].assignedWorker != null)
+                {
+                    _player.RemoveWorker(editorWorkerComponents[0].assignedWorker);
+                }
+                vehicle.AssignWorker(_station, editorWorkerComponents[0].assignedWorker);
+                return;
         }
     }
 
@@ -136,6 +190,33 @@ public class EditorTabConnector : MonoBehaviour
             }
             editorComponents[i].SetUp();
             shipNameText.text = vehicle.ShipName;
+        }
+    }
+
+    public void RefreshWorkerComponents()
+    {
+        vehicle.GetPart(out PartCabin _cabin);
+        int maxComponents = 1;
+        if (_cabin != null)
+        {
+            maxComponents += _cabin.CrewCapacity;
+            print("Crew Capacity: " + maxComponents);
+        }
+        for (int i = 0; i < editorWorkerComponents.Count; i++)
+        {
+            if (i < maxComponents)
+            {
+                editorWorkerComponents[i].AddWorker(vehicle.Crew[i]);
+            }
+            if (_cabin == null && i > 0)
+            {
+                editorWorkerComponents[i].gameObject.SetActive(false);
+
+            }else if (_cabin != null && !editorWorkerComponents[i].gameObject.activeSelf)
+            {
+                editorWorkerComponents[i].gameObject.SetActive(true);
+                editorWorkerComponents[i].SetUp();
+            }
         }
     }
 

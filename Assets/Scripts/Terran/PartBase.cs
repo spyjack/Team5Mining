@@ -12,6 +12,9 @@ public class PartBase : ScriptableObject
     Sprite _image = null;
 
     [SerializeField]
+    Sprite _image2 = null;
+
+    [SerializeField]
     Sprite _uiIcon = null;
 
     [SerializeField]
@@ -36,6 +39,12 @@ public class PartBase : ScriptableObject
     {
         get { return _image; }
         set { _image = value; }
+    }
+
+    public Sprite SecondaryImage
+    {
+        get { return _image2; }
+        set { _image2 = value; }
     }
 
     public Sprite Icon

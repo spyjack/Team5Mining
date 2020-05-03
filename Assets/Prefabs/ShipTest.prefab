@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 1681674708}
   - component: {fileID: 1681674709}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: Headlights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,7 +195,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6746278843993166900}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.008, z: 0}
+  m_LocalPosition: {x: 0, y: 0.004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1.0000001}
   m_Children: []
   m_Father: {fileID: 6746278844825350096}
@@ -278,8 +278,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 6746278844481943565}
+  m_Children: []
   m_Father: {fileID: 6746278845522855358}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -348,12 +347,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6746278844481943566}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.001, y: 0.003, z: -0.25}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.3745, y: -0.20649987, z: -0.05}
+  m_LocalScale: {x: 1, y: 1, z: 0.2}
   m_Children: []
-  m_Father: {fileID: 6746278844054704885}
-  m_RootOrder: 0
+  m_Father: {fileID: 6746278844513606699}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6746278844481943564
 SpriteRenderer:
@@ -413,6 +412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6746278844513606699}
+  - component: {fileID: 8645158971810591997}
   m_Layer: 31
   m_Name: ShipGFX
   m_TagString: Untagged
@@ -429,14 +429,37 @@ Transform:
   m_GameObject: {fileID: 6746278844513606700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.416, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 5}
+  m_LocalScale: {x: 2, y: 2, z: 10}
   m_Children:
   - {fileID: 6746278845162705945}
   - {fileID: 6746278844825350096}
   - {fileID: 366275511}
+  - {fileID: 6746278844481943565}
   m_Father: {fileID: 6746278845522855358}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8645158971810591997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6746278844513606700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04da044fce7b23d428b69eb9306d2761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vehicle: {fileID: 6746278845522855346}
+  vehicleMover: {fileID: 6746278845522855345}
+  vehicleDriller: {fileID: 6746278844054704884}
+  drillRenderer: {fileID: 6746278844481943564}
+  drillTransform: {fileID: 6746278844481943565}
+  cabinRenderer: {fileID: 6746278845162705944}
+  bodyRenderer: {fileID: 6746278844825350111}
+  windowRenderer: {fileID: 6746278843993166898}
+  wheelRenderer: {fileID: 6746278844968598806}
+  headlights: {fileID: 1681674707}
 --- !u!1 &6746278844825350097
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +567,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6746278844968598824}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0028}
   m_LocalScale: {x: 1, y: 1, z: 1.0000001}
   m_Children: []
   m_Father: {fileID: 6746278844825350096}
@@ -811,6 +834,7 @@ MonoBehaviour:
     maxCapacity: 0
     usedCapacity: 0
   vehicleMover: {fileID: 6746278845522855345}
+  vehicleGraphics: {fileID: 8645158971810591997}
   selectionSprite: {fileID: 366275510}
   shipName: S.S. Unnamed
   health: 10
@@ -819,20 +843,22 @@ MonoBehaviour:
   baseWeight: 50
   weight: 100
   fuel: 60
-  fuelMax: 100
+  fuelMax: 1000
   acceleration: 60
   drillSpeed: 1
   isSelected: 0
   cost: 10
   crew:
-  - {fileID: 11400000, guid: caf08e104827ea64da883d2d2319ffab, type: 2}
+  - {fileID: 11400000, guid: f6055c57f1f4735448ff72d6baf2d421, type: 2}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  crewCount: 0
   vehicleBase: {fileID: 11400000, guid: 6f0b429e5db0df74788264d6a068ff51, type: 2}
   drill: {fileID: 11400000, guid: 371f7c6967a2b5c4fb3ae1a60749ae8a, type: 2}
   engine: {fileID: 11400000, guid: cdcda958b3a7d734cae13946e036497c, type: 2}
   upgrade: {fileID: 11400000, guid: 6049b4a02407d4b4bb453dcdca4403c7, type: 2}
-  cabin: {fileID: 11400000, guid: 7c3ab340114dca04195d07214dbcba3b, type: 2}
+  cabin: {fileID: 0}
   wheels: {fileID: 11400000, guid: cb79af443f12db1418f4d8d6b12df402, type: 2}
 --- !u!70 &6746278845522855347
 CapsuleCollider2D:

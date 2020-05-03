@@ -21,7 +21,7 @@ public class VehicleMovement : MonoBehaviour
     private float maxSpeed = 200f;
 
     [SerializeField]
-    private float stoppingDistance = 3f;
+    private float stoppingDistance = 1f;
 
     [SerializeField]
     private float nextWaypointDistance = 3f;
@@ -60,6 +60,11 @@ public class VehicleMovement : MonoBehaviour
         get { return drillPosition; }
     }
 
+    public float Speed
+    {
+        get { return speed; }
+    }
+
     public bool IsMining
     {
         get { return minerMode; }
@@ -96,7 +101,7 @@ public class VehicleMovement : MonoBehaviour
         if (vehicleMain.Inventory.UsedCapacity >= vehicleMain.Inventory.Capacity && minerMode)
             ToggleMinerMode(true);
 
-        if (Input.GetMouseButtonDown(0) && vehicleMain.Selected)
+        if (Input.GetMouseButtonDown(0) && vehicleMain.Selected && vehicleMain.HasPart(PartType.Wheels))
         {
             AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }else if ((Input.GetMouseButtonDown(2) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
@@ -127,6 +132,18 @@ public class VehicleMovement : MonoBehaviour
             drillBit.position = drillPosition;
         }
         Debug.DrawLine(rb.position, drillBit.position, Color.blue);
+
+        if (!vehicleMain.HasPart(PartType.Wheels))
+        {
+            speed = 0;
+            ClearPath();
+        }
+        if (vehicleMain.Inventory.GetFuelAmount() <= 0 && (speed > 0 || minerMode))
+        {
+            speed = 0;
+            ClearPath();
+            ToggleMinerMode(true);
+        }
     }
 
     // Update is called once per frame
@@ -143,28 +160,24 @@ public class VehicleMovement : MonoBehaviour
             {
                 if (Vector2.Distance(rb.position, targetQueue[0]) <= stoppingDistance)
                 {
-                    if (targetQueue.Count <= 0)
-                    {
-                        speed = 0;
-                    }
-                    else
-                    {
                         RemoveTargetPoint(0);
-                    }
+                        if (targetQueue.Count <= 0)
+                        {
+                            print("Removing spped");
+                            speed = 0;
+                        }
                 }
             }
-           
-            
+
             return;
         }else
         {
             reachedEndOfPath = false;
         }
 
-        if (speed < maxSpeed && !reachedEndOfPath)
+        if (speed < maxSpeed && !reachedEndOfPath && Vector2.Distance(rb.position, targetQueue[0]) > stoppingDistance)
         {
             speed += vehicleMain.Acceleration;
-            
         }
 
         direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
@@ -191,6 +204,7 @@ public class VehicleMovement : MonoBehaviour
     {
         ClearTargets();
         path.vectorPath.Clear();
+        speed = 0;
         rb.velocity = Vector3.zero;
     }
 
@@ -279,6 +293,7 @@ public class VehicleMovement : MonoBehaviour
     {
         targetQueue.Clear();
         path.vectorPath.Clear();
+        speed = 0;
         for (int i = targetPositions.Count-1; i >= 0; i--)
         {
             Destroy(targetPositions[i]);
@@ -301,5 +316,17 @@ public class VehicleMovement : MonoBehaviour
             GetComponentInChildren<ShipDrilling>().drillCollider.enabled = true;
             minerMode = true;
         }
+    }
+
+    public void CheckDrillRange(PartDrill _drill)
+    {
+        if (_drill == null)
+        {
+            drillRange = 0;
+            return;
+        }
+
+        if (_drill.Range > drillRange || _drill.Range < drillRange)
+            drillRange = _drill.Range;
     }
 }
