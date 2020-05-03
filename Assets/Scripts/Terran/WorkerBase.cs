@@ -59,6 +59,12 @@ public class WorkerBase : ScriptableObject
         set { _gender = value; }
     }
 
+    public int Health
+    {
+        get { return currentHealth; }
+        set { maxHealth = value; currentHealth = maxHealth; }
+    }
+
     public int Motorskills
     {
         get { return motorskills; }
