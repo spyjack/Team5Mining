@@ -41,15 +41,11 @@ public class ShipDrilling : MonoBehaviour
         {
             StartCoroutine(DrillRepeated());
         }
-        else
-        {
-            print("Broke Drill");
-        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Ground")
+        if (other.tag == "Ground" && vehicleMover.GetTarget(0).z != 1)
         {
             drillActive = false;
             StopCoroutine(DrillRepeated());

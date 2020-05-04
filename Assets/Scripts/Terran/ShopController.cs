@@ -322,6 +322,7 @@ public class ShopController : MonoBehaviour
 
             GameObject _newVehicle = Instantiate(vehiclePrefab, shipSpawnPosition.position, Quaternion.identity);
             _newVehicle.GetComponent<VehicleClass>().CreateSelf(_vehicleCard.vehicle);
+            _newVehicle.GetComponent<VehicleClass>().MovementScript.AddTargetPoint(new Vector2(shipSpawnPosition.position.x, shipSpawnPosition.position.y - 0.5f));
             player.AddShip(_newVehicle.transform);
         }
     }
@@ -677,18 +678,25 @@ public class ShopController : MonoBehaviour
         }
 
         helpResourcesText.gameObject.SetActive(false);
-        shipEditor.RefreshTabs();
+        bool isNew = true;
 
         foreach (ShipSelector sellector in shipSelectors)
         {
             if (sellector.Vehicle == _vehicle)
             {
                 sellector.gameObject.SetActive(true);
-                return;
+                isNew = false;
+                break;
             }
         }
-        AddShipSelector(_vehicle);
-        shipEditor.CreateShipEditor(_vehicle);
+        if (isNew)
+        {
+            AddShipSelector(_vehicle);
+            shipEditor.CreateShipEditor(_vehicle);
+        }else
+        {
+            shipEditor.RefreshTabs();
+        }
     }
 
     void UndockShip(VehicleClass _vehicle)
@@ -715,10 +723,11 @@ public class ShopController : MonoBehaviour
         }
         else
         {
+            //shipEditor.RefreshTabs();
             SelectShipTab(dockedShips[0]);
             if (shipEditor.ActiveShip == _vehicle)
             {
-                shipEditor.GoToNextShipEditor();
+                shipEditor.GoToShipEditor(dockedShips[0]);
             }
         }
     }
@@ -740,7 +749,7 @@ public class ShopController : MonoBehaviour
             bool addResource = true;
             foreach (ResourceListConnector connector in resourceListItems)
             {
-                if (connector.resourceId == resourceId)
+                if (connector.resource == resourceId)
                 {
                     addResource = false;
                     RefreshResource(resourceId, connector);
@@ -791,7 +800,7 @@ public class ShopController : MonoBehaviour
             ResourceListConnector connector = newListObject.GetComponent<ResourceListConnector>();
             resourceListItems.Add(connector);
 
-            connector.resourceId = _resource;
+            connector.resource = _resource;
             connector.resourceName.text = selectedVehicle.Inventory.GetResourceName(_resource);
             connector.resourceQuantity.text = selectedVehicle.Inventory.GetResourceAmount(_resource).ToString("F2");
             connector.resourceCapacity.text = selectedVehicle.Inventory.GetResourceCapacity(_resource).ToString("F2");

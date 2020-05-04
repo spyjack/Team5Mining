@@ -267,8 +267,7 @@ public class ShipEditor : MonoBehaviour
         helpText.gameObject.SetActive(false);
         if (shopMain.DockedShips.Count <= 0)
         {
-            GoToShipEditor(0);
-            editorTabs[0].gameObject.SetActive(false);
+            editorTabs[openEditorIndex].gameObject.SetActive(false);
             helpText.gameObject.SetActive(true);
         }else if (!editorTabs[openEditorIndex].gameObject.activeSelf)
         {
@@ -284,7 +283,6 @@ public class ShipEditor : MonoBehaviour
             {
                 selectedShip = _vehicle;
                 GoToShipEditor(i);
-                break;
             }else if (editorTabs[i].gameObject.activeSelf)
             {
                 editorTabs[i].gameObject.SetActive(false);
@@ -299,6 +297,7 @@ public class ShipEditor : MonoBehaviour
         editorTabs[index].RefreshComponents();
         helpText.gameObject.SetActive(false);
         openEditorIndex = index;
+        selectedShip = editorTabs[index].vehicle;
     }
 
     public void GoToNextShipEditor()
@@ -348,27 +347,26 @@ public class ShipEditor : MonoBehaviour
         EditorTabConnector _newEditorTab = Instantiate(editorTabPrefab, editorTabHolder.transform).GetComponent<EditorTabConnector>();
         _newEditorTab.vehicle = _vehicle;
         editorTabs.Add(_newEditorTab);
-        if (shopMain.DockedShips.Count > 1)
+        if (shopMain.DockedShips.Count != 1)
         {
             _newEditorTab.transform.gameObject.SetActive(false);
-        }else
+        }else if (shopMain.DockedShips.Count == 1)
         {
-            GoToShipEditor(0);
+            GoToShipEditor(editorTabs.Count-1);
         }
     }
 
     public void CloseTab()
     {
         editorTabs[openEditorIndex].gameObject.SetActive(false);
-        openEditorIndex = 0;
         helpText.gameObject.SetActive(true);
     }
 
     public void RefreshTabs()
     {
-        if (editorTabs.Count > 0 && !editorTabs[openEditorIndex].gameObject.activeInHierarchy)
+        if (editorTabs.Count > 0 && !editorTabs[openEditorIndex].gameObject.activeSelf)
         {
-            GoToShipEditor(openEditorIndex);
+            GoToNextShipEditor();
         }
     }
 

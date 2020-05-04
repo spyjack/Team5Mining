@@ -44,7 +44,7 @@ public class VehicleMovement : MonoBehaviour
     VehicleClass vehicleMain = null;
 
     [SerializeField]
-    Vector2 drillPosition = new Vector2();
+    Vector2 drillPosition;
 
     [SerializeField]
     Transform drillBit = null;
@@ -83,6 +83,7 @@ public class VehicleMovement : MonoBehaviour
             Debug.LogWarning(gameObject.name + " Missing RigidBody2D");
             rb = GetComponent<Rigidbody2D>();
         }
+        drillPosition = this.transform.position;
 
         ToggleMinerMode(true);
 
@@ -106,7 +107,7 @@ public class VehicleMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && vehicleMain.Selected && vehicleMain.HasPart(PartType.Wheels))
         {
             AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        }else if ((Input.GetMouseButtonDown(2) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
+        }else if (((Input.GetMouseButtonDown(2) || Input.GetKeyDown(KeyCode.X)) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
         {
             ClearPath();
         }
@@ -241,15 +242,22 @@ public class VehicleMovement : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
-
-
-    void AddTargetPoint(Vector3 newTarget)
+    public Vector3 GetTarget(int index)
     {
-        if (minerMode)
-            newTarget.z = 1;
+        if (targetQueue.Count <= 0)
+            return new Vector3(0, 0, 0);
+
+        return targetQueue[0];
+    }
+
+    public void AddTargetPoint(Vector3 newTarget)
+    {
         targetQueue.Add(newTarget);
         newTarget.z = -2;
         targetPositions.Add(Instantiate(targetPrefab, newTarget, Quaternion.identity));
+        newTarget.z = 0;
+        if (minerMode)
+            newTarget.z = 1;
         for (int i = 0; i < targetPositions.Count; i++)
         {
             SpriteRenderer sprite = targetPositions[i].transform.GetComponent<SpriteRenderer>();
@@ -304,14 +312,18 @@ public class VehicleMovement : MonoBehaviour
 
     void ToggleMinerMode(bool isActive)
     {
-        if (isActive)
+        float waypointMinerMode = 0;
+        if (targetQueue.Count > 0)
+            waypointMinerMode = targetQueue[0].z;
+
+        if (isActive && waypointMinerMode != 1)
         {
             seeker.graphMask = GraphMask.FromGraphName("Cleared Paths");
             minerMode = false;
             GetComponentInChildren<ShipDrilling>().drillCollider.enabled = false;
             FindObjectOfType<PlayerController>().recentMinerToggle = true;
         }
-        else
+        else if (!isActive || waypointMinerMode == 1)
         {
             seeker.graphMask = GraphMask.FromGraphName("Mining Paths");
             GetComponentInChildren<ShipDrilling>().drillCollider.enabled = true;

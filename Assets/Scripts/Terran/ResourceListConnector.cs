@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ResourceListConnector : MonoBehaviour
 {
-    public ResourceId resourceId;
+    public ResourceId resource;
 
     public Text resourceName = null;
 
@@ -21,21 +21,21 @@ public class ResourceListConnector : MonoBehaviour
 
     public void SellAllClicked()
     {
-        shopMain.SellResource(resourceId, shopMain.SelectedShip.Inventory.GetResourceAmount(resourceId));
-        shopMain.RefreshResource(resourceId, this);
+        shopMain.SellResource(resource, shopMain.SelectedShip.Inventory.GetResourceAmount(resource));
+        shopMain.RefreshResource(resource, this);
     }
 
     public void SellClicked()
     {
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            shopMain.SellResource(resourceId, 10);
-            shopMain.RefreshResource(resourceId, this);
+            shopMain.SellResource(resource, 10);
+            shopMain.RefreshResource(resource, this);
         }
         else
         {
-            shopMain.SellResource(resourceId, 1);
-            shopMain.RefreshResource(resourceId, this);
+            shopMain.SellResource(resource, 1);
+            shopMain.RefreshResource(resource, this);
         }
         
     }
@@ -44,13 +44,13 @@ public class ResourceListConnector : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            shopMain.BuyResource(resourceId, 10);
-            shopMain.RefreshResource(resourceId, this);
+            shopMain.BuyResource(resource, 10);
+            shopMain.RefreshResource(resource, this);
         }
         else
         {
-            shopMain.BuyResource(resourceId, 1);
-            shopMain.RefreshResource(resourceId, this);
+            shopMain.BuyResource(resource, 1);
+            shopMain.RefreshResource(resource, this);
         }
     }
 }
