@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VehicleDisplayClass : MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class VehicleDisplayClass : MonoBehaviour
 
     [SerializeField]
     GameObject headlights = null;
+
+    [SerializeField]
+    ParticleSystem exhaust = null;
 
     [Header("Vehicle UI")]
     [SerializeField]
@@ -89,13 +93,30 @@ public class VehicleDisplayClass : MonoBehaviour
             drillTransform.position = Vector2.Lerp(drillTransform.position, vehicleMover.DrillPoint, Time.deltaTime * 3f);
         }
 
-        if (drillTransform.position.x > transform.position.x && transform.localScale.x > -1)
+        DoFlip();
+    }
+
+    void DoFlip()
+    {
+        if (drillTransform.position.x > transform.position.x+0.1f && transform.localScale.x > -1)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-        }else if (drillTransform.position.x < transform.position.x && transform.localScale.x < 1)
+        }
+        else if (drillTransform.position.x < transform.position.x-0.1f
+ && transform.localScale.x < 1)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
+    }
+
+    public void EnableTrade(VehicleClass[] tradingShips)
+    {
+        uiConnector.EnableTrade(vehicle, tradingShips);
+    }
+
+    public void DisableTrade()
+    {
+        uiConnector.DisableTrade();
     }
 
     public void AlternateDrillSprite()
@@ -116,11 +137,6 @@ public class VehicleDisplayClass : MonoBehaviour
         Sprite prevSprite = wheelRenderer.sprite;
         wheelRenderer.sprite = wheelSpriteAlt;
         wheelSpriteAlt = prevSprite;
-    }
-
-    public void DoNothing()
-    {
-        //Do Nothing
     }
 
     public void ReDraw()
@@ -165,6 +181,7 @@ public class VehicleDisplayClass : MonoBehaviour
         if (uiConnector == null)
             uiConnector = Instantiate(uiPrefab, uiHolder.transform).GetComponent<ShipUIConnector>();
 
+        uiConnector.referenceVehicle = vehicle;
         uiConnector.RefreshUI(vehicle);
     }
 
@@ -174,6 +191,11 @@ public class VehicleDisplayClass : MonoBehaviour
             return;
 
         uiConnector.RefreshInventoryUI(vehicle);
+    }
+
+    public void PlayExhaust()
+    {
+        exhaust.Play();
     }
 
     IEnumerator AnimateDrill()

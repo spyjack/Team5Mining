@@ -50,6 +50,9 @@ public class VehicleClass : MonoBehaviour
     [SerializeField]
     private int cost = 10;
 
+    [SerializeField]
+    private int tradeRadius = 2;
+
     [Header("Crew Stats")]
     [SerializeField]
     WorkerBase[] crew = new WorkerBase[4]; //0 - Captain, 1 - Engineer, 2 - Operator, 3 - Spare Hands
@@ -181,6 +184,7 @@ public class VehicleClass : MonoBehaviour
             {
                 selectionSprite.SetActive(false);
                 vehicleGraphics.SetUI(false);
+                vehicleGraphics.DisableTrade();
             }
         }
     }
@@ -245,6 +249,21 @@ public class VehicleClass : MonoBehaviour
         }
 
         return totalWeight;
+    }
+
+    public void ScanForTrade()
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, tradeRadius, transform.forward, tradeRadius, LayerMask.GetMask("Vehicle"));
+        if (hits.Length > 1)
+        {
+            List<VehicleClass> nearbyvehicles = new List<VehicleClass>();
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform.gameObject.GetComponent<VehicleClass>() != this)
+                    nearbyvehicles.Add(hits[i].transform.gameObject.GetComponent<VehicleClass>());
+            }
+            vehicleGraphics.EnableTrade(nearbyvehicles.ToArray());
+        }
     }
 
     public void CreateSelf(VehicleClass _vehicle)
@@ -314,6 +333,7 @@ public class VehicleClass : MonoBehaviour
             print("Crew Fuel Consumption Multiplier is: " + crewModifier);
         }
         resourceInventory.RemoveResource(ResourceId.Fuel, fuelModifier * crewModifier);
+        vehicleGraphics.PlayExhaust();
     }
 
     public void Refuel(float fuelAmount)
@@ -667,6 +687,4 @@ public class VehicleClass : MonoBehaviour
             }
         }
     }
-
-
 }

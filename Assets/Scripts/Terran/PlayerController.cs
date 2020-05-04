@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject EditorUIObj = null;
 
+    [SerializeField]
+    GameObject pauseMenu = null;
+
     public double Money
     {
         get { return money; }
@@ -98,6 +101,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(CheckDepths());
         StartCoroutine(UpdateNavmesh());
         StartCoroutine(EventTimer());
+        ResumeGame();
     }
 
     // Update is called once per frame
@@ -114,6 +118,14 @@ public class PlayerController : MonoBehaviour
         }
 
         checkForSelection();
+
+        if (pauseMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            ResumeGame();
+        }else if (!pauseMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
     }
 
     public void AddWorker(WorkerBase _worker)
@@ -206,7 +218,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
             DeselectAllShips();
         }
@@ -332,6 +344,23 @@ public class PlayerController : MonoBehaviour
         {
             playerShips.Add(vehicle.GetComponent<Transform>());
         }
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
 

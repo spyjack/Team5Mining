@@ -44,7 +44,7 @@ public class VehicleMovement : MonoBehaviour
     VehicleClass vehicleMain = null;
 
     [SerializeField]
-    Vector2 drillPosition = new Vector2();
+    Vector2 drillPosition;
 
     [SerializeField]
     Transform drillBit = null;
@@ -83,6 +83,7 @@ public class VehicleMovement : MonoBehaviour
             Debug.LogWarning(gameObject.name + " Missing RigidBody2D");
             rb = GetComponent<Rigidbody2D>();
         }
+        drillPosition = this.transform.position;
 
         ToggleMinerMode(true);
 
@@ -106,7 +107,7 @@ public class VehicleMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && vehicleMain.Selected && vehicleMain.HasPart(PartType.Wheels))
         {
             AddTargetPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        }else if ((Input.GetMouseButtonDown(2) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
+        }else if (((Input.GetMouseButtonDown(2) || Input.GetKeyDown(KeyCode.X)) && vehicleMain.Selected) || vehicleMain.Fuel <= 0)
         {
             ClearPath();
         }
@@ -249,7 +250,7 @@ public class VehicleMovement : MonoBehaviour
         return targetQueue[0];
     }
 
-    void AddTargetPoint(Vector3 newTarget)
+    public void AddTargetPoint(Vector3 newTarget)
     {
         targetQueue.Add(newTarget);
         newTarget.z = -2;
