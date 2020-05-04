@@ -201,7 +201,12 @@ public class VehicleClass : MonoBehaviour
 
         if (crew[0] != null)
         {
-            accelerationPoints *= crew[0].Motorskills;
+            int modifier = 0;
+            if (crew[3] != null)
+            {
+                modifier = crew[3].Motorskills;
+            }
+            accelerationPoints *= (crew[0].Motorskills + modifier);
         }
 
         accelerationPoints += engine.Power;

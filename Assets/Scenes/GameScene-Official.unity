@@ -4669,8 +4669,8 @@ MonoBehaviour:
   otherMultiplier: 3
   resourceSaleItems:
   - resource: 0
-    salePricerPerUnit: 25
-    buyPricerPerUnit: 100
+    salePricerPerUnit: 20
+    buyPricerPerUnit: 40
     saleModifier: 1
   - resource: 1
     salePricerPerUnit: 5
@@ -4681,15 +4681,15 @@ MonoBehaviour:
     buyPricerPerUnit: 0
     saleModifier: 1
   - resource: 3
-    salePricerPerUnit: 5
+    salePricerPerUnit: 10
     buyPricerPerUnit: 0
     saleModifier: 1
   - resource: 4
-    salePricerPerUnit: 100
+    salePricerPerUnit: 200
     buyPricerPerUnit: 0
     saleModifier: 1
   - resource: 5
-    salePricerPerUnit: 150
+    salePricerPerUnit: 225
     buyPricerPerUnit: 0
     saleModifier: 1
   - resource: 6
@@ -4709,7 +4709,7 @@ MonoBehaviour:
     buyPricerPerUnit: 0
     saleModifier: 1
   - resource: 10
-    salePricerPerUnit: 50
+    salePricerPerUnit: 100
     buyPricerPerUnit: 0
     saleModifier: 1
   selectedVehicle: {fileID: 0}
@@ -5975,6 +5975,17 @@ PrefabInstance:
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 1509603832}
+    - target: {fileID: 6746278845522855345, guid: 3899e5bf3a071684d8af1cbc316713d0,
+        type: 3}
+      propertyPath: stoppingDistance
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746278845522855346, guid: 3899e5bf3a071684d8af1cbc316713d0,
+        type: 3}
+      propertyPath: drill
+      value: 
+      objectReference: {fileID: 11400000, guid: 371f7c6967a2b5c4fb3ae1a60749ae8a,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3899e5bf3a071684d8af1cbc316713d0, type: 3}
 --- !u!1 &1057167287

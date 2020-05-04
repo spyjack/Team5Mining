@@ -677,18 +677,25 @@ public class ShopController : MonoBehaviour
         }
 
         helpResourcesText.gameObject.SetActive(false);
-        shipEditor.RefreshTabs();
+        bool isNew = true;
 
         foreach (ShipSelector sellector in shipSelectors)
         {
             if (sellector.Vehicle == _vehicle)
             {
                 sellector.gameObject.SetActive(true);
-                return;
+                isNew = false;
+                break;
             }
         }
-        AddShipSelector(_vehicle);
-        shipEditor.CreateShipEditor(_vehicle);
+        if (isNew)
+        {
+            AddShipSelector(_vehicle);
+            shipEditor.CreateShipEditor(_vehicle);
+        }else
+        {
+            shipEditor.RefreshTabs();
+        }
     }
 
     void UndockShip(VehicleClass _vehicle)
@@ -715,10 +722,11 @@ public class ShopController : MonoBehaviour
         }
         else
         {
+            //shipEditor.RefreshTabs();
             SelectShipTab(dockedShips[0]);
             if (shipEditor.ActiveShip == _vehicle)
             {
-                shipEditor.GoToNextShipEditor();
+                shipEditor.GoToShipEditor(dockedShips[0]);
             }
         }
     }
