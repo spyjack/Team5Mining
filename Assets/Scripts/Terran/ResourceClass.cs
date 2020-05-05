@@ -52,25 +52,25 @@ public class ResourceClass
                 weightPerUnit = 18f;
                 break;
             case ResourceId.Stone:
-                weightPerUnit = 68f;
+                weightPerUnit = 33f;
                 break;
             case ResourceId.Iron:
-                weightPerUnit = 222.7f;
+                weightPerUnit = 111.7f;
                 break;
             case ResourceId.Copper:
-                weightPerUnit = 249.9f;
+                weightPerUnit = 124.9f;
                 break;
             case ResourceId.Gold:
-                weightPerUnit = 547f;
+                weightPerUnit = 200f;
                 break;
             case ResourceId.Lead:
                 weightPerUnit = 321.6f;
                 break;
             case ResourceId.Aluminum:
-                weightPerUnit = 169f;
+                weightPerUnit = 86f;
                 break;
             case ResourceId.Crystals:
-                weightPerUnit = 600f;
+                weightPerUnit = 500f;
                 break;
             case ResourceId.Coal:
                 weightPerUnit = 53.4f;

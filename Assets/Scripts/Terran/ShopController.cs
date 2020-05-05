@@ -149,6 +149,9 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     private TierProbability tierProbability = new TierProbability();
 
+    [SerializeField]
+    UIAudio uiAudio = null;
+
     //[SerializeField]
 
     public VehicleClass SelectedShip
@@ -281,6 +284,7 @@ public class ShopController : MonoBehaviour
             player.Money += (int)CalculateValue(_resource, _amount);
             selectedVehicle.Inventory.RemoveResource(_resource, _amount);
             UpdateCapacity();
+            uiAudio.PlaySound(UIsounds.Purchase);
         }
     }
 
@@ -291,6 +295,7 @@ public class ShopController : MonoBehaviour
             player.Money -= (int)CalculateValue(_resource, _amount, false);
             selectedVehicle.Inventory.AddResource(_resource, _amount);
             UpdateCapacity();
+            uiAudio.PlaySound(UIsounds.Purchase);
             //print("Added " + _resource + " x" + _amount);
         }
     }
@@ -324,6 +329,7 @@ public class ShopController : MonoBehaviour
             _newVehicle.GetComponent<VehicleClass>().CreateSelf(_vehicleCard.vehicle);
             _newVehicle.GetComponent<VehicleClass>().MovementScript.AddTargetPoint(new Vector2(shipSpawnPosition.position.x, shipSpawnPosition.position.y - 0.5f));
             player.AddShip(_newVehicle.transform);
+            uiAudio.PlaySound(UIsounds.Purchase);
         }
     }
 
@@ -440,6 +446,7 @@ public class ShopController : MonoBehaviour
             colors.colorMultiplier = 1;
             partBuyButton.colors = colors;
             partBuyButton.transform.GetComponentInChildren<Text>().text = "Purchased";
+            uiAudio.PlaySound(UIsounds.Purchase);
         }
     }
 
@@ -476,6 +483,7 @@ public class ShopController : MonoBehaviour
 
         player.Money -= (int)workerConnector.worker.Cost;
         player.AddWorker(workerConnector.worker);
+        uiAudio.PlaySound(UIsounds.Purchase);
     }
 
     void NewWorkerCard(WorkerBase _worker)

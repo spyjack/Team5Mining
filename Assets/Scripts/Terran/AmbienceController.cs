@@ -10,6 +10,8 @@ public class AmbienceController : MonoBehaviour
     AudioSource ambienceSourceMain = null;
     [SerializeField]
     AudioSource ambienceSourceSecondary = null;
+    [SerializeField]
+    AudioSource extraSource = null;
 
     [SerializeField]
     List<AudioClip> ambienceTracks = new List<AudioClip>();
@@ -61,6 +63,11 @@ public class AmbienceController : MonoBehaviour
     public void SetAmbienceVolume(float sliderValue)
     {
         mixer.SetFloat("ambienceVol", Mathf.Log10(sliderValue) * 20);
+    }
+
+    public void PlayTrack(AudioClip _track)
+    {
+        extraSource.PlayOneShot(_track);
     }
 
     public void FadeInAmbience(AmbienceTrack _track)

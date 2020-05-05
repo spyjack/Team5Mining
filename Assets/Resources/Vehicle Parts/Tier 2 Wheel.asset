@@ -22,3 +22,4 @@ MonoBehaviour:
   _fuelEfficiency: 1
   _weight: 90
   _traction: 5
+  _movementSound: {fileID: 8300000, guid: ef3c5abd07220574595e9e09575553f3, type: 3}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class VehicleAudio
+public class VehicleAudio : MonoBehaviour
 {
     [SerializeField]
     VehicleClass vehicle = null;
@@ -80,8 +80,12 @@ public class VehicleAudio
         else if (engineAudio != null && _sound == VehicleSounds.Engine && !engineAudio.isPlaying)
         {
             vehicle.GetPart(out PartEngine _engine);
-            engineAudio.clip = _engine.Sound;
-            engineAudio.Play();
+            if (_engine != null)
+            {
+                engineAudio.clip = _engine.Sound;
+                engineAudio.Play();
+                StartCoroutine(FadeInEngine());
+            }
         }
     }
 
@@ -97,8 +101,29 @@ public class VehicleAudio
         }
         else if (engineAudio != null && _sound == VehicleSounds.Engine && engineAudio.isPlaying)
         {
-            engineAudio.Stop();
+            StartCoroutine(FadeOutEngine());
         }
+    }
+
+    IEnumerator FadeInEngine()
+    {
+        while (engineAudio.volume < 1)
+        {
+            engineAudio.volume += 0.1f;
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield break;
+    }
+
+    IEnumerator FadeOutEngine()
+    {
+        while(engineAudio.volume > 0)
+        {
+            engineAudio.volume -= 0.1f;
+            yield return new WaitForSeconds(0.2f);
+        }
+        engineAudio.Stop();
+        yield break;
     }
 }
 

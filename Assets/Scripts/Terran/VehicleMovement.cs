@@ -55,6 +55,9 @@ public class VehicleMovement : MonoBehaviour
     [SerializeField]
     bool minerMode = false;
 
+    [SerializeField]
+    bool hasTargets = false;
+
     public Vector2 DrillPoint
     {
         get { return drillPosition; }
@@ -68,6 +71,11 @@ public class VehicleMovement : MonoBehaviour
     public bool IsMining
     {
         get { return minerMode; }
+    }
+
+    public bool HasTargets
+    {
+        get { return hasTargets; }
     }
 
     // Start is called before the first frame update
@@ -176,6 +184,7 @@ public class VehicleMovement : MonoBehaviour
                         {
                             print("Removing spped");
                             speed = 0;
+                            hasTargets = false;
                         }
                 }
             }
@@ -217,6 +226,7 @@ public class VehicleMovement : MonoBehaviour
         path.vectorPath.Clear();
         speed = 0;
         rb.velocity = Vector3.zero;
+        hasTargets = false;
     }
 
     void UpdatePath()
@@ -261,6 +271,7 @@ public class VehicleMovement : MonoBehaviour
     public void AddTargetPoint(Vector3 newTarget)
     {
         targetQueue.Add(newTarget);
+        hasTargets = true;
         newTarget.z = -2;
         targetPositions.Add(Instantiate(targetPrefab, newTarget, Quaternion.identity));
         newTarget.z = 0;
@@ -310,6 +321,7 @@ public class VehicleMovement : MonoBehaviour
     {
         targetQueue.Clear();
         path.vectorPath.Clear();
+        hasTargets = false;
         speed = 0;
         for (int i = targetPositions.Count-1; i >= 0; i--)
         {

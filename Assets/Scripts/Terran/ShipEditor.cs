@@ -48,6 +48,9 @@ public class ShipEditor : MonoBehaviour
     [SerializeField]
     GameObject closeMenuButton = null;
 
+    [SerializeField]
+    UIAudio uiAudio = null;
+
     int openEditorIndex = 0;
 
 
@@ -95,6 +98,7 @@ public class ShipEditor : MonoBehaviour
             VehicleEditorComponent _component = result.gameObject.GetComponentInParent<VehicleEditorComponent>();
             if (heldItem.partContent is PartDrill && _component.partType == PartType.Drill)
             {
+                uiAudio.PlaySound(UIsounds.Upgrade);
                 _component.AddPart(heldItem.partContent);
                 Drop();
                 editorTabs[openEditorIndex].FinalizeChanges();
@@ -102,6 +106,7 @@ public class ShipEditor : MonoBehaviour
             }
             else if (heldItem.partContent is PartCabin && _component.partType == PartType.Cabin)
             {
+                uiAudio.PlaySound(UIsounds.Upgrade);
                 _component.AddPart(heldItem.partContent);
                 Drop();
                 editorTabs[openEditorIndex].FinalizeChanges();
@@ -109,6 +114,7 @@ public class ShipEditor : MonoBehaviour
             }
             else if (heldItem.partContent is PartEngine && _component.partType == PartType.Engine)
             {
+                uiAudio.PlaySound(UIsounds.Upgrade);
                 _component.AddPart(heldItem.partContent);
                 Drop();
                 editorTabs[openEditorIndex].FinalizeChanges();
@@ -116,6 +122,7 @@ public class ShipEditor : MonoBehaviour
             }
             else if (heldItem.partContent is PartWheel && _component.partType == PartType.Wheels)
             {
+                uiAudio.PlaySound(UIsounds.Upgrade);
                 _component.AddPart(heldItem.partContent);
                 Drop();
                 editorTabs[openEditorIndex].FinalizeChanges();
@@ -123,6 +130,7 @@ public class ShipEditor : MonoBehaviour
             }
             else if (heldItem.partContent is PartUpgrade && _component.partType == PartType.Upgrade)
             {
+                uiAudio.PlaySound(UIsounds.Upgrade);
                 _component.AddPart(heldItem.partContent);
                 Drop();
                 editorTabs[openEditorIndex].FinalizeChanges();
@@ -172,6 +180,7 @@ public class ShipEditor : MonoBehaviour
                     _player.AddPart(editorComponent.installedPart);
                     editorComponent.RemovePart();
                     editorTabs[openEditorIndex].FinalizeChanges();
+                    uiAudio.PlaySound(UIsounds.Upgrade);
                     return;
                 }
                 else if (_player.PartsInventory.ItemCount < _player.PartsInventory.MaxItems && editorComponent.partType == PartType.Cabin && _cabin != null)
@@ -196,6 +205,7 @@ public class ShipEditor : MonoBehaviour
                         _player.AddPart(editorComponent.installedPart);
                         editorComponent.RemovePart();
                         editorTabs[openEditorIndex].FinalizeChanges();
+                        uiAudio.PlaySound(UIsounds.Upgrade);
                         return;
                     }
                     else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
@@ -210,6 +220,7 @@ public class ShipEditor : MonoBehaviour
                         _player.AddPart(editorComponent.installedPart);
                         editorComponent.RemovePart();
                         editorTabs[openEditorIndex].FinalizeChanges();
+                        uiAudio.PlaySound(UIsounds.Upgrade);
                         return;
                     }
                 }

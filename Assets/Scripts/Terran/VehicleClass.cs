@@ -81,7 +81,7 @@ public class VehicleClass : MonoBehaviour
 
     [Header("Aduio")]
     [SerializeField]
-    VehicleAudio vehicleAudio = new VehicleAudio();
+    VehicleAudio vehicleAudio = null;
 
 
 
@@ -190,6 +190,7 @@ public class VehicleClass : MonoBehaviour
             {
                 selectionSprite.SetActive(true);
                 vehicleGraphics.SetUI(true);
+                vehicleAudio.PlayAudio(VehicleSounds.Engine);
             }
             else if (!isSelected && selectionSprite.activeSelf)
             {
@@ -201,11 +202,8 @@ public class VehicleClass : MonoBehaviour
 
         if (vehicleAudio != null)
         {
-            vehicleAudio.SetVolume(vehicleAudio.Falloff.Evaluate(Vector2.Distance(this.transform.position, Camera.main.transform.position) / vehicleAudio.MaxDistance));
-            if (engine != null && resourceInventory.GetFuelAmount() > 0)
-            {
-                vehicleAudio.PlayAudio(VehicleSounds.Engine);
-            }else
+            vehicleAudio.SetVolume(vehicleAudio.Falloff.Evaluate(Vector2.Distance(this.transform.position, Camera.main.transform.position) / vehicleAudio.MaxDistance)); 
+            if (engine == null || resourceInventory.GetFuelAmount() <= 0 || (!vehicleMover.HasTargets && !vehicleMover.IsMining && vehicleMover.Speed <= 5 && !isSelected))
             {
                 vehicleAudio.StopAudio(VehicleSounds.Engine);
             }

@@ -84,6 +84,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     AmbienceController ambience = null;
 
+    [SerializeField]
+    AudioClip accomplishmentSound = null;
+
     public double Money
     {
         get { return money; }
@@ -342,6 +345,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DisplayDepthText()
     {
+        ambience.PlayTrack(accomplishmentSound);
         depthLabel.SetActive(true);
         Color labelColor = new Color(1, 1, 1, 0);
         while (labelColor.a < 1)

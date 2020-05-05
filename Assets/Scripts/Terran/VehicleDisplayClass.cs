@@ -109,9 +109,9 @@ public class VehicleDisplayClass : MonoBehaviour
         }
     }
 
-    public void UpdateLight(float multiplier)
+    public void UpdateLight(float rangeBonus)
     {
-        headlights.GetComponent<Light>().intensity = Mathf.Max(0.0001f, headlights.GetComponent<Light>().intensity * multiplier);
+        headlights.GetComponent<Light>().range = 10 + rangeBonus;
     }
 
     public void EnableTrade(VehicleClass[] tradingShips)
