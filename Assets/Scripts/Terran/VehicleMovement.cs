@@ -147,6 +147,14 @@ public class VehicleMovement : MonoBehaviour
             ClearPath();
             ToggleMinerMode(true);
         }
+
+        if (speed > 5)
+        {
+            vehicleMain.Audio.PlayAudio(VehicleSounds.Movement);
+        }else if (speed <= 5)
+        {
+            vehicleMain.Audio.StopAudio(VehicleSounds.Movement);
+        }
     }
 
     // Update is called once per frame

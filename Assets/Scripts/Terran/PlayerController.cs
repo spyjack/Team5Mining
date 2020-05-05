@@ -78,6 +78,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject pauseMenu = null;
 
+    [SerializeField]
+    GameObject confirmQuit = null;
+
+    [SerializeField]
+    AmbienceController ambience = null;
+
     public double Money
     {
         get { return money; }
@@ -125,6 +131,19 @@ public class PlayerController : MonoBehaviour
         }else if (!pauseMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame();
+        }
+
+        if (Camera.main.transform.position.y > 10)
+        {
+            ambience.FadeInAmbience(AmbienceTrack.Surface);
+        }
+        else if (Camera.main.transform.position.y <= 10 && Camera.main.transform.position.y > depthMarkers[2].depthLevel * 0.25f)
+        {
+            ambience.FadeInAmbience(AmbienceTrack.UpperLayers);
+        }
+        else if (Camera.main.transform.position.y < depthMarkers[2].depthLevel * 0.25f)
+        {
+            ambience.FadeInAmbience(AmbienceTrack.DarkCaves);
         }
     }
 
@@ -262,7 +281,11 @@ public class PlayerController : MonoBehaviour
     {
         while(true)
         {
-            
+            if (nextDepth >= depthMarkers.Count)
+            {
+                yield break;
+            }
+
             float lowest = deepestDepth;
             foreach (Transform vehicle in playerShips)
             {
@@ -275,7 +298,7 @@ public class PlayerController : MonoBehaviour
             deepestDepth = lowest;
             depthCurrentText.text = "Depth: " + deepestDepth.ToString("F2") + "m";
             depthGoalText.text = "Goal: " + depthMarkers[nextDepth].depthLevel + "m";
-            if (deepestDepth <= depthMarkers[nextDepth].depthLevel)
+            if (deepestDepth <= depthMarkers[nextDepth].depthLevel && nextDepth < depthMarkers.Count-1)
             {
                 
                 depthTextsList[1].text = depthMarkers[nextDepth].depthName;
@@ -289,6 +312,14 @@ public class PlayerController : MonoBehaviour
                 camBounds.size = newSize;
                 camBounds.offset = newOffset;
                 StartCoroutine(DisplayDepthText());
+                nextDepth++;
+            }else if (nextDepth >= depthMarkers.Count - 1)
+            {
+                StartCoroutine(DisplayDepthText());
+                depthTextsList[1].text = "The Mantle";
+                depthTextsList[2].text = "<b>You have Won!</b> However, you are free to keep playing!";
+                depthCurrentText.text = "Depth: " + deepestDepth.ToString("F2") + "m";
+                depthGoalText.text = "Goals Completed";
                 nextDepth++;
             }
             yield return new WaitForSeconds(0.25f * playerShips.Count);
@@ -350,12 +381,18 @@ public class PlayerController : MonoBehaviour
     {
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
+        confirmQuit.SetActive(false);
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
+    }
+
+    public void QuitGameChecked()
+    {
+        confirmQuit.SetActive(true);
     }
 
     public void QuitGame()

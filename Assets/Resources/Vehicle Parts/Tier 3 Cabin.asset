@@ -22,4 +22,4 @@ MonoBehaviour:
   _weight: 10
   _fuelCapacity: 1
   _crewCapacity: 3
-  _healthBonus: 0
+  _lightRangeBonus: 3

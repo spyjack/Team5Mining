@@ -12,6 +12,9 @@ public class PartEngine : PartBase
     [SerializeField]
     float _maxSpeed = 200; //Max speed the vehicle can go
 
+    [SerializeField]
+    AudioClip _engineSound = null;
+
     //How much fuel is used every over time;
 
     public float Power
@@ -24,5 +27,11 @@ public class PartEngine : PartBase
     {
         get { return _maxSpeed; }
         set { _maxSpeed = value; }
+    }
+
+    public AudioClip Sound
+    {
+        get { return _engineSound; }
+        set { _engineSound = value; }
     }
 }

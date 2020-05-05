@@ -16,7 +16,6 @@ public class DepthLighting : MonoBehaviour
     [SerializeField]
     float maxDepth = -100;
 
-
     // Update is called once per frame
     void Update()
     {

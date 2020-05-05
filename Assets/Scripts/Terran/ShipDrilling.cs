@@ -34,6 +34,24 @@ public class ShipDrilling : MonoBehaviour
     [SerializeField]
     List<GameObject> drillParticlesPooled = new List<GameObject>();
 
+    private void OnEnable()
+    {
+        if (tilemap == null)
+            FindTilemap();
+    }
+
+    public void FindTilemap()
+    {
+        foreach (Tilemap map in FindObjectsOfType<Tilemap>())
+        {
+            if (map.transform.tag == "Ground")
+            {
+                tilemap = map;
+                return;
+            }
+        }
+    }
+
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -48,6 +66,7 @@ public class ShipDrilling : MonoBehaviour
         if (other.tag == "Ground" && vehicleMover.GetTarget(0).z != 1)
         {
             drillActive = false;
+            vehicleMain.Audio.StopAudio(VehicleSounds.Drilling);
             StopCoroutine(DrillRepeated());
         }
     }
@@ -56,6 +75,7 @@ public class ShipDrilling : MonoBehaviour
     {
         if (drillActive || !vehicleMover.IsMining)
         {
+            vehicleMain.Audio.StopAudio(VehicleSounds.Drilling);
             yield break;
         }
         int _hardnessCount = 0;
@@ -68,6 +88,7 @@ public class ShipDrilling : MonoBehaviour
             }
             else if (!vehicleMover.IsMining || gasLeft <= 0)
             {
+                vehicleMain.Audio.StopAudio(VehicleSounds.Drilling);
                 drillActive = false;
                 yield break;
             }
@@ -95,6 +116,7 @@ public class ShipDrilling : MonoBehaviour
                         {
                             int damage = 5;
                             float collectionBonus = 1;
+                            vehicleMain.Audio.PlayAudio(VehicleSounds.Drilling);
                             WorkerBase _drillOperater = vehicleMain.GetWorker(WorkStation.Drill);
                             if (_drillOperater != null)
                             {
@@ -128,6 +150,7 @@ public class ShipDrilling : MonoBehaviour
                     if (_hardnessCount >= hits.Length)
                     {
                         Debug.LogWarning("Soil is too hard");
+                        vehicleMain.Audio.StopAudio(VehicleSounds.Drilling);
                         drillActive = false;
                         yield break;
                     }
@@ -137,6 +160,7 @@ public class ShipDrilling : MonoBehaviour
             }
             else
             {
+                vehicleMain.Audio.StopAudio(VehicleSounds.Drilling);
                 drillActive = false;
                 yield break;
             }

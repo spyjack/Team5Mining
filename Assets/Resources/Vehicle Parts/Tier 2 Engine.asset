@@ -22,3 +22,4 @@ MonoBehaviour:
   _weight: 100
   _horsePower: 4
   _maxSpeed: 300
+  _engineSound: {fileID: 8300000, guid: 2759f3f3ccbb43a4f9f94d1b8fff14f3, type: 3}

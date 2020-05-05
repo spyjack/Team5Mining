@@ -79,6 +79,12 @@ public class VehicleClass : MonoBehaviour
     [SerializeField]
     private PartWheel wheels = null;
 
+    [Header("Aduio")]
+    [SerializeField]
+    VehicleAudio vehicleAudio = new VehicleAudio();
+
+
+
     public string ShipName
     {
         get { return shipName; }
@@ -141,6 +147,11 @@ public class VehicleClass : MonoBehaviour
         }
     }
 
+    public VehicleAudio Audio
+    {
+        get { return vehicleAudio; }
+    }
+
     public WorkerBase[] Crew
     {
         get { return crew; }
@@ -185,6 +196,18 @@ public class VehicleClass : MonoBehaviour
                 selectionSprite.SetActive(false);
                 vehicleGraphics.SetUI(false);
                 vehicleGraphics.DisableTrade();
+            }
+        }
+
+        if (vehicleAudio != null)
+        {
+            vehicleAudio.SetVolume(vehicleAudio.Falloff.Evaluate(Vector2.Distance(this.transform.position, Camera.main.transform.position) / vehicleAudio.MaxDistance));
+            if (engine != null && resourceInventory.GetFuelAmount() > 0)
+            {
+                vehicleAudio.PlayAudio(VehicleSounds.Engine);
+            }else
+            {
+                vehicleAudio.StopAudio(VehicleSounds.Engine);
             }
         }
     }
@@ -278,6 +301,7 @@ public class VehicleClass : MonoBehaviour
         crew = new WorkerBase[4];
         crew[0] = _vehicle.crew[0];
         cost = _vehicle.cost;
+
     }
 
     public int GetCost(float _multiplier)
@@ -363,6 +387,9 @@ public class VehicleClass : MonoBehaviour
 
         if (vehicleGraphics != null)
             vehicleGraphics.RefreshUI();
+
+        if (cabin != null && vehicleGraphics != null)
+            vehicleGraphics.UpdateLight(cabin.LightRange);
     }
 
     public void AssignWorker(WorkStation _station, WorkerBase _worker)
@@ -562,6 +589,11 @@ public class VehicleClass : MonoBehaviour
     {
         engine = _part;
         RecalculateStats();
+        if (vehicleAudio != null)
+        {
+            vehicleAudio.StopAudio(VehicleSounds.Engine);
+            vehicleAudio.PlayAudio(VehicleSounds.Engine);
+        }
     }
 
     public void InstallPart(PartWheel _part)

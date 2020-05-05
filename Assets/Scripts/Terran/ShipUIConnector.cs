@@ -98,10 +98,10 @@ public class ShipUIConnector : MonoBehaviour
         invCapacityText.text = "Capacity Used: " + vehicle.Inventory.UsedCapacity.ToString("F2") + "/" + vehicle.Inventory.Capacity;
         invFuelText.text = "Fuel Remaining: " + vehicle.Inventory.GetFuelAmount();
         invRationsText.text = "Rations Remaining: " + vehicle.Inventory.GetResourceAmount(ResourceId.Rations);
-        if (vehicle.MovementScript.IsMining && miningModeText.text == "Mining Mode (M): Disabled")
+        if (vehicle.MovementScript.IsMining)
         {
             miningModeText.text = "Mining Mode (M): Active";
-        } else if (!vehicle.MovementScript.IsMining && miningModeText.text == "Mining Mode (M): Active")
+        } else if (!vehicle.MovementScript.IsMining)
         {
             miningModeText.text = "Mining Mode (M): Disabled";
         }

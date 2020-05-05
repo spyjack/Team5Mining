@@ -13,7 +13,7 @@ public class PartCabin : PartBase
     int _crewCapacity = 1; //Max amount of crew
 
     [SerializeField]
-    int _healthBonus = 0; //Bonus health to the ship
+    float _lightRangeBonus = 1; //Bonus health to the ship
 
     public int FuelCapacity
     {
@@ -27,9 +27,9 @@ public class PartCabin : PartBase
         set { _crewCapacity = value; }
     }
 
-    public int HealthBonus
+    public float LightRange
     {
-        get { return _healthBonus; }
-        set { _healthBonus = value; }
+        get { return _lightRangeBonus; }
+        set { _lightRangeBonus = value; }
     }
 }

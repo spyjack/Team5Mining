@@ -161,6 +161,8 @@ public class Terriangenerationmodified : MonoBehaviour
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[5]));
                     crystalsAmount++;
                 }
+                if (y >= Random.Range(height - 5, height - 1))
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), CreateTile(terrainTilesList[9]));
 
                 botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
                 

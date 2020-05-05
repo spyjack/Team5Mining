@@ -11,6 +11,9 @@ public class CameraController : MonoBehaviour
     BoxCollider2D cameraPlane = null;
 
     [SerializeField]
+    AmbienceController ambience = null;
+
+    [SerializeField]
     float zoomModifier = 2;
 
     // Update is called once per frame
